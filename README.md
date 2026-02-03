@@ -1,2 +1,2 @@
-# HaneulGyeol_PJ
-Haneul Gyeol Project
+# HaneulGyeol_Project
+HaneulGyeol Project
