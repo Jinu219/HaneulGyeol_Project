@@ -1,0 +1,6 @@
+AIModel/outputs/cloud_model_convnext_img320_e20_b96_mix0.2_crop0.25_auglight_last.pt
+AIModel/outputs/cloud_model_convnext_img320_e20_b96_mix0.2_crop0.25_auglight.pt
+AIModel/outputs/cloud_model_convnext_img320_e20_b64_mix0.2_crop0.0_last.pt
+AIModel/outputs/cloud_model_convnext_img320_e20_b64_mix0.2_crop0.0.pt
+AIModel/outputs/cloud_model_convnext_img320_e20_b64.pt
+AIModel/outputs/cloud_model_best.pt
