@@ -13,17 +13,18 @@ def load_model():
 
     ckpt = torch.load(ckpt_path, map_location=device)
 
-    classes = ckpt.get("classes", None)
+    classes = ckpt.get("classes")
     if classes is None:
-        raise KeyError("Checkpoint missing 'classes'")
+        raise RuntimeError("Checkpoint does not contain 'classes'")
 
     num_classes = len(classes)
 
-    # ConvNeXt Tiny architecture
     model = models.convnext_tiny(weights=None)
-    model.classifier[2] = nn.Linear(model.classifier[2].in_features, num_classes)
-
+    model.classifier[2] = nn.Linear(
+        model.classifier[2].in_features, num_classes
+    )
     model.load_state_dict(ckpt["model_state"])
+
     model.to(device)
     model.eval()
 
@@ -32,7 +33,7 @@ def load_model():
         "device": device,
         "img_size": ckpt.get("img_size", 320),
         "arch": ckpt.get("arch", "convnext_tiny"),
-        "run_name": ckpt.get("run_name", "unknown"),
+        "run_name": ckpt.get("run_name", "cloud_model_best"),
         "ckpt_path": str(ckpt_path),
     }
 
