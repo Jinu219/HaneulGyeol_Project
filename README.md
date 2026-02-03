@@ -10,8 +10,9 @@
 ![IMG_1665](https://github.com/user-attachments/assets/156a75c9-f17d-4059-b411-cab34835bef0)
 ![IMG_1672](https://github.com/user-attachments/assets/febe628e-f58a-44b1-a2a6-7c6ea7748393)
 
+<br><br>
 
-# 1인 개발
+## 1인 개발
 
 <div align="center">
   <table>
@@ -24,12 +25,19 @@
   </table>
 </div>
 
-# 툴
+<br><br>
+
+## 툴
 <div> 
   <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/react-181717?style=for-the-badge&logo=react&logoColor=white">
   <img src="https://img.shields.io/badge/next.js-181717?style=for-the-badge&logo=next.js&logoColor=white">
   <img src="https://img.shields.io/badge/python-181717?style=for-the-badge&logo=python&logoColor=white">
-  
 </div>
+
+<br><br>
+
+## 개발일지 및 프로젝트 홈
+<h4><a href="https://haneulgyeol.notion.site/1f05f5f657c580049a0cd5581ee9c0b7?v=1f05f5f657c580eeb434000c4db4ec1e">Notion Page</a></h4>
+<h4><a href="https://haneulgyeol.notion.site/2fb5f5f657c5807a85ecd85e86ace0b4">Development log</a></h4>
