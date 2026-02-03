@@ -1,6 +1,9 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import AISection from "@/components/AISection";
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import AISection from "../components/AISection";
+import AtlasSection from "../components/AtlasSection";
+import AboutSection from "../components/AboutSection";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -8,7 +11,9 @@ export default function Home() {
       <Navbar />
       <Hero />
       <AISection />
-      {/* Atlas, About, Footer 순서대로 추가 */}
+      <AtlasSection />
+      <AboutSection />
+      <Footer />
     </>
   );
 }
