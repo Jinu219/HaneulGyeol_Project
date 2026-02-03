@@ -41,3 +41,9 @@
 ## 개발일지 및 프로젝트 홈
 <h4><a href="https://haneulgyeol.notion.site/1f05f5f657c580049a0cd5581ee9c0b7?v=1f05f5f657c580eeb434000c4db4ec1e">Notion Page</a></h4>
 <h4><a href="https://haneulgyeol.notion.site/2fb5f5f657c5807a85ecd85e86ace0b4">Development log</a></h4>
+
+<br><br><br>
+
+## CCSN(Cirrus Cumulus Stratus Nimbus) Database Cite
+> Zhang, J. L., Liu, P., Zhang, F., & Song, Q. Q. ( 2018). CloudNet: Ground‐based cloud classification with deep convolutional neural network. Geophysical Research Letters, 45, 8665– 8672. https://doi.org/10.1029/2018GL077787
+
