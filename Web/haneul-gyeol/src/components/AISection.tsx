@@ -2,12 +2,30 @@
 
 import { useRef, useState } from "react";
 
-type MockResult = {
-  name: string;
-  confidence: number;
+type Prediction = {
+  code: string;
+  name_ko: string;
+  confidence: number; // 0~1
   description: string;
-  height: string;
-  precipitation: string;
+};
+
+type ApiResult = {
+  predictions: Prediction[];
+  confidence_level: "high" | "medium" | "low";
+  confidence_text: string;
+  tips: string[];
+  meta?: {
+    img_size?: number;
+    device?: string;
+    arch?: string;
+    run_name?: string;
+  };
+};
+
+type ApiResponse = {
+  success: boolean;
+  result?: ApiResult;
+  error?: string;
 };
 
 export default function AISection() {
@@ -17,64 +35,72 @@ export default function AISection() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [topResult, setTopResult] = useState<MockResult | null>(null);
-  const [altResult, setAltResult] = useState<MockResult | null>(null);
+  const [result, setResult] = useState<ApiResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // ✅ 추후 배포 시: NEXT_PUBLIC_CLOUD_API 같은 환경변수로 빼면 좋음
+  const API_URL = process.env.NEXT_PUBLIC_CLOUD_API_URL ?? "http://127.0.0.1:8000/predict";
 
   const openFilePicker = () => fileInputRef.current?.click();
 
+  const isImageFile = (file: File) => file.type.startsWith("image/");
+
+  const setPreviewFromFile = (file: File) => {
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+  };
+
+  const analyze = async (file: File) => {
+    setIsLoading(true);
+    setError(null);
+    setResult(null);
+
+    try {
+      const form = new FormData();
+      form.append("file", file);
+
+      const res = await fetch(API_URL, {
+        method: "POST",
+        body: form,
+      });
+
+      const data = (await res.json()) as ApiResponse;
+
+      if (!res.ok || !data.success || !data.result) {
+        throw new Error(data.error || `API error (status: ${res.status})`);
+      }
+
+      setResult(data.result);
+    } catch (e: any) {
+      setError(e?.message ?? "알 수 없는 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleFile = (file: File) => {
-    if (!file.type.startsWith("image/")) {
+    if (!isImageFile(file)) {
       alert("이미지 파일만 업로드 가능합니다.");
       return;
     }
-
-    setIsLoading(true);
-    setTopResult(null);
-    setAltResult(null);
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const url = reader.result as string;
-      setPreviewUrl(url);
-
-      // mock 분석 (원본 HTML 로직을 React로 옮김)
-      setTimeout(() => {
-        const mockResults: MockResult[] = [
-          {
-            name: "적운 (Cumulus)",
-            confidence: 92,
-            description:
-              "맑은 날씨에 자주 나타나는 뭉게구름입니다. 대기가 불안정할 때 형성되며, 낮 동안 태양열로 인한 상승기류로 발달합니다.",
-            height: "600-2000m",
-            precipitation: "없음 ~ 약한 소나기",
-          },
-          {
-            name: "층적운 (Stratocumulus)",
-            confidence: 7,
-            description: "낮은 고도에서 덩어리진 형태로 나타나는 구름입니다.",
-            height: "600-2000m",
-            precipitation: "거의 없음",
-          },
-        ];
-
-        setTopResult(mockResults[0]);
-        setAltResult(mockResults[1]);
-        setIsLoading(false);
-      }, 1200);
-    };
-    reader.readAsDataURL(file);
+    setPreviewFromFile(file);
+    analyze(file);
   };
+
+  const top = result?.predictions?.[0];
+  const rest = result?.predictions?.slice(1) ?? [];
 
   return (
     <section className="ai-section" id="ai">
       <h2 className="section-title">AI 구름 식별</h2>
       <p className="section-subtitle">
-        구름 사진을 올려주세요. AI가 어떤 구름인지 알려드립니다.
+        구름 사진을 올려주세요. AI가 운형 후보(Top-3)와 설명을 제공합니다.
       </p>
 
       <div className="ai-container">
+        {/* 업로드 영역 */}
         <div
-          className="upload-area"
+          className={`upload-area ${isDragging ? "dragging" : ""}`}
           onClick={openFilePicker}
           onDragOver={(e) => {
             e.preventDefault();
@@ -87,14 +113,6 @@ export default function AISection() {
             const file = e.dataTransfer.files?.[0];
             if (file) handleFile(file);
           }}
-          style={
-            isDragging
-              ? {
-                  borderColor: "var(--sky-deep)",
-                  background: "var(--sky-light)",
-                }
-              : undefined
-          }
         >
           <p className="upload-text">구름 사진을 드래그하거나 클릭하세요</p>
           <p className="upload-hint">JPG, PNG 파일 지원</p>
@@ -113,99 +131,99 @@ export default function AISection() {
 
         {/* 결과 영역 */}
         <div className={`result-area ${previewUrl ? "active" : ""}`}>
-          <h3 style={{ marginBottom: "1rem", color: "var(--sky-deep)" }}>
-            분석 결과
-          </h3>
+          <h3 className="result-title">분석 결과</h3>
 
-          {isLoading && (
-            <div style={{ textAlign: "center", padding: "2rem" }}>
-              <div className="loading" />
-              <p style={{ marginTop: "1rem" }}>AI가 구름을 분석중입니다...</p>
+          {!previewUrl && (
+            <div className="result-empty">
+              <p>왼쪽에 이미지를 업로드하면 결과가 표시됩니다.</p>
             </div>
           )}
 
-          {!isLoading && previewUrl && topResult && (
+          {previewUrl && (
+            <div className="result-preview">
+              <img
+                src={previewUrl}
+                alt="업로드 이미지"
+                className="preview-img"
+              />
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="result-loading">
+              <div className="loading" />
+              <p>AI가 구름을 분석중입니다...</p>
+            </div>
+          )}
+
+          {error && !isLoading && (
+            <div className="result-error">
+              <strong>오류</strong>
+              <p>{error}</p>
+              <p className="error-hint">
+                API 서버(8000)가 켜져 있는지 확인해 주세요.
+              </p>
+            </div>
+          )}
+
+          {result && !isLoading && top && (
             <>
-              <div style={{ marginBottom: "2rem" }}>
-                {/* next/image로 바꾸는 건 나중에 해도 됨 */}
-                <img
-                  src={previewUrl}
-                  alt="업로드 이미지"
-                  style={{
-                    width: "100%",
-                    borderRadius: "10px",
-                    marginBottom: "1.5rem",
-                  }}
-                />
+              {/* 확신도 배지 + 메타 */}
+              <div className="confidence-row">
+                <span className={`confidence-badge ${result.confidence_level}`}>
+                  {result.confidence_text}
+                </span>
+                {result.meta?.arch && (
+                  <span className="meta-text">
+                    {result.meta.arch}
+                    {result.meta.device ? ` / ${result.meta.device}` : ""}
+                    {result.meta.img_size ? ` / img ${result.meta.img_size}` : ""}
+                  </span>
+                )}
               </div>
 
-              <div
-                style={{
-                  background: "var(--sky-light)",
-                  padding: "1.5rem",
-                  borderRadius: "10px",
-                  marginBottom: "1rem",
-                }}
-              >
-                <h4
-                  style={{
-                    color: "var(--sky-deep)",
-                    marginBottom: "1rem",
-                    fontSize: "1.3rem",
-                  }}
-                >
-                  {topResult.name}
-                </h4>
-
-                <div
-                  style={{
-                    background: "var(--cloud-white)",
-                    padding: "0.5rem 1rem",
-                    borderRadius: "20px",
-                    display: "inline-block",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  <strong>확신도:</strong> {topResult.confidence}%
-                </div>
-
-                <p style={{ lineHeight: 1.8, marginBottom: "1rem" }}>
-                  {topResult.description}
-                </p>
-
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "1rem",
-                    marginTop: "1rem",
-                  }}
-                >
-                  <div>
-                    <strong style={{ color: "var(--sky-deep)" }}>고도:</strong>
-                    <br />
-                    {topResult.height}
-                  </div>
-                  <div>
-                    <strong style={{ color: "var(--sky-deep)" }}>강수:</strong>
-                    <br />
-                    {topResult.precipitation}
+              {/* Top-1 카드 */}
+              <div className="top-card">
+                <div className="top-card-head">
+                  <h4 className="top-card-title">
+                    {top.code} · {top.name_ko}
+                  </h4>
+                  <div className="top-card-score">
+                    {(top.confidence * 100).toFixed(1)}%
                   </div>
                 </div>
+
+                <p className="top-card-desc">{top.description}</p>
               </div>
 
-              {altResult && (
-                <div
-                  style={{
-                    fontSize: "0.9rem",
-                    color: "var(--text-light)",
-                    padding: "1rem",
-                    background: "var(--cloud-gray)",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <strong>다른 가능성:</strong> {altResult.name} (
-                  {altResult.confidence}%)
+              {/* 나머지 후보 */}
+              {rest.length > 0 && (
+                <div className="alt-box">
+                  <strong>다른 가능성</strong>
+                  <ul>
+                    {rest.map((p) => (
+                      <li key={p.code}>
+                        <span className="alt-name">
+                          {p.code} · {p.name_ko}
+                        </span>
+                        <span className="alt-score">
+                          {(p.confidence * 100).toFixed(1)}%
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* 확신 낮으면 촬영 팁 */}
+              {result.tips?.length > 0 && (
+                <div className="tips-box">
+                  <strong>정확도를 높이는 촬영 팁</strong>
+                  <ul>
+                    {result.tips.map((t, i) => (
+                      <li key={i}>{t}</li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </>

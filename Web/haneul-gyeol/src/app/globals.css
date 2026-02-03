@@ -507,4 +507,141 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-    
+/* === AISection: API 결과 UI 보강 === */
+
+.upload-area.dragging {
+  border-color: var(--sky-deep);
+  background: var(--sky-light);
+}
+
+.result-title {
+  margin-bottom: 1rem;
+  color: var(--sky-deep);
+}
+
+.result-empty {
+  padding: 1.25rem;
+  color: var(--text-light);
+  background: var(--cloud-gray);
+  border-radius: 10px;
+}
+
+.result-preview {
+  margin-bottom: 1rem;
+}
+
+.preview-img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.result-loading {
+  text-align: center;
+  padding: 1.25rem 0;
+  color: var(--text-light);
+}
+
+.result-error {
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.06);
+  border: 1px solid rgba(255, 0, 0, 0.18);
+  color: #7a1a1a;
+}
+
+.error-hint {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(122, 26, 26, 0.75);
+}
+
+/* 확신도 라벨 */
+.confidence-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0 1rem;
+  flex-wrap: wrap;
+}
+
+.confidence-badge {
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: var(--sky-deep);
+}
+
+.confidence-badge.high { background: #2e7d32; }
+.confidence-badge.medium { background: #c58b00; }
+.confidence-badge.low { background: #c0392b; }
+
+.meta-text {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* Top 카드 */
+.top-card {
+  background: var(--sky-light);
+  padding: 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.top-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.top-card-title {
+  color: var(--sky-deep);
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.top-card-score {
+  background: var(--cloud-white);
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--sky-deep);
+  white-space: nowrap;
+}
+
+.top-card-desc {
+  line-height: 1.8;
+  margin: 0;
+  color: rgba(0,0,0,0.75);
+}
+
+/* 후보/팁 박스 */
+.alt-box,
+.tips-box {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  padding: 1rem;
+  background: var(--cloud-gray);
+  border-radius: 10px;
+  margin-top: 0.75rem;
+}
+
+.alt-box ul,
+.tips-box ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.alt-box li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0;
+}
+
+.alt-name { color: rgba(0,0,0,0.75); }
+.alt-score { color: rgba(0,0,0,0.55); white-space: nowrap; }
