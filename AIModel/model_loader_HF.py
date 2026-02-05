@@ -17,6 +17,7 @@ class ModelBundle:
     class_names: list
     
 HF_REPO_ID   = os.getenv("HF_REPO_ID", "Jinu219/HaneulGyeol")
+
 HF_FILENAME  = os.getenv("HF_FILENAME", "cloud_model_best.pt")
 HF_REVISION  = os.getenv("HF_REVISION")  # 선택: "main" 또는 커밋 해시/태그
 HF_CACHE_DIR = os.getenv("HF_CACHE_DIR", "./hf_cache")  # 컨테이너 로컬 캐시
@@ -51,6 +52,7 @@ def build_resnet18(num_classes: int) -> torch.nn.Module:
 
 def get_device() -> str:
     return "cuda" if torch.cuda.is_available() else "cpu"
+
 
 
 def load_checkpoint_to_model(
@@ -123,11 +125,13 @@ def load_checkpoint_to_model(
 
 
 
+
 def download_model_from_hf() -> str:
     """
     Hugging Face Hub에서 모델 파일을 다운로드하고 로컬 경로 반환.
     """
     repo_id = os.getenv("HF_REPO_ID", "Jinu219/HaneulGyeol")
+
     if not repo_id:
         raise RuntimeError("HF_REPO_ID environment variable is required.")
 
@@ -152,11 +156,11 @@ _bundle: Optional[ModelBundle] = None
 _bundle = None
 
 
-def get_model_bundle():
+
+def get_model_bundle() -> ModelBundle:
     """
-    Hugging Face Hub에서 모델을 다운로드하고
-    ckpt 메타(classes, arch 등)를 기준으로 모델을 구성한 뒤
-    단 한 번만 로드해서 재사용한다.
+    싱글톤처럼 한 번만 로드해서 재사용.
+
     """
     global _bundle
     if _bundle is not None:
