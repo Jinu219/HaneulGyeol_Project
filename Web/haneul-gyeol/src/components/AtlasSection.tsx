@@ -18,7 +18,7 @@ export default function AtlasSection() {
       en: "Cumulonimbus (Cb)",
       desc:
         "천둥번개를 동반하는 거대한 구름으로, 강한 상승기류로 인해 수직으로 크게 발달합니다. 소나기와 우박을 동반하기도 합니다.",
-      badge: "수직운",
+      badge: "저층운",
     },
     {
       emoji: "🌫️",
@@ -30,13 +30,31 @@ export default function AtlasSection() {
       badge: "저층운",
     },
     {
-      emoji: "🌥️",
-      type: "권운형",
-      name: "권운",
-      en: "Cirrus (Ci)",
+      emoji: "🌫️",
+      type: "층적운형",
+      name: "층적운",
+      en: "Stratocumulus (Sc)",
       desc:
-        "가느다란 깃털 모양의 하얀 구름으로, 하늘 높은 곳에 위치합니다. 날씨가 변하기 전 자주 관찰됩니다.",
-      badge: "고층운",
+        "회색이나 흰색의 덩어리들이 층을 이루며 펼쳐진 구름입니다. 적운과 층운의 특징을 모두 가지고 있습니다.",
+      badge: "저층운",
+    },
+    {
+      emoji: "🌧️",
+      type: "난층운형",
+      name: "난층운",
+      en: "Nimbostratus (Ns)",
+      desc:
+        "하늘 전체를 두껍게 덮으며 오랜 시간 비나 눈을 내리는 구름입니다. 태양이 보이지 않을 정도로 하늘을 어둡게 만들며, 지속적인 강수를 동반합니다.",
+      badge: "중층운",
+    },
+    {
+      emoji: "🌥️",
+      type: "고층운형",
+      name: "고층운",
+      en: "Altostratus (As)",
+      desc:
+        "하늘을 넓게 덮는 회백색의 구름으로, 태양이 희미한 원반처럼 보이게 만듭니다. 비나 눈이 오기 전 단계에서 자주 나타납니다.",
+      badge: "중층운",
     },
     {
       emoji: "☁️",
@@ -48,14 +66,34 @@ export default function AtlasSection() {
       badge: "중층운",
     },
     {
-      emoji: "🌫️",
-      type: "층적운형",
-      name: "층적운",
-      en: "Stratocumulus (Sc)",
+      emoji: "🌥️",
+      type: "권운형",
+      name: "권운",
+      en: "Cirrus (Ci)",
       desc:
-        "회색이나 흰색의 덩어리들이 층을 이루며 펼쳐진 구름입니다. 적운과 층운의 특징을 모두 가지고 있습니다.",
-      badge: "저층운",
+        "가느다란 깃털 모양의 하얀 구름으로, 하늘 높은 곳에 위치합니다. 날씨가 변하기 전 자주 관찰됩니다.",
+      badge: "고층운",
     },
+    {
+      emoji: "🌥️",
+      type: "권층운형",
+      name: "권층운",
+      en: "Cirrostratus (Cs)",
+      desc:
+        "하늘을 얇은 베일처럼 덮는 투명한 구름으로, 태양이나 달 주위에 무리(halo)를 만들기도 합니다. 날씨 변화의 신호로 자주 나타납니다.",
+      badge: "고층운",
+    },
+    {
+      emoji: "🌤️",
+      type: "권적운형",
+      name: "권적운",
+      en: "Cirrocumulus (Cc)",
+      desc:
+        "작고 하얀 알갱이 모양의 구름들이 물결처럼 배열된 모습이 특징입니다. 매우 높은 하늘에 나타나며, 보통 맑은 날씨와 함께 관찰됩니다.",
+      badge: "고층운",
+    },
+
+
   ];
 
   return (
