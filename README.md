@@ -11,6 +11,28 @@
 ![IMG_1672](https://github.com/user-attachments/assets/febe628e-f58a-44b1-a2a6-7c6ea7748393)
 
 <br><br>
+## 초안
+
+### Hero Selection 
+https://github.com/user-attachments/assets/64828881-eefc-4563-8ca4-d4a96154c984
+
+### HaneulGyeol CCSN DeepRunning Model: 운결(雲結)
+
+
+https://github.com/user-attachments/assets/0da106ca-5511-42e1-a95d-3a830302e4a2
+
+
+### Cloud Atlas Dic
+
+<img width="2548" height="1400" alt="3" src="https://github.com/user-attachments/assets/04527019-d4bf-4990-9fa2-9d1f3d7b1465" />
+
+> 권층운, 권적운, 난층운, 고층운 추가 예정
+
+### About Section & Footer Section
+<img width="2558" height="921" alt="4" src="https://github.com/user-attachments/assets/bb3f203a-c1f5-4cc1-b316-aa1b7d010167" />
+
+<br><br>
+
 
 ## 1인 개발
 
@@ -27,13 +49,16 @@
 
 <br><br>
 
-## 툴
+## 개발 툴
 <div> 
   <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/gitlfs-181717?style=for-the-badge&logo=gitlfs&logoColor=white">
   <img src="https://img.shields.io/badge/react-181717?style=for-the-badge&logo=react&logoColor=white">
   <img src="https://img.shields.io/badge/next.js-181717?style=for-the-badge&logo=next.js&logoColor=white">
   <img src="https://img.shields.io/badge/python-181717?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/render-181717?style=for-the-badge&logo=render&logoColor=white">
+  
 </div>
 
 <br><br>
