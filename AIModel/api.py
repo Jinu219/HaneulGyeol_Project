@@ -1,54 +1,83 @@
-# AIModel/api.py
+# api.py (HF Space / Docker에서 사용할 버전)
+import io
+from typing import Any, Dict
+
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from PIL import Image
-import io
 
-from model_loader import load_model
-from predictor import predict_image
+from model_loader_HF import get_model_bundle
+from predictor import predict_image  # ✅ predictor 방식 사용
 
-app = FastAPI(title="HaneulGyeol Cloud Classifier")
-
-from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI(title="HaneulGyeol Cloud Classifier API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://haneul-gyeol-project-git-develop-jinu219s-projects.vercel.app",
-    ],
+    allow_origins=["*"],   # 운영시 Next 도메인만 허용해도 됨
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-model, meta = load_model()
+
+def infer_arch(model) -> str:
+    # 완벽하진 않지만 메타 표시용으로 충분
+    if hasattr(model, "fc"):
+        return "resnet18"
+    name = model.__class__.__name__.lower()
+    if "convnext" in name or hasattr(model, "classifier"):
+        return "convnext_tiny"
+    return "unknown"
+
+@app.on_event("startup")
+def _startup_load_model():
+    _ = get_model_bundle()
 
 @app.get("/")
-def root():
-    return {"message": "HaneulGyeol Cloud API is running"}
+def root() -> Dict[str, Any]:
+    # HF가 / 를 자주 찍어봄(로그에 뜨는 GET /)
+    return {"ok": True, "service": "HaneulGyeol API", "endpoints": ["/health", "/predict"]}
 
 @app.get("/health")
-def health():
+def health() -> Dict[str, Any]:
+    b = get_model_bundle()
     return {
         "status": "ok",
-        "device": meta["device"],
-        "arch": meta.get("arch"),
-        "run_name": meta.get("run_name"),
-        "img_size": meta.get("img_size"),
-        "ckpt_path": meta.get("ckpt_path"),
-        "num_classes": len(meta["classes"]),
-        "classes": meta["classes"],
+        "device": b.device,
+        "num_classes": len(b.class_names),
+        "classes": b.class_names,
     }
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     try:
-        image_bytes = await file.read()
-        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        b = get_model_bundle()
 
-        result = predict_image(model, meta, img, topk=3)
-        return JSONResponse(content={"success": True, "result": result})
+        data = await file.read()
+        img = Image.open(io.BytesIO(data)).convert("RGB")
+
+        # ✅ predictor가 요구하는 meta 구성
+        meta = {
+            "device": b.device,
+            "classes": b.class_names,
+            "img_size": 320,              # 학습 기준 사이즈로(필요하면 env로 뺄 수 있음)
+            "arch": infer_arch(b.model),
+            "run_name": "hf-space",
+        }
+
+        result = predict_image(
+            model=b.model,
+            meta=meta,
+            img=img,
+            topk=3,
+        )
+
+        # ✅ AISection이 기대하는 응답 구조
+        return {"success": True, "result": result}
 
     except Exception as e:
-        return JSONResponse(status_code=500, content={"success": False, "error": str(e)})
+        # ✅ AISection이 기대하는 error 구조
+        return JSONResponse(
+            status_code=500,
+            content={"success": False, "error": str(e)},
+        )

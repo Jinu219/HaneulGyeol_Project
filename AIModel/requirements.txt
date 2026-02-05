@@ -1,7 +1,8 @@
-fastapi
-uvicorn[standard]
-python-multipart
-pillow
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
 torch
 torchvision
+pillow
 numpy
+huggingface_hub>=0.21.0
+python-multipart

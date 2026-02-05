@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 from torchvision import models
 
-def load_model():
+def load_model_lfs():
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     ckpt_path = Path(__file__).parent / "outputs" / "cloud_model_best.pt"
