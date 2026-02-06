@@ -17,31 +17,34 @@ export default function FilterBar({ activeFilter, onFilterChange }: FilterBarPro
   const handleFilterClick = (filterId: string) => {
     onFilterChange(filterId);
 
-    // 스크롤 이동 (전체가 아닌 경우에만)
-    if (filterId !== "all") {
-      const targetSection = document.getElementById(`level-${filterId}`);
-      if (targetSection) {
-        // 네비게이션 높이 + 필터바 높이를 고려한 오프셋
-        const navHeight = 80; // 네비게이션 높이
-        const filterHeight = 100; // 필터바 높이
-        const offset = navHeight + filterHeight;
-        
-        const elementPosition = targetSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+    // 렌더 반영 후 스크롤 (2번 RAF가 더 안정적)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (filterId === "all") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    } else {
-      // "전체" 버튼 클릭 시 페이지 상단으로 스크롤
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
+        const targetSection = document.getElementById(`level-${filterId}`);
+        if (!targetSection) return;
+
+        // ✅ 실제 높이 측정
+        const nav = document.querySelector(".atlas-nav") as HTMLElement | null;
+        const filter = document.querySelector(".filter-section") as HTMLElement | null;
+
+        const navH = nav?.getBoundingClientRect().height ?? 0;
+        const filterH = filter?.getBoundingClientRect().height ?? 0;
+
+        const offset = navH + filterH + 16; // 여백 16px
+
+        const top =
+          targetSection.getBoundingClientRect().top + window.scrollY - offset;
+
+        window.scrollTo({ top, behavior: "smooth" });
       });
-    }
+    });
   };
+
 
   const handleSearchClick = () => {
     const searchBox = document.getElementById("search-box");
