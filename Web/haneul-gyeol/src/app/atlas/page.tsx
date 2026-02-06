@@ -1,7 +1,7 @@
 // src/app/atlas/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import FilterBar from "@/components/atlas/FilterBar";
 import CloudLevelSection from "@/components/atlas/CloudLevelSection";
@@ -10,6 +10,12 @@ import "./atlas.css";
 export default function AtlasPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [debounced, setDebounced] = useState<string>("");
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(searchTerm), 200);
+    return () => clearTimeout(t);
+  }, [searchTerm]);
 
   return (
     <>
@@ -57,10 +63,7 @@ export default function AtlasPage() {
       </section>
 
       {/* Filter */}
-      <FilterBar
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-      />
+      <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
 
       {/* Classification Info */}
       <section className="classification-info">
@@ -93,7 +96,7 @@ export default function AtlasPage() {
             id="search-box"
             type="text"
             className="search-box"
-            placeholder="구름 이름으로 검색... (예: 적운, Cumulus)"
+            placeholder="구름 이름으로 검색... (예: 적운, Cumulus, Cu)"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -111,7 +114,7 @@ export default function AtlasPage() {
           altitudeDetail="극지방: 3-8km | 온대: 5-13km | 열대: 6-18km"
           icon="☁️"
           activeFilter={activeFilter}
-          searchTerm={searchTerm}
+          searchTerm={debounced}   // ✅ 여기! debounced로 바꿈
         />
 
         <CloudLevelSection
@@ -122,7 +125,7 @@ export default function AtlasPage() {
           altitudeDetail="극지방: 2-4km | 온대: 2-7km | 열대: 2-8km"
           icon="⛅"
           activeFilter={activeFilter}
-          searchTerm={searchTerm}
+          searchTerm={debounced}   // ✅ 여기
         />
 
         <CloudLevelSection
@@ -133,7 +136,7 @@ export default function AtlasPage() {
           altitudeDetail="지표면 근처부터 2km 이하 고도 (적운/적란운은 수직 발달)"
           icon="🌤️"
           activeFilter={activeFilter}
-          searchTerm={searchTerm}
+          searchTerm={debounced}   // ✅ 여기
         />
       </main>
 
@@ -146,7 +149,7 @@ export default function AtlasPage() {
             <Link href="/atlas">구름 도감</Link>
             <Link href="/#about">소개</Link>
           </div>
-          <p>&copy; 2024 하늘결 프로젝트. All rights reserved.</p>
+          <p>&copy; 2026 하늘결 프로젝트. All rights reserved.</p>
           <p style={{ marginTop: "0.5rem", fontSize: "0.9rem", opacity: 0.8 }}>
             부경대학교 지구환경시스템과학부 환경대기과학전공
           </p>

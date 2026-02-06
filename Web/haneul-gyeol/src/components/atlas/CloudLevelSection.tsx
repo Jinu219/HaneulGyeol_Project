@@ -162,15 +162,18 @@ export default function CloudLevelSection({
   // 검색 필터링
   const filteredClouds = clouds.filter((cloud) => {
     if (!searchTerm) return true;
-    const search = searchTerm.toLowerCase();
-    return (
-      cloud.name_ko.toLowerCase().includes(search) ||
-      cloud.name_en.toLowerCase().includes(search)
-    );
+
+    const q = searchTerm.toLowerCase().replace(/\s+/g, "");
+    const ko = cloud.name_ko.toLowerCase().replace(/\s+/g, "");
+    const en = cloud.name_en.toLowerCase().replace(/\s+/g, "");
+    const sym = cloud.symbol.toLowerCase().replace(/\s+/g, "");
+
+    return ko.includes(q) || en.includes(q) || sym.includes(q);
   });
 
+
   if (!shouldShow) return null;
-  if (searchTerm && filteredClouds.length === 0) return null;
+  
 
   return (
     <section className="cloud-level-section" data-level={level} id={`level-${level}`}>
@@ -186,11 +189,21 @@ export default function CloudLevelSection({
         </div>
       </div>
 
-      <div className="cloud-grid">
-        {filteredClouds.map((cloud) => (
-          <CloudCard key={cloud.symbol} cloud={cloud} />
-        ))}
-      </div>
+      {filteredClouds.length > 0 ? (
+        <div className="cloud-grid">
+          {filteredClouds.map((cloud) => (
+            <CloudCard key={cloud.symbol} cloud={cloud} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">
+          <div className="empty-title">검색 결과가 없어요</div>
+          <div className="empty-desc">
+            다른 키워드로 검색해보세요 (예: 적운, Cu, Cumulus)
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }
