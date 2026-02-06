@@ -1,0 +1,511 @@
+/* src/app/atlas/atlas.css */
+
+/* Atlas 페이지 전용 스타일 */
+
+/* Navigation for Atlas page */
+.atlas-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.atlas-nav .logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: 'Gowun Batang', serif;
+  color: var(--sky-deep);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.atlas-nav .nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.atlas-nav .nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 400;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.atlas-nav .nav-links a.active::after,
+.atlas-nav .nav-links a:hover::after {
+  width: 100%;
+}
+
+.atlas-nav .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--sky-deep);
+  transition: width 0.3s ease;
+}
+
+/* Header Section */
+.atlas-header {
+  padding: 10rem 5% 5rem;
+  text-align: center;
+  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.atlas-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.3)"/></svg>');
+  opacity: 0.5;
+}
+
+.atlas-header h1 {
+  font-size: 4rem;
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.atlas-header p {
+  font-size: 1.3rem;
+  color: var(--text-light);
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+}
+
+.reference-note {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  position: relative;
+  z-index: 1;
+}
+
+.reference-note a {
+  color: var(--sky-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Filter Section */
+.filter-section {
+  padding: 1.2rem 5%;
+  background: var(--cloud-white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 80px;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.filter-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-right: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.7rem 1.5rem;
+  background: var(--cloud-gray);
+  border: 2px solid transparent;
+  border-radius: 25px;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: var(--sky-light);
+  border-color: var(--sky-blue);
+}
+
+.filter-btn.active {
+  background: var(--sky-deep);
+  color: white;
+  border-color: var(--sky-deep);
+}
+
+/* Classification Info */
+.classification-info {
+  padding: 4rem 5% 2rem;
+  background: var(--cloud-white);
+}
+
+.info-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.info-card {
+  background: linear-gradient(135deg, var(--sky-light) 0%, var(--cloud-white) 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  border-left: 4px solid var(--sky-deep);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h3 {
+  font-size: 1.3rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.8rem;
+  color: var(--sky-deep);
+}
+
+.info-card p {
+  line-height: 1.7;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.info-card .count {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  margin-bottom: 0.5rem;
+}
+
+/* Search Box */
+.search-container {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  position: relative;
+}
+
+.search-box {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1.5rem;
+  border: 2px solid var(--sky-blue);
+  border-radius: 50px;
+  font-size: 1rem;
+  font-family: 'Noto Serif KR', serif;
+  transition: all 0.3s ease;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--sky-deep);
+  box-shadow: 0 5px 20px rgba(74, 144, 226, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sky-deep);
+  font-size: 1.2rem;
+}
+
+/* Main Content */
+.main-content {
+  padding: 3rem 5% 6rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.cloud-level-section {
+  margin-bottom: 5rem;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid;
+}
+
+.level-header.high {
+  border-color: #E3F2FD;
+}
+
+.level-header.mid {
+  border-color: #B3E5FC;
+}
+
+.level-header.low {
+  border-color: #81D4FA;
+}
+
+.level-header.vertical {
+  border-color: #4FC3F7;
+}
+
+.level-icon {
+  font-size: 3rem;
+}
+
+.level-title {
+  flex: 1;
+}
+
+.level-title h2 {
+  font-size: 2.5rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.3rem;
+}
+
+.level-title .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+.altitude-info {
+  text-align: right;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.altitude-info strong {
+  display: block;
+  font-size: 1.3rem;
+  color: var(--sky-deep);
+  margin-bottom: 0.2rem;
+}
+
+/* Cloud Grid */
+.cloud-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2.5rem;
+}
+
+.cloud-card {
+  background: var(--cloud-white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.cloud-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border-color: var(--sky-blue);
+}
+
+.cloud-card.high-cloud {
+  border-top: 4px solid #E3F2FD;
+}
+
+.cloud-card.mid-cloud {
+  border-top: 4px solid #B3E5FC;
+}
+
+.cloud-card.low-cloud {
+  border-top: 4px solid #81D4FA;
+}
+
+.cloud-card.vertical-cloud {
+  border-top: 4px solid #4FC3F7;
+}
+
+.cloud-image {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #E3F2FD 0%, #90CAF9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cloud-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 100%);
+}
+
+.cloud-info {
+  padding: 2rem;
+}
+
+.cloud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.cloud-type {
+  font-size: 0.8rem;
+  color: var(--sky-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.cloud-symbol {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-light);
+  background: var(--cloud-gray);
+  padding: 0.3rem 0.8rem;
+  border-radius: 8px;
+}
+
+.cloud-name {
+  font-size: 2rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.cloud-name-en {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 1.2rem;
+}
+
+.cloud-description {
+  color: var(--text-light);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.cloud-meta {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.meta-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--sky-light);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--sky-deep);
+  font-weight: 500;
+}
+
+.cloud-details-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--sky-deep);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.cloud-card:hover .cloud-details-link {
+  transform: translateX(5px);
+}
+
+/* Footer */
+.atlas-footer {
+  background: var(--text-dark);
+  color: var(--cloud-white);
+  padding: 3rem 5%;
+  text-align: center;
+}
+
+.atlas-footer .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.atlas-footer .footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.atlas-footer .footer-links a {
+  color: var(--cloud-white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.atlas-footer .footer-links a:hover {
+  color: var(--sky-blue);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .atlas-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .level-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .altitude-info {
+    text-align: left;
+  }
+
+  .cloud-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .atlas-nav .nav-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+}
