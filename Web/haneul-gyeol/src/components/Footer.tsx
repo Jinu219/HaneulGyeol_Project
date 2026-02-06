@@ -9,7 +9,7 @@ export default function Footer() {
           <a href="#about">소개</a>
         </div>
 
-        <p>&copy; 2024 하늘결 프로젝트. All rights reserved.</p>
+        <p>&copy; 2026 하늘결 프로젝트. All rights reserved.</p>
 
         <p style={{ marginTop: "0.5rem", fontSize: "0.9rem", opacity: 0.8 }}>
           부경대학교 지구환경시스템과학부 환경대기과학전공
