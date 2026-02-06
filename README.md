@@ -6,6 +6,12 @@
   라는 사고에서 출발한 이 프로젝트는 구름의 종, 변종, 부속 구름, 생성 원리, 분류 기준 등을 체계적으로 정리하여 제공합니다.
   국제구름사진의 한글 자료 부족을 느끼고, 누구나 쉽게 구름을 배우고 이해할 수 있는 플랫폼을 만들고자 시작되었습니다.
 ```
+## Beta Release
+### <a href="https://haneul-gyeol-project-git-develop-jinu219s-projects.vercel.app/">바로가기</a>
+
+<br>
+<hr>
+<br>
 
 ![IMG_1665](https://github.com/user-attachments/assets/156a75c9-f17d-4059-b411-cab34835bef0)
 ![IMG_1672](https://github.com/user-attachments/assets/febe628e-f58a-44b1-a2a6-7c6ea7748393)
@@ -64,8 +70,8 @@ https://github.com/user-attachments/assets/0da106ca-5511-42e1-a95d-3a830302e4a2
 <br><br>
 
 ## 개발일지 및 프로젝트 홈
-<h4><a href="https://haneulgyeol.notion.site/1f05f5f657c580049a0cd5581ee9c0b7?v=1f05f5f657c580eeb434000c4db4ec1e">Notion Page</a></h4>
-<h4><a href="https://haneulgyeol.notion.site/2fb5f5f657c5807a85ecd85e86ace0b4">Development log</a></h4>
+<h4><a href="https://haneulgyeol.notion.site/2ff5f5f657c580249753ca72e8fb4c4d?source=copy_link">Notion Page</a></h4>
+<h4><a href="https://haneulgyeol.notion.site/Development-Log-2fb5f5f657c5807a85ecd85e86ace0b4?source=copy_link">Development log</a></h4>
 
 <br><br>
 
