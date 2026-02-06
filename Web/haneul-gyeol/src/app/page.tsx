@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
+import DynamicHero from "../components/DynamicHero";
 import AISection from "../components/AISection";
 import AtlasSection from "../components/AtlasSection";
 import AboutSection from "../components/AboutSection";
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
+      <DynamicHero />
       <AISection />
       <AtlasSection />
       <AboutSection />
