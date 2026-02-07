@@ -1,0 +1,310 @@
+/* src/app/atlas/[cloudId]/cloud-detail.css */
+
+/* Hero Section */
+.cloud-hero {
+  padding: 8rem 5% 4rem;
+  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+  text-align: center;
+}
+
+.cloud-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb a {
+  color: var(--sky-deep);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.cloud-symbol-large {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  background: rgba(255, 255, 255, 0.8);
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cloud-hero h1 {
+  font-size: 3.5rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.cloud-hero .cloud-name-en {
+  font-size: 1.5rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+.cloud-badges {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.level-badge {
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.level-badge.high {
+  background: #E3F2FD;
+  color: var(--sky-deep);
+}
+
+.level-badge.mid {
+  background: #B3E5FC;
+  color: var(--sky-deep);
+}
+
+.level-badge.low {
+  background: #81D4FA;
+  color: var(--sky-deep);
+}
+
+.comp-badge {
+  padding: 0.6rem 1.5rem;
+  background: var(--cloud-gray);
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+/* Main Content */
+.cloud-detail-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 5% 5rem;
+}
+
+.detail-section {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.count-badge {
+  font-size: 0.9rem;
+  background: var(--sky-light);
+  color: var(--sky-deep);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-weight: 600;
+}
+
+/* Definition Box */
+.definition-box {
+  background: var(--cloud-gray);
+  padding: 2rem;
+  border-radius: 15px;
+  border-left: 4px solid var(--sky-deep);
+}
+
+.definition-box p {
+  line-height: 1.8;
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: var(--cloud-white);
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border-left: 4px solid;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.species-card {
+  border-left-color: #ff9800;
+}
+
+.variety-card {
+  border-left-color: #ffc107;
+}
+
+.supplementary-card {
+  border-left-color: #4caf50;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.8rem;
+}
+
+.card-header h3 {
+  font-size: 1.2rem;
+  font-family: 'Gowun Batang', serif;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.card-code {
+  font-size: 0.85rem;
+  background: var(--cloud-gray);
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.card-name-en {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.card-description {
+  line-height: 1.7;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+/* Editable Content Placeholder */
+.editable-content:empty::before {
+  content: "여기에 설명을 작성하세요...";
+  color: #bbb;
+  font-style: italic;
+}
+
+.editable-content {
+  min-height: 60px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--cloud-gray);
+  text-align: center;
+}
+
+.back-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--sky-deep);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: var(--sky-blue);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
+}
+
+/* Not Found */
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.not-found h1 {
+  font-size: 2.5rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 1rem;
+}
+
+.not-found a {
+  color: var(--sky-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cloud-hero {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .cloud-symbol-large {
+    font-size: 4rem;
+    width: 90px;
+    height: 90px;
+  }
+
+  .cloud-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .cloud-hero .cloud-name-en {
+    font-size: 1.2rem;
+  }
+
+  .cloud-detail-content {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .definition-box {
+    padding: 1.5rem;
+  }
+
+  .info-card {
+    padding: 1.2rem;
+  }
+}
