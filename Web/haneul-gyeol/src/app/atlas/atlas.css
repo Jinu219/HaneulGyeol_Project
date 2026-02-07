@@ -318,8 +318,8 @@
 /* Cloud Grid */
 .cloud-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .cloud-card {
@@ -506,6 +506,149 @@
 
   .atlas-nav .nav-links {
     gap: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Empty State 추가 */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--cloud-gray);
+  border-radius: 15px;
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.8rem;
+  color: var(--text-dark);
+}
+
+.empty-desc {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+/* Responsive - 모바일 최적화 */
+@media (max-width: 1024px) {
+  .cloud-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .cloud-image {
+    height: 190px;
+    font-size: 4.2rem;
+  }
+
+  .cloud-info {
+    padding: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .atlas-header {
+    padding: 8rem 3% 4rem;
+  }
+
+  .atlas-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .atlas-header p {
+    font-size: 1.1rem;
+  }
+
+  .atlas-nav {
+    padding: 1rem 3%;
+  }
+
+  .atlas-nav .logo {
+    font-size: 1.5rem;
+  }
+
+  .atlas-nav .nav-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .filter-section {
+    padding: 1rem 3%;
+  }
+
+  .filter-container {
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .classification-info {
+    padding: 3rem 3% 2rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .main-content {
+    padding: 2rem 3% 4rem;
+  }
+
+  .level-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .level-icon {
+    font-size: 2.5rem;
+  }
+
+  .level-title h2 {
+    font-size: 2rem;
+  }
+
+  .altitude-info {
+    text-align: left;
+  }
+
+  .cloud-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cloud-image {
+    height: 180px;
+    font-size: 4rem;
+  }
+
+  .cloud-info {
+    padding: 1.5rem;
+  }
+
+  .cloud-name {
+    font-size: 1.6rem;
+  }
+
+  .cloud-description {
     font-size: 0.9rem;
   }
 }
