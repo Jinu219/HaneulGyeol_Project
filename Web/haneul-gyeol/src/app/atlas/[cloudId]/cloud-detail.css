@@ -1,310 +1,224 @@
-/* src/app/atlas/[cloudId]/cloud-detail.css */
+/* ================================================================
+   cloud-detail.css — 정리본 (중복 제거)
+   ================================================================ */
 
-/* Hero Section */
+/* ───────────────── Hero ───────────────── */
 .cloud-hero {
-  padding: 8rem 5% 4rem;
-  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-  text-align: center;
-}
-
-.cloud-hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.breadcrumb {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
-}
-
-.breadcrumb a {
-  color: var(--sky-deep);
-  text-decoration: none;
-}
-
-.breadcrumb a:hover {
-  text-decoration: underline;
-}
-
-.cloud-symbol-large {
-  font-size: 6rem;
-  font-weight: 700;
-  color: var(--sky-deep);
-  background: rgba(255, 255, 255, 0.8);
-  width: 120px;
-  height: 120px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.cloud-hero h1 {
-  font-size: 3.5rem;
-  font-family: 'Gowun Batang', serif;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
-}
-
-.cloud-hero .cloud-name-en {
-  font-size: 1.5rem;
-  color: var(--text-light);
-  font-style: italic;
-  margin-bottom: 1.5rem;
-}
-
-.cloud-badges {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.level-badge {
-  padding: 0.6rem 1.5rem;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.level-badge.high {
-  background: #E3F2FD;
-  color: var(--sky-deep);
-}
-
-.level-badge.mid {
-  background: #B3E5FC;
-  color: var(--sky-deep);
-}
-
-.level-badge.low {
-  background: #81D4FA;
-  color: var(--sky-deep);
-}
-
-.comp-badge {
-  padding: 0.6rem 1.5rem;
-  background: var(--cloud-gray);
-  border-radius: 25px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: var(--text-dark);
-}
-
-/* Main Content */
-.cloud-detail-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 5% 5rem;
-}
-
-.detail-section {
-  margin-bottom: 4rem;
-}
-
-.section-title {
-  font-size: 2rem;
-  font-family: 'Gowun Batang', serif;
-  margin-bottom: 1.5rem;
-  color: var(--text-dark);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.count-badge {
-  font-size: 0.9rem;
-  background: var(--sky-light);
-  color: var(--sky-deep);
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
-  font-weight: 600;
-}
-
-/* Definition Box */
-.definition-box {
-  background: var(--cloud-gray);
-  padding: 2rem;
-  border-radius: 15px;
-  border-left: 4px solid var(--sky-deep);
-}
-
-.definition-box p {
-  line-height: 1.8;
-  font-size: 1rem;
-  color: var(--text-dark);
-}
-
-/* Cards Grid */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-.info-card {
-  background: var(--cloud-white);
-  padding: 1.5rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
-  border-left: 4px solid;
-}
-
-.info-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-.species-card {
-  border-left-color: #ff9800;
-}
-
-.variety-card {
-  border-left-color: #ffc107;
-}
-
-.supplementary-card {
-  border-left-color: #4caf50;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.8rem;
-}
-
-.card-header h3 {
-  font-size: 1.2rem;
-  font-family: 'Gowun Batang', serif;
-  color: var(--text-dark);
-  margin: 0;
-}
-
-.card-code {
-  font-size: 0.85rem;
-  background: var(--cloud-gray);
-  padding: 0.3rem 0.7rem;
-  border-radius: 8px;
-  color: var(--text-light);
-  font-weight: 600;
-}
-
-.card-name-en {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  font-style: italic;
-  margin-bottom: 1rem;
-}
-
-.card-description {
-  line-height: 1.7;
-  font-size: 0.95rem;
-  color: var(--text-dark);
-}
-
-/* Editable Content Placeholder */
-.editable-content:empty::before {
-  content: "여기에 설명을 작성하세요...";
-  color: #bbb;
-  font-style: italic;
-}
-
-.editable-content {
-  min-height: 60px;
-}
-
-/* Bottom Navigation */
-.bottom-nav {
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 2px solid var(--cloud-gray);
-  text-align: center;
-}
-
-.back-btn {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background: var(--sky-deep);
-  color: white;
-  text-decoration: none;
-  border-radius: 25px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-  background: var(--sky-blue);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
-}
-
-/* Not Found */
-.not-found {
-  min-height: 100vh;
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding: 0 1.25rem 2.5rem;
   text-align: center;
 }
 
-.not-found h1 {
-  font-size: 2.5rem;
-  font-family: 'Gowun Batang', serif;
-  margin-bottom: 1rem;
+.cloud-hero-image-wrap,
+.cloud-hero-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
-.not-found a {
-  color: var(--sky-deep);
-  text-decoration: none;
+.cloud-hero-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 25, 55, 0.15) 0%,
+    rgba(10, 25, 55, 0.5) 55%,
+    rgba(10, 25, 55, 0.8) 100%
+  );
+  z-index: 1;
+}
+
+.cloud-hero-placeholder.high {
+  background: linear-gradient(160deg, #1a2f6e 0%, #2a4a9f 40%, #4a90e2 100%);
+}
+.cloud-hero-placeholder.mid {
+  background: linear-gradient(160deg, #01579b 0%, #0277bd 40%, #4fc3f7 100%);
+}
+.cloud-hero-placeholder.low {
+  background: linear-gradient(160deg, #006064 0%, #00838f 45%, #4dd0e1 100%);
+}
+
+.cloud-hero > *:not(.cloud-hero-image-wrap):not(.cloud-hero-placeholder) {
+  position: relative;
+  z-index: 2;
+}
+
+.cloud-hero h1 {
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  margin: 0.2rem 0;
+}
+
+.cloud-hero .cloud-symbol-large {
+  font-size: 2rem;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.cloud-hero .cloud-name-en {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+}
+
+.image-credit {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.7rem;
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.42);
+  font-family: 'Noto Serif KR', serif;
+  pointer-events: none;
+}
+
+/* ───────────────── 본문 레이아웃 ───────────────── */
+.cloud-detail-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.count-badge {
+  font-size: 0.72rem;
+  background: #e8f0fa;
+  color: #4a6fa5;
+  padding: 0.18rem 0.55rem;
+  border-radius: 20px;
   font-weight: 600;
 }
 
-/* Responsive */
+/* ───────────────── 설명 박스 ───────────────── */
+.definition-box,
+.formation-box {
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.definition-box {
+  background: #f5f7fa;
+  border: 1px solid #e2e8f0;
+}
+
+.formation-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2fb 100%);
+  border-left: 3px solid var(--sky-deep, #4a90e2);
+}
+
+.editable-content {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.9rem;
+  line-height: 1.85;
+}
+
+/* ───────────────── 서브카드 (종 / 변종 / 부속) ───────────────── */
+.sub-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.sub-card {
+  background: #fff;
+  border-left: 4px solid transparent;
+}
+
+.species-card       { border-left-color: #ff9800; }
+.variety-card       { border-left-color: #ffc107; }
+.supplementary-card { border-left-color: #4caf50; }
+
+.sub-card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f4f8;
+}
+
+.sub-card-title {
+  display: flex;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.sub-card-ko {
+  font-family: 'Gowun Batang', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sub-card-en {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub-card-code {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.18rem 0.5rem;
+  border-radius: 10px;
+}
+
+.species-code       { background: #fff3e0; color: #e65100; }
+.variety-code       { background: #fffde7; color: #f57f17; }
+.supplementary-code { background: #e8f5e9; color: #2e7d32; }
+
+.sub-card-chevron {
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+  transform: rotate(90deg);
+}
+
+.sub-card-chevron.open {
+  transform: rotate(270deg);
+}
+
+.sub-card-body {
+  animation: slideDown 0.22s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────────────── 반응형 ───────────────── */
 @media (max-width: 768px) {
   .cloud-hero {
-    padding: 6rem 1rem 3rem;
+    min-height: 300px;
+    padding: 0 1rem 2rem;
   }
-
-  .cloud-symbol-large {
-    font-size: 4rem;
-    width: 90px;
-    height: 90px;
-  }
-
-  .cloud-hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .cloud-hero .cloud-name-en {
-    font-size: 1.2rem;
-  }
-
-  .cloud-detail-content {
-    padding: 2rem 1rem 3rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .definition-box {
-    padding: 1.5rem;
-  }
-
-  .info-card {
-    padding: 1.2rem;
-  }
+  .cloud-hero h1 { font-size: 1.6rem; }
+  .cloud-hero .cloud-symbol-large { font-size: 1.5rem; }
+  .sub-card-en { display: none; }
 }
