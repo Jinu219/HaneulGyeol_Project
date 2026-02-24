@@ -18,7 +18,7 @@ type Props = {
 export default function MasonryGallery({
   images,
   emptyMessage = "사진을 추가하면 여기에 표시됩니다",
-  colDesktop = 10,
+  colDesktop = 4,   /* 기본 10→4로 변경: 데스크톱에서 칸 수 줄여 이미지 축소 */
   colTablet = 3,
   colMobile = 2,
 }: Props) {
