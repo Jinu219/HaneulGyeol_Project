@@ -396,7 +396,7 @@
             font-size: 0.95rem;
         }
 
-        .cloud-badge {
+        /* .cloud-badge {
             display: inline-block;
             padding: 0.4rem 1rem;
             background: var(--sky-light);
@@ -404,7 +404,7 @@
             font-size: 0.8rem;
             margin-top: 1rem;
             color: var(--sky-deep);
-        }
+        } */
 
         /* About Section */
         .about-section {
