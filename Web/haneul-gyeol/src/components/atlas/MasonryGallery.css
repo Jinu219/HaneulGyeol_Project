@@ -3,13 +3,17 @@
    전체 너비, 자연 비율, 다양한 높이
    ================================================================ */
 
-/* ── 그리드: columns 방식으로 전체 너비 꽉 채우기 ── */
+/* ✅ 핵심: 갤러리가 화면 100%로 퍼지지 않게 "중앙 컨테이너"를 만든다 */
 .mgal-grid {
   /* PC 화면에서 사진이 너무 크다면 var(--col-desktop) 값을 높여주세요 (예: 4 -> 5 또는 6) */
   column-count: var(--col-desktop, 5);
   column-gap: 12px; /* 사진 사이 가로 간격 */
-  width: 100%;
-  padding: 0;
+
+  /* ✅ 여기부터 수정 핵심 */
+  width: 78%;
+  max-width: 78%;     /* 전체 폭 제한 */
+  margin: 0 auto;        /* 중앙 정렬 */
+  padding: 0 16px;       /* 좌우 여백 (스크린 가장자리 붙는 느낌 제거) */
 }
 
 /* ── 개별 아이템 ── */
@@ -41,7 +45,7 @@
   width: 100%;
   height: auto !important; /* 원본 세로 비율 유지 */
   display: block;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .mgal-img--loaded { opacity: 1; }
@@ -176,12 +180,14 @@
 
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
-  .mgal-grid   { column-count: var(--col-tablet, 10); column-gap: 5px; }
-  .mgal-item   { margin-bottom: 5px; }
+  /* ✅ 기본값 10은 너무 큼 → 3 정도가 자연스러움 */
+  .mgal-grid { column-count: var(--col-tablet, 3); column-gap: 10px; }
+  .mgal-item { margin-bottom: 10px; }
 }
 
 @media (max-width: 640px) {
-  .mgal-grid   { column-count: var(--col-mobile, 5); column-gap: 4px; }
-  .mgal-item   { margin-bottom: 4px; border-radius: 6px; }
+  /* ✅ 기본값 5는 모바일에서 너무 잘게 쪼개짐 → 2 추천 */
+  .mgal-grid { column-count: var(--col-mobile, 2); column-gap: 8px; }
+  .mgal-item { margin-bottom: 8px; border-radius: 6px; }
   .mgal-lb-img { max-width: 96vw; max-height: 72vh; }
 }

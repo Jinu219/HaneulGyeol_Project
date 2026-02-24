@@ -4,6 +4,17 @@
    [cloudId]/page.tsx 전용 스타일 — className 완전 일치 버전
    ================================================================ */
 
+:root {
+  --sky-deep: #2c7be5;
+  --sky-blue: #7fb9ff;
+  --sky-light: #e8f3ff;
+  --cloud-white: #ffffff;
+  --cloud-gray: #f6f9fc;
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+}
+
+
 /* ================================================================
    네비게이션
    <nav className="atlas-nav">
@@ -238,27 +249,46 @@
    <section className="detail-section gallery-full">  ← 갤러리용
    ================================================================ */
 .cloud-detail-content {
-  max-width: 100%;
+  width: 80%;
+  max-width: 80%;
   margin: 0 auto;
-  margin-left: 20px;
-  margin-right:20px;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2rem 0 4rem; /* 좌우 패딩은 0으로 두고, 내부 요소에서 처리 */
 }
 
 .detail-section {
   margin-bottom: 2.5rem;
+  margin: 0 auto 16px;
+  padding: 0 16px;
+  gap : 0.5rem;
 }
 
 /* 갤러리 섹션: 좌우 패딩 무효화하여 전체 너비 */
 .gallery-full {
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
+  margin-left: 0;
+  margin-right: 0;
 }
 
+/* “사진 갤러리” 제목도 Masonry(.mgal-grid=78%)와 같은 폭으로 중앙 */
 .gallery-full .section-title {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  width: 78%;
+  max-width: 78%;
+  margin: 0 auto 1rem;
+  padding: 0 16px;
 }
+
+/* 갤러리 그리드 자체는 MasonryGallery.css가 78%로 잡고 있음.
+   다만 gallery-full 안에서 더 깔끔하게 보이도록 위아래 여백만 정리 */
+.gallery-full .mgal-grid {
+  margin-top: 0.2rem;
+}
+
+/* ✅ sub-card(아코디언) 안의 Masonry는 "부모 폭 100%"를 쓰게 해야 자연스러움 */
+.sub-card-gallery .mgal-grid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
 
 /* ================================================================
    섹션 제목
@@ -277,6 +307,10 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin: 0 auto 16px;
+  width: 78%;
+  padding: 0 16px;
+  align-items: baseline;
 }
 
 .count-badge {
@@ -550,7 +584,7 @@
    반응형
    ================================================================ */
 @media (max-width: 768px) {
-  .cloud-hero          { min-height: 340px; padding: 8rem 1rem 2.5rem; }
+  .cloud-hero          { min-height: 340px; padding: 0 1rem 2.5rem; }
   .cloud-hero h1       { font-size: 1.9rem; }
   .cloud-symbol-large  { font-size: 1.7rem; }
 
@@ -569,6 +603,173 @@
 
   .sub-card-header { padding: 0.75rem 1rem; }
   .sub-card-ko     { font-size: 0.9rem; }
+}
+
+/* added layout + taxonomy grid overrides */
+.cloud-detail-content {
+  /* 70~80% 사이가 가장 보기 좋아서 78%를 기본값으로 둠 */
+  --content-width: 78%;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  padding: 2.2rem 0 4.2rem;
+}
+
+.detail-section {
+  margin: 0 auto 2.6rem;
+  padding: 0;
+}
+
+.section-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  width: var(--content-width);
+  margin: 0 auto 1rem;
+  padding: 0;
+}
+
+.count-badge {
+  font-size: 0.78rem;
+  color: var(--sky-deep);
+  background: rgba(44, 123, 229, 0.12);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.species-title::before,
+.variety-title::before,
+.supplementary-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.species-title::before { background: #ff9800; }
+.variety-title::before { background: #ffc107; }
+.supplementary-title::before { background: #4caf50; }
+
+.definition-box {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: var(--cloud-gray);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+}
+
+.formation-box {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2fb 100%);
+  border-left: 4px solid var(--sky-deep);
+  border-radius: 0 12px 12px 0;
+  padding: 1.2rem 1.5rem;
+}
+
+/* ====== 아코디언 리스트(기본은 content width 중앙) ====== */
+.sub-cards-list {
+  width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+}
+
+/* 종 · 변종 · 부속구름 (한 섹션) */
+.taxonomy-grid {
+  width: var(--content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .taxonomy-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .taxonomy-grid { grid-template-columns: 1fr; }
+}
+
+.taxonomy-col .sub-cards-list {
+  width: 100%;
+  margin: 0;
+}
+
+.subsection-title-row {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.8rem;
+}
+
+.subsection-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.subsection-title.species-title::before,
+.subsection-title.variety-title::before,
+.subsection-title.supplementary-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-right: 0.15rem;
+}
+.subsection-title.species-title::before { background: #ff9800; }
+.subsection-title.variety-title::before { background: #ffc107; }
+.subsection-title.supplementary-title::before { background: #4caf50; }
+
+.taxonomy-empty {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: #fff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  color: #475569;
+  line-height: 1.8;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+}
+
+.taxonomy-note {
+  background: #fff;
+  border: 1px solid #eef2f7;
+  border-radius: 14px;
+  padding: 0.95rem 1.1rem;
+  color: #64748b;
+  line-height: 1.7;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 768px) {
+  .cloud-detail-content {
+    --content-width: 92%;
+    padding: 1.5rem 0 3rem;
+  }
+  .detail-section { margin-bottom: 2rem; }
+  .sub-card-en { display: none; }
 }
 
 
@@ -590,4 +791,26 @@
   padding-bottom: 0.8rem;
   border-bottom: 2px solid var(--sky-light); /* 깔끔한 밑줄 포인트 (선택사항) */
   display: block;
+}
+.var-sup-section {
+  margin-top: 0.5rem;
+}
+
+.var-sup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* 컬럼 내부 타이틀이 너무 위로 붙지 않게 */
+.var-sup-col .section-title {
+  margin-bottom: 0.9rem;
+}
+
+/* 모바일에서는 1열 */
+@media (max-width: 900px) {
+  .var-sup-grid {
+    grid-template-columns: 1fr;
+  }
 }

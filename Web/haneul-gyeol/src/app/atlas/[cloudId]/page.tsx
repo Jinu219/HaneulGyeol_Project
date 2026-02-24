@@ -82,21 +82,27 @@ function SubItemCard({
 
 // ── 메인 페이지 ──────────────────────────────────────────────
 export default function CloudDetailPage() {
-  const params  = useParams();
+  const params = useParams();
   const cloudId = (params?.cloudId as string) || "";
-  const cloud   = cloudDetailData[cloudId.toLowerCase()];
+  const cloud = cloudDetailData[cloudId.toLowerCase()];
 
   if (!cloud) {
     return (
       <>
         <nav className="atlas-nav">
-          <Link href="/" className="nav-logo">하늘결</Link>
-          <div className="nav-links"><Link href="/atlas">구름 도감</Link></div>
+          <Link href="/" className="nav-logo">
+            하늘결
+          </Link>
+          <div className="nav-links">
+            <Link href="/atlas">구름 도감</Link>
+          </div>
         </nav>
         <div className="not-found">
           <h1>구름을 찾을 수 없습니다</h1>
           <p>요청하신 구름({cloudId})이 존재하지 않습니다.</p>
-          <Link href="/atlas" className="back-btn">← 구름 도감으로 돌아가기</Link>
+          <Link href="/atlas" className="back-btn">
+            ← 구름 도감으로 돌아가기
+          </Link>
         </div>
       </>
     );
@@ -106,8 +112,12 @@ export default function CloudDetailPage() {
     <>
       {/* ── 네비게이션 ── */}
       <nav className="atlas-nav">
-        <Link href="/" className="nav-logo">하늘결</Link>
-        <div className="nav-links"><Link href="/atlas">구름 도감</Link></div>
+        <Link href="/" className="nav-logo">
+          하늘결
+        </Link>
+        <div className="nav-links">
+          <Link href="/atlas">구름 도감</Link>
+        </div>
       </nav>
 
       {/* ── Hero ── */}
@@ -143,7 +153,6 @@ export default function CloudDetailPage() {
 
       {/* ── 본문 ── */}
       <main className="cloud-detail-content">
-
         {/* ① 전체 갤러리 — full width */}
         {cloud.images.length > 0 && (
           <section className="detail-section gallery-full">
@@ -180,67 +189,112 @@ export default function CloudDetailPage() {
           </div>
         </section>
 
-        {/* ④ 종 — 아코디언 */}
-        {cloud.species.length > 0 && (
-          <section className="detail-section">
-            <h2 className="section-title species-title">
-              종 (Species)
-              <span className="count-badge">{cloud.species.length}개</span>
-            </h2>
-            <div className="sub-cards-list">
-              {cloud.species.map((item, idx) => (
-                <SubItemCard
-                  key={idx}
-                  item={item}
-                  colorClass="species-card"
-                  codeClass="species-code"
-                />
-              ))}
-            </div>
-          </section>
-        )}
+        {/* ④ 종/변종/부속구름 — 한 번에 */}
+        <section className="detail-section taxonomy-section">
+          <h2 className="section-title">종 · 변종 · 부속구름</h2>
 
-        {/* ⑤ 변종 — 아코디언 */}
-        {cloud.varieties.length > 0 && (
-          <section className="detail-section">
-            <h2 className="section-title variety-title">
-              변종 (Varieties)
-              <span className="count-badge">{cloud.varieties.length}개</span>
-            </h2>
-            <div className="sub-cards-list">
-              {cloud.varieties.map((item, idx) => (
-                <SubItemCard
-                  key={idx}
-                  item={item}
-                  colorClass="variety-card"
-                  codeClass="variety-code"
-                />
-              ))}
+          {cloud.species.length === 0 &&
+          cloud.varieties.length === 0 &&
+          cloud.supplementary.length === 0 ? (
+            <div className="taxonomy-empty">
+              <p>
+                이 구름에는 <b>종/변종/부속구름</b> 정보가 없습니다.
+                {cloud.level === "high" && (
+                  <> (고층운은 WMO 분류에서 해당 항목이 비어있는 경우가 흔합니다.)</>
+                )}
+              </p>
             </div>
-          </section>
-        )}
+          ) : (
+            <div className="taxonomy-grid">
+              {/* 종 */}
+              <div className="taxonomy-col">
+                <div className="subsection-title-row">
+                  <h3 className="subsection-title species-title">
+                    종 (Species)
+                  </h3>
+                  <span className="count-badge">{cloud.species.length}개</span>
+                </div>
 
-        {/* ⑥ 부속구름 — 아코디언 */}
-        {cloud.supplementary.length > 0 && (
-          <section className="detail-section">
-            <h2 className="section-title supplementary-title">
-              부속 구름 및 보조 특징
-              <span className="count-badge">{cloud.supplementary.length}개</span>
-            </h2>
-            <div className="sub-cards-list">
-              {cloud.supplementary.map((item, idx) => (
-                <SubItemCard
-                  key={idx}
-                  item={item}
-                  colorClass="supplementary-card"
-                  codeClass="supplementary-code"
-                />
-              ))}
+                {cloud.species.length > 0 ? (
+                  <div className="sub-cards-list">
+                    {cloud.species.map((item, idx) => (
+                      <SubItemCard
+                        key={`sp-${idx}`}
+                        item={item}
+                        colorClass="species-card"
+                        codeClass="species-code"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="taxonomy-note">
+                    {cloud.level === "high"
+                      ? "고층운은 종(Species)이 정의되지 않거나 자료가 없는 경우가 많습니다."
+                      : "등록된 종(Species) 정보가 없습니다."}
+                  </div>
+                )}
+              </div>
+
+              {/* 변종 */}
+              <div className="taxonomy-col">
+                <div className="subsection-title-row">
+                  <h3 className="subsection-title variety-title">
+                    변종 (Varieties)
+                  </h3>
+                  <span className="count-badge">{cloud.varieties.length}개</span>
+                </div>
+
+                {cloud.varieties.length > 0 ? (
+                  <div className="sub-cards-list">
+                    {cloud.varieties.map((item, idx) => (
+                      <SubItemCard
+                        key={`va-${idx}`}
+                        item={item}
+                        colorClass="variety-card"
+                        codeClass="variety-code"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="taxonomy-note">
+                    등록된 변종(Varieties) 정보가 없습니다.
+                  </div>
+                )}
+              </div>
+
+              {/* 부속구름 */}
+              <div className="taxonomy-col">
+                <div className="subsection-title-row">
+                  <h3 className="subsection-title supplementary-title">
+                    부속 구름 및 보조 특징
+                  </h3>
+                  <span className="count-badge">
+                    {cloud.supplementary.length}개
+                  </span>
+                </div>
+
+                {cloud.supplementary.length > 0 ? (
+                  <div className="sub-cards-list">
+                    {cloud.supplementary.map((item, idx) => (
+                      <SubItemCard
+                        key={`su-${idx}`}
+                        item={item}
+                        colorClass="supplementary-card"
+                        codeClass="supplementary-code"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="taxonomy-note">
+                    등록된 부속 구름/보조 특징 정보가 없습니다.
+                  </div>
+                )}
+              </div>
             </div>
-          </section>
-        )}
+          )}
+        </section>
 
-        {/* ⑦ 물리적 구성 */}
+        {/* ⑤ 물리적 구성 */}
         <section className="detail-section">
           <h2 className="section-title">물리적 구성 (Physical Constitution)</h2>
           <div className="definition-box">
@@ -250,7 +304,7 @@ export default function CloudDetailPage() {
           </div>
         </section>
 
-        {/* ⑧ 관측 정보 */}
+        {/* ⑥ 관측 정보 */}
         <section className="detail-section">
           <h2 className="section-title">관측 정보 (Observation)</h2>
           <div className="definition-box">
@@ -261,12 +315,14 @@ export default function CloudDetailPage() {
         </section>
 
         <div className="bottom-nav">
-          <Link href="/atlas" className="back-btn">← 구름 도감으로 돌아가기</Link>
+          <Link href="/atlas" className="back-btn">
+            ← 구름 도감으로 돌아가기
+          </Link>
         </div>
       </main>
 
       <footer className="atlas-footer">
-        <p>© 2025 하늘결 — 부경대학교 환경대기과학전공 WMO 국제구름사전 한국어 번역 프로젝트</p>
+        <p>© 2026 하늘결 (HaneulGyeol) — Cloud Atlas</p>
       </footer>
     </>
   );
