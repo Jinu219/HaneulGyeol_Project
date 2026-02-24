@@ -1,4 +1,3 @@
-
         * {
             margin: 0;
             padding: 0;
@@ -16,8 +15,10 @@
             --accent-gold: #D4AF37;
             --gradient-sky: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
         }
+        
 
         body {
+            zoom: 0.85;
             font-family: 'Noto Serif KR', serif;
             color: var(--text-dark);
             overflow-x: hidden;
@@ -259,7 +260,8 @@
             overflow: hidden;
         }
 
-        .upload-area:hover {
+        .upload-area:hover,
+        .upload-area.dragging {
             border-color: var(--sky-deep);
             background: var(--sky-light);
         }
@@ -311,98 +313,123 @@
         }
 
         /* Cloud Atlas Section */
+        /* ====== Atlas (Centered Grids) ====== */
         .atlas-section {
-            padding: 8rem 5%;
-            background: linear-gradient(180deg, var(--cloud-white) 0%, var(--sky-light) 100%);
+        width: 100%;
+        background: linear-gradient(180deg, var(--cloud-white) 0%, var(--sky-light) 100%);
+        padding: 4rem 1.5rem;
         }
 
+        /* 섹션 내부를 “정확히” 가운데로 잡아주는 컨테이너 역할 */
+        .atlas-section .section-title,
+        .atlas-section .section-subtitle,
+        .atlas-section .cloud-group,
+        .atlas-section .atlas-cta {
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        /* 그룹 사이 여백 */
+        .cloud-group {
+        margin-top: 2.8rem;
+        }
+
+        /* CTA 중앙 */
+        .atlas-cta {
+        text-align: center;
+        margin-top: 3rem;
+        }
+
+        /* ✅ 핵심: 그리드 자체를 가운데 정렬 */
         .cloud-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
+        display: grid;
+        justify-content: center; /* grid 트랙 전체를 가운데로 */
+        gap: 2.5rem;            /* 카드 사이 여백 */
+        width: 100%;
+        margin: 0 auto;
+        /* 기존 auto-fit/minmax(1fr) 영향 제거 */
+        grid-template-columns: none;
         }
 
+        /* ✅ 데스크탑에서 “정확히” 3개 / 4개 중앙 배치 */
+        .cloud-grid--3 {
+        grid-template-columns: repeat(3, 320px);
+        }
+
+        .cloud-grid--4 {
+        grid-template-columns: repeat(4, 280px);
+        }
+
+        /* 카드 내부 여백/룩 */
         .cloud-card {
-            background: var(--cloud-white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
+        background: var(--cloud-white);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        cursor: pointer;
         }
 
         .cloud-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        transform: translateY(-8px);
+        box-shadow: 0 18px 55px rgba(0, 0, 0, 0.12);
         }
 
         .cloud-image {
-            width: 100%;
-            height: 240px;
-            background: var(--gradient-sky);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cloud-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 100%);
+        width: 100%;
+        height: 220px;
+        background: var(--gradient-sky);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        position: relative;
         }
 
         .cloud-info {
-            padding: 2rem;
+        padding: 1.6rem 1.6rem 1.8rem; /* ✅ 박스 내부 여백 */
+        display: flex;
+        flex-direction: column;
+        }
+
+        .cloud-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         }
 
         .cloud-type {
-            font-size: 0.85rem;
-            color: var(--sky-deep);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: rgba(0, 0, 0, 0.45);
+        }
+
+        .cloud-symbol {
+        font-weight: 700;
+        padding: 0.25rem 0.55rem;
+        border-radius: 8px;
+        background: rgba(74, 144, 226, 0.08);
+        color: rgba(0, 0, 0, 0.65);
         }
 
         .cloud-name {
-            font-size: 1.8rem;
-            font-family: 'Gowun Batang', serif;
-            margin-bottom: 0.8rem;
-            color: var(--text-dark);
+        margin-top: 0.9rem;
+        font-size: 1.7rem;
+        font-weight: 700;
         }
 
         .cloud-name-en {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            font-style: italic;
-            margin-bottom: 1rem;
+        margin-top: 0.2rem;
+        font-style: italic;
+        color: rgba(0, 0, 0, 0.55);
         }
 
         .cloud-description {
-            color: var(--text-light);
-            line-height: 1.7;
-            font-size: 0.95rem;
+        margin-top: 0.8rem;
+        line-height: 1.6;
+        color: rgba(0, 0, 0, 0.65);
         }
 
-        .cloud-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: var(--sky-light);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 1rem;
-            color: var(--sky-deep);
-        }
 
         /* About Section */
         .about-section {
@@ -507,12 +534,8 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-/* === AISection: API 결과 UI 보강 === */
 
-.upload-area.dragging {
-  border-color: var(--sky-deep);
-  background: var(--sky-light);
-}
+/* === AISection: API 결과 UI === */
 
 .result-title {
   margin-bottom: 1rem;
@@ -556,7 +579,6 @@
   color: rgba(122, 26, 26, 0.75);
 }
 
-/* 확신도 라벨 */
 .confidence-row {
   display: flex;
   align-items: center;
@@ -573,16 +595,15 @@
   background: var(--sky-deep);
 }
 
-.confidence-badge.high { background: #2e7d32; }
+.confidence-badge.high   { background: #2e7d32; }
 .confidence-badge.medium { background: #c58b00; }
-.confidence-badge.low { background: #c0392b; }
+.confidence-badge.low    { background: #c0392b; }
 
 .meta-text {
   font-size: 0.85rem;
   color: var(--text-light);
 }
 
-/* Top 카드 */
 .top-card {
   background: var(--sky-light);
   padding: 1.25rem;
@@ -619,7 +640,6 @@
   color: rgba(0,0,0,0.75);
 }
 
-/* 후보/팁 박스 */
 .alt-box,
 .tips-box {
   font-size: 0.95rem;
@@ -643,5 +663,37 @@
   padding: 0.25rem 0;
 }
 
-.alt-name { color: rgba(0,0,0,0.75); }
+.alt-name  { color: rgba(0,0,0,0.75); }
 .alt-score { color: rgba(0,0,0,0.55); white-space: nowrap; }
+
+
+/* ====== Responsive: 화면 줄면 자연스럽게 2열/1열 ====== */
+@media (max-width: 1280px) {
+  .cloud-grid--4 {
+    grid-template-columns: repeat(2, 320px);
+  }
+}
+
+@media (max-width: 980px) {
+  .cloud-grid--3,
+  .cloud-grid--4 {
+    grid-template-columns: repeat(2, 320px);
+  }
+}
+
+@media (max-width: 720px) {
+  .cloud-grid--3,
+  .cloud-grid--4 {
+    grid-template-columns: repeat(1, minmax(280px, 360px));
+  }
+
+  .cloud-group {
+    margin-top: 2.2rem;
+  }
+}
+
+/* AtlasSection - 자세히 보기 링크 */
+
+.cloud-card:hover .cloud-details-link {
+  transform: translateX(5px);
+}

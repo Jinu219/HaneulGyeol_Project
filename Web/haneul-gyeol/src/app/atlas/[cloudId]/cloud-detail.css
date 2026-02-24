@@ -1,0 +1,1018 @@
+/* ================================================================
+   cloud-detail.css
+   src/app/atlas/[cloudId]/cloud-detail.css
+   [cloudId]/page.tsx 전용 스타일 — className 완전 일치 버전
+   ================================================================ */
+
+:root {
+  --sky-deep: #2c7be5;
+  --sky-blue: #7fb9ff;
+  --sky-light: #e8f3ff;
+  --cloud-white: #ffffff;
+  --cloud-gray: #f6f9fc;
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+}
+
+
+/* ================================================================
+   네비게이션
+   <nav className="atlas-nav">
+   <Link className="nav-logo">          ← atlas/page.tsx의 "logo"와 다름!
+   <div className="nav-links">          ← atlas/page.tsx의 ul과 다름!
+   ================================================================ */
+.atlas-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* [cloudId]/page.tsx: className="nav-logo" */
+.atlas-nav .nav-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: 'Gowun Batang', serif;
+  color: var(--sky-deep);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+/* [cloudId]/page.tsx: <div className="nav-links"> */
+.atlas-nav .nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.atlas-nav .nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 400;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.atlas-nav .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--sky-deep);
+  transition: width 0.3s ease;
+}
+
+.atlas-nav .nav-links a:hover::after { width: 100%; }
+
+/* ================================================================
+   404 not-found
+   <div className="not-found">
+   ================================================================ */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ================================================================
+   Hero 섹션
+   <section className="cloud-hero">
+   <div className="cloud-hero-image-wrap">
+   <div className={`cloud-hero-placeholder ${cloud.level}`}>  → high/mid/low
+   <span className="image-credit">
+   <p className="breadcrumb">
+   <div className="cloud-symbol-large">
+   <p className="cloud-name-en">
+   <div className="cloud-badges">
+   <span className={`level-badge ${cloud.level}`}>
+   <span className="comp-badge">
+   ================================================================ */
+.cloud-hero {
+  position: relative;
+  min-height: 300px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8rem 5% 2rem;
+  text-align: center;
+}
+
+.cloud-hero-image-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cloud-hero-image-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 25, 55, 0.15) 0%,
+    rgba(10, 25, 55, 0.50) 55%,
+    rgba(10, 25, 55, 0.80) 100%
+  );
+  z-index: 1;
+}
+
+/* 이미지 없을 때 고도별 그라데이션 배경 */
+.cloud-hero-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cloud-hero-placeholder.high { background: linear-gradient(160deg, #1a2f6e 0%, #2a4a9f 40%, #4a90e2 100%); }
+.cloud-hero-placeholder.mid  { background: linear-gradient(160deg, #01579b 0%, #0277bd 40%, #4fc3f7 100%); }
+.cloud-hero-placeholder.low  { background: linear-gradient(160deg, #006064 0%, #00838f 45%, #4dd0e1 100%); }
+
+/* Hero 내 모든 요소를 배경 이미지 위로 */
+.cloud-hero > *:not(.cloud-hero-image-wrap):not(.cloud-hero-placeholder) {
+  position: relative;
+  z-index: 2;
+}
+
+/* 사진 출처 */
+.image-credit {
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.8rem;
+  z-index: 3;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: 'Noto Serif KR', serif;
+  pointer-events: none;
+}
+
+/* 브레드크럼 */
+.breadcrumb {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.breadcrumb a {
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover { color: #fff; }
+
+/* 큰 기호 */
+.cloud-symbol-large {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+  margin-bottom: 0.5rem;
+}
+
+/* 제목 */
+.cloud-hero h1 {
+  font-size: 1.8rem;
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45);
+  margin: 0.2rem 0;
+  margin-bottom:0.5rem;
+}
+
+/* 영문명 */
+.cloud-hero .cloud-name-en {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* 뱃지 행 */
+.cloud-badges {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* 고도 뱃지 */
+.level-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.level-badge.high { background: rgba(227,242,253,0.25); color: #fff; border: 1px solid rgba(255,255,255,0.45); }
+.level-badge.mid  { background: rgba(179,229,252,0.25); color: #fff; border: 1px solid rgba(255,255,255,0.45); }
+.level-badge.low  { background: rgba(129,212,250,0.25); color: #fff; border: 1px solid rgba(255,255,255,0.45); }
+
+/* 구성 뱃지 */
+.comp-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Noto Serif KR', serif;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.35);
+}
+
+/* ================================================================
+   본문 레이아웃
+   <main className="cloud-detail-content">
+   <section className="detail-section">
+   <section className="detail-section gallery-full">  ← 갤러리용
+   ================================================================ */
+.cloud-detail-content {
+  width: 80%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 2rem 0 4rem; /* 좌우 패딩은 0으로 두고, 내부 요소에서 처리 */
+}
+
+.detail-section {
+  margin-bottom: 2.5rem;
+  margin: 0 auto 16px;
+  padding: 0 16px;
+  gap : 0.5rem;
+}
+
+/* 갤러리 섹션: 좌우 패딩 무효화하여 전체 너비 */
+.gallery-full {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* “사진 갤러리” 제목도 Masonry(.mgal-grid=78%)와 같은 폭으로 중앙 */
+.gallery-full .section-title {
+  width: 78%;
+  max-width: 78%;
+  margin: 0 auto 1rem;
+  padding: 0 16px;
+}
+
+/* 갤러리 그리드 자체는 MasonryGallery.css가 78%로 잡고 있음.
+   다만 gallery-full 안에서 더 깔끔하게 보이도록 위아래 여백만 정리 */
+.gallery-full .mgal-grid {
+  margin-top: 0.2rem;
+}
+
+/* ✅ sub-card(아코디언) 안의 Masonry는 "부모 폭 100%"를 쓰게 해야 자연스러움 */
+.sub-card-gallery .mgal-grid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+
+/* ================================================================
+   섹션 제목
+   <h2 className="section-title">
+   <h2 className="section-title species-title">
+   <h2 className="section-title variety-title">
+   <h2 className="section-title supplementary-title">
+   <span className="count-badge">
+   ================================================================ */
+.section-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 auto 16px;
+  width: 78%;
+  padding: 0 16px;
+  align-items: baseline;
+}
+
+.count-badge {
+  font-size: 0.72rem;
+  background: #e8f0fa;
+  color: #4a6fa5;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+}
+
+/* 섹션 타이틀 컬러 마커 */
+.species-title::before,
+.variety-title::before,
+.supplementary-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.species-title::before       { background: #ff9800; }
+.variety-title::before       { background: #ffc107; }
+.supplementary-title::before { background: #4caf50; }
+
+/* ================================================================
+   텍스트 박스
+   <div className="definition-box">
+   <div className="formation-box">
+   <p className="editable-content">
+   ================================================================ */
+.definition-box {
+  background: var(--cloud-gray);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+}
+
+.formation-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2fb 100%);
+  border-left: 4px solid var(--sky-deep);
+  border-radius: 0 12px 12px 0;
+  padding: 1.2rem 1.5rem;
+}
+
+.editable-content {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text-dark);
+}
+
+/* ================================================================
+   아코디언 서브카드 (종 / 변종 / 부속구름)
+   <div className="sub-cards-list">
+   <div className={`sub-card ${colorClass}`}>   → species-card / variety-card / supplementary-card
+   <button className="sub-card-header">
+   <div className="sub-card-title">
+   <span className="sub-card-ko">
+   <span className="sub-card-en">
+   <div className="sub-card-right">
+   <span className={`sub-card-code ${codeClass}`}>  → species-code / variety-code / supplementary-code
+   <span className={`sub-card-chevron${open ? " open" : ""}`}>
+   <div className="sub-card-body">
+   <div className="sub-card-gallery">
+   <div className="sub-card-section">
+   <span className="sub-card-label">
+   <p className="sub-card-text">
+   ================================================================ */
+.sub-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+}
+
+.sub-card {
+  background: #fff;
+  border-left: 4px solid transparent;
+  overflow: hidden;
+}
+
+/* 첫/마지막 카드 모서리 처리 */
+.sub-cards-list .sub-card:first-child  { border-radius: 14px 14px 0 0; }
+.sub-cards-list .sub-card:last-child   { border-radius: 0 0 14px 14px; }
+.sub-cards-list .sub-card:only-child   { border-radius: 14px; }
+
+/* 카드 사이 구분선 */
+.sub-cards-list .sub-card + .sub-card {
+  border-top: 1px solid #f0f4f8;
+}
+
+.species-card       { border-left-color: #ff9800; }
+.variety-card       { border-left-color: #ffc107; }
+.supplementary-card { border-left-color: #4caf50; }
+
+/* 아코디언 헤더 버튼 */
+.sub-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 0.75rem;
+  transition: background 0.2s ease;
+}
+
+.sub-card-header:hover { background: #f8fbff; }
+
+.sub-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.sub-card-ko {
+  font-family: 'Gowun Batang', serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+}
+
+.sub-card-en {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  font-style: italic;
+  font-family: 'Noto Serif KR', serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sub-card-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* 코드 뱃지 */
+.sub-card-code {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.species-code       { background: #fff3e0; color: #e65100; }
+.variety-code       { background: #fffde7; color: #f57f17; }
+.supplementary-code { background: #e8f5e9; color: #2e7d32; }
+
+/* 화살표 아이콘 */
+.sub-card-chevron {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  display: inline-block;
+  transform: rotate(90deg);   /* › → 아래 방향 */
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.sub-card-chevron.open { transform: rotate(270deg); }
+
+/* 펼쳐진 콘텐츠 */
+.sub-card-body {
+  border-top: 1px solid #f0f4f8;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sub-card-gallery {
+  padding: 0.9rem 1.2rem;
+  background: #f8fbff;
+  border-bottom: 1px solid #f0f4f8;
+}
+
+.sub-card-section {
+  padding: 0.85rem 1.2rem;
+  border-bottom: 1px solid #f5f7fa;
+}
+
+.sub-card-section:last-child { border-bottom: none; }
+
+.sub-card-label {
+  display: block;
+  font-family: 'Gowun Batang', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.4rem;
+}
+
+.sub-card-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+/* ================================================================
+   하단 네비게이션
+   <div className="bottom-nav">
+   <Link className="back-btn">
+   ================================================================ */
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e8eff8;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  background: var(--sky-light);
+  color: var(--sky-deep);
+  border-radius: 25px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+  background: var(--sky-blue);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ================================================================
+   푸터
+   <footer className="atlas-footer">
+     <p>© 2025 하늘결 ...</p>       ← footer-content / footer-links 없음
+   ================================================================ */
+.atlas-footer {
+  background: var(--text-dark);
+  color: var(--cloud-white);
+  padding: 2.5rem 5%;
+  text-align: center;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+/* ================================================================
+   반응형
+   ================================================================ */
+@media (max-width: 768px) {
+  .cloud-hero          { min-height: 340px; padding: 0 1rem 2.5rem; }
+  .cloud-hero h1       { font-size: 1.9rem; }
+  .cloud-symbol-large  { font-size: 1.7rem; }
+
+  .cloud-detail-content { padding: 1.5rem 1rem 3rem; }
+  .detail-section       { margin-bottom: 2rem; }
+
+  .gallery-full         { margin-left: -1rem; margin-right: -1rem; }
+  .gallery-full .section-title { padding-left: 1rem; padding-right: 1rem; }
+
+  .sub-card-en { display: none; }
+}
+
+@media (max-width: 480px) {
+  .atlas-nav       { padding: 1rem 4%; }
+  .atlas-nav .nav-logo { font-size: 1.4rem; }
+
+  .sub-card-header { padding: 0.75rem 1rem; }
+  .sub-card-ko     { font-size: 0.9rem; }
+}
+
+/* added layout + taxonomy grid overrides */
+.cloud-detail-content {
+  /* 70~80% 사이가 가장 보기 좋아서 78%를 기본값으로 둠 */
+  --content-width: 78%;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  padding: 2.2rem 0 4.2rem;
+}
+
+.detail-section {
+  margin: 0 auto 2.6rem;
+  padding: 0;
+}
+
+.section-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  width: var(--content-width);
+  margin: 0 auto 1rem;
+  padding: 0;
+}
+
+.count-badge {
+  font-size: 0.78rem;
+  color: var(--sky-deep);
+  background: rgba(44, 123, 229, 0.12);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.species-title::before,
+.variety-title::before,
+.supplementary-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.species-title::before { background: #ff9800; }
+.variety-title::before { background: #ffc107; }
+.supplementary-title::before { background: #4caf50; }
+
+.definition-box {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: var(--cloud-gray);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+}
+
+.formation-box {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2fb 100%);
+  border-left: 4px solid var(--sky-deep);
+  border-radius: 0 12px 12px 0;
+  padding: 1.2rem 1.5rem;
+}
+
+/* ====== 아코디언 리스트(기본은 content width 중앙) ====== */
+.sub-cards-list {
+  width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+}
+
+/* 종 · 변종 · 부속구름 (한 섹션) */
+.taxonomy-grid {
+  width: var(--content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .taxonomy-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .taxonomy-grid { grid-template-columns: 1fr; }
+}
+
+.taxonomy-col .sub-cards-list {
+  width: 100%;
+  margin: 0;
+}
+
+.subsection-title-row {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.8rem;
+}
+
+.subsection-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.subsection-title.species-title::before,
+.subsection-title.variety-title::before,
+.subsection-title.supplementary-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-right: 0.15rem;
+}
+.subsection-title.species-title::before { background: #ff9800; }
+.subsection-title.variety-title::before { background: #ffc107; }
+.subsection-title.supplementary-title::before { background: #4caf50; }
+
+.taxonomy-empty {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: #fff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  color: #475569;
+  line-height: 1.8;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+}
+
+.taxonomy-note {
+  background: #fff;
+  border: 1px solid #eef2f7;
+  border-radius: 14px;
+  padding: 0.95rem 1.1rem;
+  color: #64748b;
+  line-height: 1.7;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 768px) {
+  .cloud-detail-content {
+    --content-width: 92%;
+    padding: 1.5rem 0 3rem;
+  }
+  .detail-section { margin-bottom: 2rem; }
+  .sub-card-en { display: none; }
+}
+
+
+/* src/app/atlas/[cloudId]/cloud-detail.css 하단에 추가 */
+
+/* 갤러리 섹션 전체 여백 */
+.gallery-section {
+  margin-top: 1rem;
+  margin-bottom: 4rem; 
+}
+
+/* "사진 갤러리" 제목 스타일링 (margin, padding 신경씀) */
+.gallery-section .section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  margin-top: 2.5rem;    /* 위쪽 요소와의 간격 넓힘 */
+  margin-bottom: 1.5rem; /* 아래쪽 갤러리와의 간격 넓힘 */
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--sky-light); /* 깔끔한 밑줄 포인트 (선택사항) */
+  display: block;
+}
+.var-sup-section {
+  margin-top: 0.5rem;
+}
+
+.var-sup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* 컬럼 내부 타이틀이 너무 위로 붙지 않게 */
+.var-sup-col .section-title {
+  margin-bottom: 0.9rem;
+}
+
+/* 모바일에서는 1열 */
+@media (max-width: 900px) {
+  .var-sup-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================================
+   네비게이션 — 전체 메뉴 (홈/AI식별/구름도감/소개)
+   기존 2개(하늘결, 구름도감)에서 4개 항목으로 확장
+   ================================================================ */
+.atlas-nav .nav-links a.active {
+  color: var(--sky-deep);
+  font-weight: 600;
+}
+
+.atlas-nav .nav-links a.active::after {
+  width: 100%;
+}
+
+/* ================================================================
+   구름 탐색 패널
+   <section className="related-section">
+   <div className="related-body">
+   <div className="related-level-row">
+   <div className="related-level-label">
+   <div className="related-cloud-list">
+   <Link className="related-cloud-chip">
+   ================================================================ */
+
+.related-section {
+  width: var(--content-width, 78%);
+  margin: 0 auto 2.5rem;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 20px rgba(44, 123, 229, 0.08);
+  border: 1px solid #e6eef8;
+}
+
+/* 패널 제목 */
+.related-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  padding: 1rem 1.4rem 0.85rem;
+  border-bottom: 1px solid #edf2f9;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.related-title::before {
+  content: "🗺️";
+  font-size: 1rem;
+}
+
+/* 본문 */
+.related-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 레벨 행 */
+.related-level-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  border-bottom: 1px solid #f0f4f8;
+  transition: background 0.15s;
+}
+
+.related-level-row:last-child {
+  border-bottom: none;
+}
+
+/* 현재 구름과 같은 레벨 행 강조 */
+.related-level-row.is-current-level {
+  background: linear-gradient(90deg, rgba(44, 123, 229, 0.04) 0%, transparent 100%);
+}
+
+/* 레벨 라벨 (왼쪽 고정 컬럼) */
+.related-level-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-width: 72px;
+  padding: 0.85rem 0.6rem;
+  background: var(--lvl-bg, #E3F2FD);
+  border-right: 1px solid #e6eef8;
+  flex-shrink: 0;
+}
+
+.related-level-emoji { font-size: 1.3rem; line-height: 1; }
+
+.related-level-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--lvl-color, #4a90e2);
+  letter-spacing: 0.05em;
+  font-family: 'Noto Serif KR', serif;
+  white-space: nowrap;
+}
+
+/* 구름 칩 목록 (오른쪽, 가로 스크롤) */
+.related-cloud-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+/* 개별 구름 칩 */
+.related-cloud-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.7rem 0.32rem 0.5rem;
+  border-radius: 999px;
+  border: 1.5px solid #d8e6f7;
+  background: #f5f9ff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.related-cloud-chip:hover {
+  border-color: var(--sky-deep);
+  background: var(--sky-light);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(44, 123, 229, 0.15);
+}
+
+/* 현재 구름 칩 강조 */
+.related-cloud-chip.is-current {
+  border-color: var(--sky-deep);
+  background: var(--sky-deep);
+  pointer-events: none;
+}
+
+.related-cloud-chip.is-current .chip-symbol,
+.related-cloud-chip.is-current .chip-name {
+  color: #fff;
+}
+
+/* 칩 내부 요소 */
+.chip-symbol {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--sky-deep);
+  background: rgba(44, 123, 229, 0.1);
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+  font-family: 'Noto Serif KR', serif;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.related-cloud-chip.is-current .chip-symbol {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.chip-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-family: 'Gowun Batang', serif;
+  white-space: nowrap;
+}
+
+.chip-now {
+  font-size: 0.6rem;
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.08rem 0.35rem;
+  border-radius: 999px;
+  font-family: 'Noto Serif KR', serif;
+  letter-spacing: 0.03em;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .related-section { width: 92%; }
+
+  .related-level-label {
+    min-width: 58px;
+    padding: 0.7rem 0.4rem;
+  }
+
+  .related-level-emoji { font-size: 1.1rem; }
+  .related-level-name  { font-size: 0.6rem; }
+
+  .related-cloud-list { gap: 5px; padding: 0.65rem 0.75rem; }
+
+  .chip-name   { font-size: 0.75rem; }
+  .chip-symbol { font-size: 0.68rem; }
+}
+
+@media (max-width: 480px) {
+  .related-level-label { min-width: 50px; }
+  .atlas-nav .nav-links { gap: 1rem; }
+  .atlas-nav .nav-links a { font-size: 0.82rem; }
+}

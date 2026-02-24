@@ -1,8 +1,15 @@
 /* src/app/atlas/atlas.css */
+/* atlas/page.tsx 전용 스타일 */
 
-/* Atlas 페이지 전용 스타일 */
-
-/* Navigation for Atlas page */
+/* ================================================================
+   네비게이션
+   <nav className="atlas-nav">
+   <Link className="logo">
+   <ul className="nav-links">
+   ================================================================ */
+body{
+  zoom:0.75;
+}
 .atlas-nav {
   position: fixed;
   top: 0;
@@ -42,11 +49,6 @@
   position: relative;
 }
 
-.atlas-nav .nav-links a.active::after,
-.atlas-nav .nav-links a:hover::after {
-  width: 100%;
-}
-
 .atlas-nav .nav-links a::after {
   content: '';
   position: absolute;
@@ -58,7 +60,15 @@
   transition: width 0.3s ease;
 }
 
-/* Header Section */
+.atlas-nav .nav-links a.active::after,
+.atlas-nav .nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ================================================================
+   헤더
+   <section className="atlas-header">
+   ================================================================ */
 .atlas-header {
   padding: 10rem 5% 5rem;
   text-align: center;
@@ -115,58 +125,13 @@
   font-weight: 600;
 }
 
-/* Filter Section */
-.filter-section {
-  padding: 1.2rem 5%;
-  background: var(--cloud-white);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 80px;
-  z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-}
 
-.filter-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.7rem;
-  flex-wrap: wrap;
-}
-
-.filter-label {
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-right: 0.5rem;
-}
-
-.filter-btn {
-  padding: 0.7rem 1.5rem;
-  background: var(--cloud-gray);
-  border: 2px solid transparent;
-  border-radius: 25px;
-  color: var(--text-dark);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Noto Serif KR', serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.filter-btn:hover {
-  background: var(--sky-light);
-  border-color: var(--sky-blue);
-}
-
-.filter-btn.active {
-  background: var(--sky-deep);
-  color: white;
-  border-color: var(--sky-deep);
-}
-
-/* Classification Info */
+/* ================================================================
+   분류 안내
+   <section className="classification-info">
+   <div className="info-grid">
+   <div className="info-card">
+   ================================================================ */
 .classification-info {
   padding: 4rem 5% 2rem;
   background: var(--cloud-white);
@@ -214,7 +179,12 @@
   margin-bottom: 0.5rem;
 }
 
-/* Search Box */
+/* ================================================================
+   검색
+   <div className="search-container">
+   <input className="search-box">
+   <span className="search-icon">
+   ================================================================ */
 .search-container {
   max-width: 600px;
   margin: 0 auto 3rem;
@@ -229,6 +199,7 @@
   font-size: 1rem;
   font-family: 'Noto Serif KR', serif;
   transition: all 0.3s ease;
+  background: var(--cloud-white);
 }
 
 .search-box:focus {
@@ -246,79 +217,22 @@
   font-size: 1.2rem;
 }
 
-/* Main Content */
+/* ================================================================
+   메인 콘텐츠
+   <main className="main-content">
+   ================================================================ */
 .main-content {
   padding: 3rem 5% 6rem;
   max-width: 1600px;
   margin: 0 auto;
 }
 
-.cloud-level-section {
-  margin-bottom: 5rem;
-}
-
-.level-header {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px solid;
-}
-
-.level-header.high {
-  border-color: #E3F2FD;
-}
-
-.level-header.mid {
-  border-color: #B3E5FC;
-}
-
-.level-header.low {
-  border-color: #81D4FA;
-}
-
-.level-header.vertical {
-  border-color: #4FC3F7;
-}
-
-.level-icon {
-  font-size: 3rem;
-}
-
-.level-title {
-  flex: 1;
-}
-
-.level-title h2 {
-  font-size: 2.5rem;
-  font-family: 'Gowun Batang', serif;
-  margin-bottom: 0.3rem;
-}
-
-.level-title .subtitle {
-  font-size: 1.1rem;
-  color: var(--text-light);
-  font-weight: 300;
-}
-
-.altitude-info {
-  text-align: right;
-  font-size: 0.95rem;
-  color: var(--text-light);
-}
-
-.altitude-info strong {
-  display: block;
-  font-size: 1.3rem;
-  color: var(--sky-deep);
-  margin-bottom: 0.2rem;
-}
-
-/* Cloud Grid */
+/* ================================================================
+   구름 카드 그리드
+   ================================================================ */
 .cloud-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2.5rem;
 }
 
@@ -339,21 +253,10 @@
   border-color: var(--sky-blue);
 }
 
-.cloud-card.high-cloud {
-  border-top: 4px solid #E3F2FD;
-}
-
-.cloud-card.mid-cloud {
-  border-top: 4px solid #B3E5FC;
-}
-
-.cloud-card.low-cloud {
-  border-top: 4px solid #81D4FA;
-}
-
-.cloud-card.vertical-cloud {
-  border-top: 4px solid #4FC3F7;
-}
+.cloud-card.high-cloud     { border-top: 4px solid #E3F2FD;}
+.cloud-card.mid-cloud      { border-top: 4px solid #B3E5FC;}
+.cloud-card.low-cloud      { border-top: 4px solid #81D4FA;}
+.cloud-card.vertical-cloud { border-top: 4px solid #4FC3F7; }
 
 .cloud-image {
   width: 100%;
@@ -370,16 +273,12 @@
 .cloud-image::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 100%);
 }
 
-.cloud-info {
-  padding: 2rem;
-}
+.cloud-info { padding: 2rem; }
 
 .cloud-header {
   display: flex;
@@ -423,13 +322,14 @@
   color: var(--text-light);
   line-height: 1.8;
   font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem; /* 텍스트와 배지 사이 간격 증가 */
 }
 
 .cloud-meta {
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
+  margin-bottom: 1.2rem; /* 배지와 링크 사이 여백 */
 }
 
 .meta-badge {
@@ -442,20 +342,18 @@
   font-weight: 500;
 }
 
-.cloud-details-link {
-  display: inline-block;
-  margin-top: 1rem;
-  color: var(--sky-deep);
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
 
-.cloud-card:hover .cloud-details-link {
-  transform: translateX(5px);
-}
+/* 빈 상태 */
+.empty-state { text-align: center; padding: 4rem 2rem; background: var(--cloud-gray); border-radius: 15px; }
+.empty-title { font-size: 1.5rem; font-family: 'Gowun Batang', serif; margin-bottom: 0.8rem; color: var(--text-dark); }
+.empty-desc  { color: var(--text-light); font-size: 1rem; }
 
-/* Footer */
+/* ================================================================
+   푸터
+   <footer className="atlas-footer">
+     <div className="footer-content">
+       <div className="footer-links">
+   ================================================================ */
 .atlas-footer {
   background: var(--text-dark);
   color: var(--cloud-white);
@@ -485,27 +383,83 @@
   color: var(--sky-blue);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .atlas-header h1 {
-    font-size: 2.5rem;
+/* ================================================================
+   반응형
+   ================================================================ */
+
+/* ================================================================
+   맞춤 그리드 설정 (기존 카드 디자인 손상 없이 3열/4열만 배치)
+   ================================================================ */
+@media (min-width: 1025px) {
+  /* 고/중층운: 한 줄에 3개 */
+  .layout-3-cols .cloud-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 
-  .level-header {
+  /* 저층운: 한 줄에 4개 */
+  .layout-4-cols .cloud-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.5rem !important; /* 4개 배치 시 간격을 살짝 좁혀서 안정감 부여 */
+  }
+}
+
+  /* ── 카드 내부 글씨 레이아웃 교정 ── */
+  .cloud-grid > * { /* 개별 카드 요소 */
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    height: 100%;
+    overflow: hidden; /* 카드를 벗어나는 요소 숨김 */
+  }
+  
+  .cloud-info {
+    flex: 1; /* 글씨 영역이 찌그러지지 않고 자연스럽게 공간 차지 */
+    padding: 1.5rem; /* 좁아진 카드 폭에 맞춰 패딩(여백) 살짝 축소 */
+    display: flex;
+    flex-direction: column;
   }
 
-  .altitude-info {
-    text-align: left;
+  /* 텍스트가 좁은 영역에서도 예쁘게 줄바꿈 되도록 설정 */
+  .cloud-info h3, 
+  .cloud-info p {
+    word-break: keep-all; /* 단어 단위로 끊어지게 설정 */
+    overflow-wrap: break-word;
   }
 
-  .cloud-grid {
-    grid-template-columns: 1fr;
+/* 태블릿/모바일 환경은 기존 유지 */
+@media (max-width: 1024px) {
+  .layout-3-cols .cloud-grid,
+  .layout-4-cols .cloud-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
   }
+}
 
-  .atlas-nav .nav-links {
-    gap: 1rem;
-    font-size: 0.9rem;
-  }
+@media (max-width: 768px) {
+  .atlas-header h1  { font-size: 2.5rem; }
+  .atlas-header p   { font-size: 1.1rem; }
+  .atlas-header     { padding: 8rem 3% 4rem; }
+
+  .atlas-nav        { padding: 1rem 3%; }
+  .atlas-nav .logo  { font-size: 1.5rem; }
+  .atlas-nav .nav-links { gap: 1rem; }
+  .atlas-nav .nav-links a { font-size: 0.9rem; }
+
+  .filter-section   { padding: 1rem 3%; }
+  .filter-btn       { font-size: 0.85rem; padding: 0.6rem 1.2rem; }
+
+  .classification-info { padding: 3rem 3% 2rem; }
+  .info-grid        { grid-template-columns: 1fr; gap: 1rem; }
+  .info-card        { padding: 1.5rem; }
+  .search-container { max-width: 100%; }
+
+  .main-content     { padding: 2rem 3% 4rem; }
+  .level-header     { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .level-icon       { font-size: 2.5rem; }
+  .level-title h2   { font-size: 2rem; }
+  .altitude-info    { text-align: left; }
+
+  .cloud-grid  { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cloud-image { height: 180px; font-size: 4rem; }
+  .cloud-info  { padding: 1.5rem; }
+  .cloud-name  { font-size: 1.6rem; }
+  .cloud-description { font-size: 0.9rem; }
 }

@@ -2,6 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import "./CloudCard.css";
 
 export type CloudData = {
   symbol: string;
@@ -23,9 +24,8 @@ export default function CloudCard({ cloud }: CloudCardProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    // 추후 개별 구름 상세 페이지로 라우팅
-    // router.push(`/atlas/${cloud.symbol.toLowerCase()}`);
-    alert(`${cloud.name_ko} (${cloud.symbol}) 상세 페이지로 이동합니다.\n\n다음 단계에서 구현 예정입니다.`);
+    // 구름 상세 페이지로 라우팅
+    router.push(`/atlas/${cloud.symbol.toLowerCase()}`);
   };
 
   return (
@@ -44,7 +44,7 @@ export default function CloudCard({ cloud }: CloudCardProps) {
         <p className="cloud-name-en">{cloud.name_en}</p>
         <p className="cloud-description">{cloud.description}</p>
         <div className="cloud-meta">
-          <span className="meta-badge">{getLevelBadge(cloud.level)}</span>
+          {/* <span className="meta-badge">{getLevelBadge(cloud.level)}</span> */}
           <span className="meta-badge">{cloud.composition}</span>
           {cloud.speciesCount !== undefined && cloud.speciesCount > 0 && (
             <span className="meta-badge">{cloud.speciesCount}종</span>
