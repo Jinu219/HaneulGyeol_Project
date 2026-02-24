@@ -814,3 +814,205 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ================================================================
+   네비게이션 — 전체 메뉴 (홈/AI식별/구름도감/소개)
+   기존 2개(하늘결, 구름도감)에서 4개 항목으로 확장
+   ================================================================ */
+.atlas-nav .nav-links a.active {
+  color: var(--sky-deep);
+  font-weight: 600;
+}
+
+.atlas-nav .nav-links a.active::after {
+  width: 100%;
+}
+
+/* ================================================================
+   구름 탐색 패널
+   <section className="related-section">
+   <div className="related-body">
+   <div className="related-level-row">
+   <div className="related-level-label">
+   <div className="related-cloud-list">
+   <Link className="related-cloud-chip">
+   ================================================================ */
+
+.related-section {
+  width: var(--content-width, 78%);
+  margin: 0 auto 2.5rem;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 20px rgba(44, 123, 229, 0.08);
+  border: 1px solid #e6eef8;
+}
+
+/* 패널 제목 */
+.related-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  padding: 1rem 1.4rem 0.85rem;
+  border-bottom: 1px solid #edf2f9;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.related-title::before {
+  content: "🗺️";
+  font-size: 1rem;
+}
+
+/* 본문 */
+.related-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 레벨 행 */
+.related-level-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  border-bottom: 1px solid #f0f4f8;
+  transition: background 0.15s;
+}
+
+.related-level-row:last-child {
+  border-bottom: none;
+}
+
+/* 현재 구름과 같은 레벨 행 강조 */
+.related-level-row.is-current-level {
+  background: linear-gradient(90deg, rgba(44, 123, 229, 0.04) 0%, transparent 100%);
+}
+
+/* 레벨 라벨 (왼쪽 고정 컬럼) */
+.related-level-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-width: 72px;
+  padding: 0.85rem 0.6rem;
+  background: var(--lvl-bg, #E3F2FD);
+  border-right: 1px solid #e6eef8;
+  flex-shrink: 0;
+}
+
+.related-level-emoji { font-size: 1.3rem; line-height: 1; }
+
+.related-level-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--lvl-color, #4a90e2);
+  letter-spacing: 0.05em;
+  font-family: 'Noto Serif KR', serif;
+  white-space: nowrap;
+}
+
+/* 구름 칩 목록 (오른쪽, 가로 스크롤) */
+.related-cloud-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+/* 개별 구름 칩 */
+.related-cloud-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.7rem 0.32rem 0.5rem;
+  border-radius: 999px;
+  border: 1.5px solid #d8e6f7;
+  background: #f5f9ff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.related-cloud-chip:hover {
+  border-color: var(--sky-deep);
+  background: var(--sky-light);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(44, 123, 229, 0.15);
+}
+
+/* 현재 구름 칩 강조 */
+.related-cloud-chip.is-current {
+  border-color: var(--sky-deep);
+  background: var(--sky-deep);
+  pointer-events: none;
+}
+
+.related-cloud-chip.is-current .chip-symbol,
+.related-cloud-chip.is-current .chip-name {
+  color: #fff;
+}
+
+/* 칩 내부 요소 */
+.chip-symbol {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--sky-deep);
+  background: rgba(44, 123, 229, 0.1);
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+  font-family: 'Noto Serif KR', serif;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.related-cloud-chip.is-current .chip-symbol {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.chip-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-family: 'Gowun Batang', serif;
+  white-space: nowrap;
+}
+
+.chip-now {
+  font-size: 0.6rem;
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.08rem 0.35rem;
+  border-radius: 999px;
+  font-family: 'Noto Serif KR', serif;
+  letter-spacing: 0.03em;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .related-section { width: 92%; }
+
+  .related-level-label {
+    min-width: 58px;
+    padding: 0.7rem 0.4rem;
+  }
+
+  .related-level-emoji { font-size: 1.1rem; }
+  .related-level-name  { font-size: 0.6rem; }
+
+  .related-cloud-list { gap: 5px; padding: 0.65rem 0.75rem; }
+
+  .chip-name   { font-size: 0.75rem; }
+  .chip-symbol { font-size: 0.68rem; }
+}
+
+@media (max-width: 480px) {
+  .related-level-label { min-width: 50px; }
+  .atlas-nav .nav-links { gap: 1rem; }
+  .atlas-nav .nav-links a { font-size: 0.82rem; }
+}

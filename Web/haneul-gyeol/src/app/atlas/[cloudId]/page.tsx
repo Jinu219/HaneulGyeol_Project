@@ -10,6 +10,62 @@ import "./cloud-detail.css";
 import { useParams } from "next/navigation";
 import MasonryGallery from "@/components/atlas/MasonryGallery";
 
+// ── 구름 레벨 메타데이터 ─────────────────────────────────────
+const LEVEL_META = {
+  high: { label: "상층운", emoji: "☁️",  color: "#4a90e2", bg: "#E3F2FD" },
+  mid:  { label: "중층운", emoji: "⛅",  color: "#0277bd", bg: "#B3E5FC" },
+  low:  { label: "저층운", emoji: "🌤️", color: "#00838f", bg: "#B2EBF2" },
+} as const;
+
+// ── 구름 탐색 패널 ────────────────────────────────────────────
+function RelatedClouds({ currentId }: { currentId: string }) {
+  const levels = ["high", "mid", "low"] as const;
+
+  return (
+    <section className="related-section">
+      <h2 className="related-title">다른 구름 탐색하기</h2>
+
+      <div className="related-body">
+        {levels.map((lvl) => {
+          const meta    = LEVEL_META[lvl];
+          const clouds  = Object.entries(cloudDetailData).filter(
+            ([, c]) => c.level === lvl
+          );
+
+          return (
+            <div key={lvl} className={`related-level-row${lvl === cloudDetailData[currentId]?.level ? " is-current-level" : ""}`}>
+              {/* 레벨 라벨 */}
+              <div className="related-level-label" style={{ "--lvl-color": meta.color, "--lvl-bg": meta.bg } as React.CSSProperties}>
+                <span className="related-level-emoji">{meta.emoji}</span>
+                <span className="related-level-name">{meta.label}</span>
+              </div>
+
+              {/* 구름 카드 목록 */}
+              <div className="related-cloud-list">
+                {clouds.map(([id, cloud]) => {
+                  const isCurrent = id === currentId;
+                  return (
+                    <Link
+                      key={id}
+                      href={`/atlas/${id}`}
+                      className={`related-cloud-chip${isCurrent ? " is-current" : ""}`}
+                      aria-current={isCurrent ? "page" : undefined}
+                    >
+                      <span className="chip-symbol">{cloud.symbol}</span>
+                      <span className="chip-name">{cloud.name_ko}</span>
+                      {isCurrent && <span className="chip-now">현재</span>}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 // ── 서브아이템 아코디언 카드 ──────────────────────────────────
 function SubItemCard({
   item,
@@ -25,7 +81,6 @@ function SubItemCard({
 
   return (
     <div className={`sub-card ${colorClass}`}>
-      {/* 헤더 — 항상 표시 */}
       <button
         className="sub-card-header"
         onClick={() => setOpen((v) => !v)}
@@ -43,10 +98,8 @@ function SubItemCard({
         </div>
       </button>
 
-      {/* 펼쳐지는 콘텐츠 */}
       {open && (
         <div className="sub-card-body">
-          {/* 갤러리 */}
           {hasImages && (
             <div className="sub-card-gallery">
               <MasonryGallery
@@ -58,16 +111,12 @@ function SubItemCard({
               />
             </div>
           )}
-
-          {/* 생성 원리 */}
           <div className="sub-card-section">
             <span className="sub-card-label">생성 원리</span>
             <p className="sub-card-text">
               {item.formation || "여기에 생성 원리를 작성하세요..."}
             </p>
           </div>
-
-          {/* 설명 */}
           <div className="sub-card-section">
             <span className="sub-card-label">설명</span>
             <p className="sub-card-text">
@@ -82,27 +131,26 @@ function SubItemCard({
 
 // ── 메인 페이지 ──────────────────────────────────────────────
 export default function CloudDetailPage() {
-  const params = useParams();
+  const params  = useParams();
   const cloudId = (params?.cloudId as string) || "";
-  const cloud = cloudDetailData[cloudId.toLowerCase()];
+  const cloud   = cloudDetailData[cloudId.toLowerCase()];
 
   if (!cloud) {
     return (
       <>
         <nav className="atlas-nav">
-          <Link href="/" className="nav-logo">
-            하늘결
-          </Link>
+          <Link href="/" className="nav-logo">하늘결</Link>
           <div className="nav-links">
+            <Link href="/">홈</Link>
+            <Link href="/#ai">AI 식별</Link>
             <Link href="/atlas">구름 도감</Link>
+            <Link href="/#about">소개</Link>
           </div>
         </nav>
         <div className="not-found">
           <h1>구름을 찾을 수 없습니다</h1>
           <p>요청하신 구름({cloudId})이 존재하지 않습니다.</p>
-          <Link href="/atlas" className="back-btn">
-            ← 구름 도감으로 돌아가기
-          </Link>
+          <Link href="/atlas" className="back-btn">← 구름 도감으로 돌아가기</Link>
         </div>
       </>
     );
@@ -112,11 +160,12 @@ export default function CloudDetailPage() {
     <>
       {/* ── 네비게이션 ── */}
       <nav className="atlas-nav">
-        <Link href="/" className="nav-logo">
-          하늘결
-        </Link>
+        <Link href="/" className="nav-logo">하늘결</Link>
         <div className="nav-links">
-          <Link href="/atlas">구름 도감</Link>
+          <Link href="/">홈</Link>
+          <Link href="/#ai">AI 식별</Link>
+          <Link href="/atlas" className="active">구름 도감</Link>
+          <Link href="/#about">소개</Link>
         </div>
       </nav>
 
@@ -153,7 +202,8 @@ export default function CloudDetailPage() {
 
       {/* ── 본문 ── */}
       <main className="cloud-detail-content">
-        {/* ① 전체 갤러리 — full width */}
+
+        {/* ① 전체 갤러리 */}
         {cloud.images.length > 0 && (
           <section className="detail-section gallery-full">
             <h2 className="section-title">
@@ -189,7 +239,7 @@ export default function CloudDetailPage() {
           </div>
         </section>
 
-        {/* ④ 종/변종/부속구름 — 한 번에 */}
+        {/* ④ 종 · 변종 · 부속구름 */}
         <section className="detail-section taxonomy-section">
           <h2 className="section-title">종 · 변종 · 부속구름</h2>
 
@@ -197,97 +247,58 @@ export default function CloudDetailPage() {
           cloud.varieties.length === 0 &&
           cloud.supplementary.length === 0 ? (
             <div className="taxonomy-empty">
-              <p>
-                이 구름에는 <b>종/변종/부속구름</b> 정보가 없습니다.
-                {cloud.level === "high" && (
-                  <> (고층운은 WMO 분류에서 해당 항목이 비어있는 경우가 흔합니다.)</>
-                )}
-              </p>
+              <p>이 구름에는 <b>종/변종/부속구름</b> 정보가 없습니다.</p>
             </div>
           ) : (
             <div className="taxonomy-grid">
               {/* 종 */}
               <div className="taxonomy-col">
                 <div className="subsection-title-row">
-                  <h3 className="subsection-title species-title">
-                    종 (Species)
-                  </h3>
+                  <h3 className="subsection-title species-title">종 (Species)</h3>
                   <span className="count-badge">{cloud.species.length}개</span>
                 </div>
-
                 {cloud.species.length > 0 ? (
                   <div className="sub-cards-list">
                     {cloud.species.map((item, idx) => (
-                      <SubItemCard
-                        key={`sp-${idx}`}
-                        item={item}
-                        colorClass="species-card"
-                        codeClass="species-code"
-                      />
+                      <SubItemCard key={`sp-${idx}`} item={item} colorClass="species-card" codeClass="species-code" />
                     ))}
                   </div>
                 ) : (
-                  <div className="taxonomy-note">
-                    {cloud.level === "high"
-                      ? "고층운은 종(Species)이 정의되지 않거나 자료가 없는 경우가 많습니다."
-                      : "등록된 종(Species) 정보가 없습니다."}
-                  </div>
+                  <div className="taxonomy-note">등록된 종(Species) 정보가 없습니다.</div>
                 )}
               </div>
 
               {/* 변종 */}
               <div className="taxonomy-col">
                 <div className="subsection-title-row">
-                  <h3 className="subsection-title variety-title">
-                    변종 (Varieties)
-                  </h3>
+                  <h3 className="subsection-title variety-title">변종 (Varieties)</h3>
                   <span className="count-badge">{cloud.varieties.length}개</span>
                 </div>
-
                 {cloud.varieties.length > 0 ? (
                   <div className="sub-cards-list">
                     {cloud.varieties.map((item, idx) => (
-                      <SubItemCard
-                        key={`va-${idx}`}
-                        item={item}
-                        colorClass="variety-card"
-                        codeClass="variety-code"
-                      />
+                      <SubItemCard key={`va-${idx}`} item={item} colorClass="variety-card" codeClass="variety-code" />
                     ))}
                   </div>
                 ) : (
-                  <div className="taxonomy-note">
-                    등록된 변종(Varieties) 정보가 없습니다.
-                  </div>
+                  <div className="taxonomy-note">등록된 변종(Varieties) 정보가 없습니다.</div>
                 )}
               </div>
 
               {/* 부속구름 */}
               <div className="taxonomy-col">
                 <div className="subsection-title-row">
-                  <h3 className="subsection-title supplementary-title">
-                    부속 구름 및 보조 특징
-                  </h3>
-                  <span className="count-badge">
-                    {cloud.supplementary.length}개
-                  </span>
+                  <h3 className="subsection-title supplementary-title">부속 구름 및 보조 특징</h3>
+                  <span className="count-badge">{cloud.supplementary.length}개</span>
                 </div>
-
                 {cloud.supplementary.length > 0 ? (
                   <div className="sub-cards-list">
                     {cloud.supplementary.map((item, idx) => (
-                      <SubItemCard
-                        key={`su-${idx}`}
-                        item={item}
-                        colorClass="supplementary-card"
-                        codeClass="supplementary-code"
-                      />
+                      <SubItemCard key={`su-${idx}`} item={item} colorClass="supplementary-card" codeClass="supplementary-code" />
                     ))}
                   </div>
                 ) : (
-                  <div className="taxonomy-note">
-                    등록된 부속 구름/보조 특징 정보가 없습니다.
-                  </div>
+                  <div className="taxonomy-note">등록된 부속 구름/보조 특징 정보가 없습니다.</div>
                 )}
               </div>
             </div>
@@ -314,10 +325,11 @@ export default function CloudDetailPage() {
           </div>
         </section>
 
+        {/* ⑦ 구름 탐색 패널 */}
+        <RelatedClouds currentId={cloudId.toLowerCase()} />
+
         <div className="bottom-nav">
-          <Link href="/atlas" className="back-btn">
-            ← 구름 도감으로 돌아가기
-          </Link>
+          <Link href="/atlas" className="back-btn">← 구름 도감으로 돌아가기</Link>
         </div>
       </main>
 
