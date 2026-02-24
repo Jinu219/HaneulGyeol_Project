@@ -389,6 +389,8 @@
 
         .cloud-info {
         padding: 1.6rem 1.6rem 1.8rem; /* ✅ 박스 내부 여백 */
+        display: flex;
+        flex-direction: column;
         }
 
         .cloud-header {

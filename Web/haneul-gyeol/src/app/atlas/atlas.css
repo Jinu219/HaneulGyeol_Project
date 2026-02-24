@@ -425,13 +425,14 @@ body{
   color: var(--text-light);
   line-height: 1.8;
   font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem; /* 텍스트와 배지 사이 간격 증가 */
 }
 
 .cloud-meta {
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
+  margin-bottom: 1.2rem; /* 배지와 링크 사이 여백 */
 }
 
 .meta-badge {
@@ -446,7 +447,7 @@ body{
 
 .cloud-details-link {
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: auto; /* 내용 끝으로 밀어서 높이 달라도 위치 고정 */
   color: var(--sky-deep);
   font-weight: 600;
   font-size: 0.9rem;
