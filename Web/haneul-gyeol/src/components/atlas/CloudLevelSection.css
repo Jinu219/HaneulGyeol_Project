@@ -1,0 +1,46 @@
+/* CloudLevelSection.css
+   CloudLevelSection.tsx 전용 스타일
+*/
+.cloud-level-section {
+  margin-bottom: 5rem;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid;
+}
+
+.level-header.high     { border-color: #E3F2FD; }
+.level-header.mid      { border-color: #B3E5FC; }
+.level-header.low      { border-color: #81D4FA; }
+.level-header.vertical { border-color: #4FC3F7; }
+
+.level-icon { font-size: 3rem; }
+
+.level-title { flex: 1; }
+
+.level-title h2 {
+  font-size: 2.5rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.3rem;
+}
+
+.level-title .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+.altitude-info {
+  text-align: right;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.altitude-info strong {
+  color: var(--text-dark);
+}

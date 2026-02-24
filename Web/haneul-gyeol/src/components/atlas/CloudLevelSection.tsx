@@ -3,6 +3,8 @@
 
 import CloudCard, { CloudData } from "./CloudCard";
 
+import "./CloudLevelSection.css";
+
 type CloudLevelSectionProps = {
   level: "high" | "mid" | "low";
   title: string;

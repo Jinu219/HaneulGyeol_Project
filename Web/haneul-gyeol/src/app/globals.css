@@ -693,15 +693,6 @@
 }
 
 /* AtlasSection - 자세히 보기 링크 */
-.cloud-details-link {
-  display: inline-block;
-  margin-top: 1rem;
-  color: var(--sky-deep);
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-  text-decoration: none;
-}
 
 .cloud-card:hover .cloud-details-link {
   transform: translateX(5px);

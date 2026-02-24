@@ -1,6 +1,8 @@
 // src/components/atlas/FilterBar.tsx
 "use client";
 
+import "./FilterBar.css";
+
 type FilterBarProps = {
   activeFilter: string;
   onFilterChange: (filter: string) => void;

@@ -2,6 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import "./CloudCard.css";
 
 export type CloudData = {
   symbol: string;
