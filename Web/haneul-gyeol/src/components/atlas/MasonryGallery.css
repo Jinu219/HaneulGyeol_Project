@@ -10,11 +10,15 @@
      줄어들거나 커진다. 기본값은 250px, 필요하면 inline style 또는 props로 조정. */
   column-width: var(--col-width, 250px);
   column-gap: 12px; /* 사진 사이 가로 간격 */
+  /* 기본 동작 유지: column-fill은 auto (브라우저 기본)로 둡니다.
+     이렇게 하면 나머지 이미지가 앞쪽 열부터 위→아래 방향으로 채워지고,
+     마지막 열에 아이템이 적게 남을 수 있으나 순서가 그대로 보존됩니다. */
 
-  width: 78%;
-  max-width: 78%;     /* 전체 폭 제한 */
-  margin: 0 auto;        /* 중앙 정렬 */
-  /* 좌우 여백: 픽셀 대신 뷰포트 비율로 설정하여 확대/축소에도 좌우 공간이 균형 있게 유지됩니다 */
+  /* 전체 너비 사용, 중앙 정렬은 padding으로 해결 */
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  /* 좌우 여백을 뷰포트 비율로 주어 언제나 균등하게 유지 */
   padding: 0 5vw;
 }
 
@@ -182,14 +186,14 @@
 
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
-  /* ✅ 기본값 10은 너무 큼 → 3 정도가 자연스러움 */
-  .mgal-grid { column-count: var(--col-tablet, 3); column-gap: 10px; }
+  /* 태블릿 열 수 조정 */
+  .mgal-grid { --cols: var(--col-tablet, 3); gap: 10px; }
   .mgal-item { margin-bottom: 10px; }
 }
 
 @media (max-width: 640px) {
-  /* ✅ 기본값 5는 모바일에서 너무 잘게 쪼개짐 → 2 추천 */
-  .mgal-grid { column-count: var(--col-mobile, 2); column-gap: 8px; }
+  /* 모바일 열 수 조정 */
+  .mgal-grid { --cols: var(--col-mobile, 2); gap: 8px; }
   .mgal-item { margin-bottom: 8px; border-radius: 6px; }
   .mgal-lb-img { max-width: 96vw; max-height: 72vh; }
 }

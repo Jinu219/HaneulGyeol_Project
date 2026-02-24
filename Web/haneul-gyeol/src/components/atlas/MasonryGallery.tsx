@@ -70,7 +70,7 @@ export default function MasonryGallery({
       <div
         className="mgal-grid"
         style={{
-          "--col-desktop": colDesktop,
+          "--cols": colDesktop,
           "--col-tablet":  colTablet,
           "--col-mobile":  colMobile,
         } as React.CSSProperties}
