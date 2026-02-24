@@ -29,11 +29,10 @@ const CLOUD_MAP = {
   Cc: "cc",
   Ci: "ci",
   Cs: "cs",
-  // 사진 생기면 추가:
-  Cu: "cu", 
-  Ns: "ns", 
-  St: "st", 
+  Cu: "cu",
+  St: "st",
   Sc: "sc",
+  Ns: "ns"
 };
 
 function shuffle(arr) {

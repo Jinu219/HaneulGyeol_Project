@@ -51,9 +51,9 @@ function SubItemCard({
             <div className="sub-card-gallery">
               <MasonryGallery
                 images={item.images}
-                colDesktop={3}
-                colTablet={2}
-                colMobile={1}
+                colDesktop={8}
+                colTablet={5}
+                colMobile={3}
                 emptyMessage={`${item.name_ko} 사진을 추가하세요`}
               />
             </div>
@@ -144,18 +144,18 @@ export default function CloudDetailPage() {
       {/* ── 본문 ── */}
       <main className="cloud-detail-content">
 
-        {/* ① 전체 갤러리 */}
+        {/* ① 전체 갤러리 — full width */}
         {cloud.images.length > 0 && (
-          <section className="detail-section">
+          <section className="detail-section gallery-full">
             <h2 className="section-title">
               사진 갤러리
               <span className="count-badge">{cloud.images.length}장</span>
             </h2>
             <MasonryGallery
               images={cloud.images}
-              colDesktop={3}
-              colTablet={2}
-              colMobile={1}
+              colDesktop={4}
+              colTablet={3}
+              colMobile={2}
             />
           </section>
         )}

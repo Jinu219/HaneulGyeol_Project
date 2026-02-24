@@ -15,8 +15,10 @@
             --accent-gold: #D4AF37;
             --gradient-sky: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
         }
+        
 
         body {
+            zoom: 0.85;
             font-family: 'Noto Serif KR', serif;
             color: var(--text-dark);
             overflow-x: hidden;

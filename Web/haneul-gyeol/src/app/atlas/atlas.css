@@ -7,6 +7,9 @@
    <Link className="logo">
    <ul className="nav-links">
    ================================================================ */
+body{
+  zoom:0.75;
+}
 .atlas-nav {
   position: fixed;
   top: 0;
@@ -332,7 +335,7 @@
    ================================================================ */
 .cloud-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2.5rem;
 }
 
@@ -353,9 +356,9 @@
   border-color: var(--sky-blue);
 }
 
-.cloud-card.high-cloud     { border-top: 4px solid #E3F2FD; }
-.cloud-card.mid-cloud      { border-top: 4px solid #B3E5FC; }
-.cloud-card.low-cloud      { border-top: 4px solid #81D4FA; }
+.cloud-card.high-cloud     { border-top: 4px solid #E3F2FD;}
+.cloud-card.mid-cloud      { border-top: 4px solid #B3E5FC;}
+.cloud-card.low-cloud      { border-top: 4px solid #81D4FA;}
 .cloud-card.vertical-cloud { border-top: 4px solid #4FC3F7; }
 
 .cloud-image {
@@ -498,10 +501,51 @@
 /* ================================================================
    반응형
    ================================================================ */
+
+/* ================================================================
+   맞춤 그리드 설정 (기존 카드 디자인 손상 없이 3열/4열만 배치)
+   ================================================================ */
+@media (min-width: 1025px) {
+  /* 고/중층운: 한 줄에 3개 */
+  .layout-3-cols .cloud-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* 저층운: 한 줄에 4개 */
+  .layout-4-cols .cloud-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.5rem !important; /* 4개 배치 시 간격을 살짝 좁혀서 안정감 부여 */
+  }
+}
+
+  /* ── 카드 내부 글씨 레이아웃 교정 ── */
+  .cloud-grid > * { /* 개별 카드 요소 */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden; /* 카드를 벗어나는 요소 숨김 */
+  }
+  
+  .cloud-info {
+    flex: 1; /* 글씨 영역이 찌그러지지 않고 자연스럽게 공간 차지 */
+    padding: 1.5rem; /* 좁아진 카드 폭에 맞춰 패딩(여백) 살짝 축소 */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 텍스트가 좁은 영역에서도 예쁘게 줄바꿈 되도록 설정 */
+  .cloud-info h3, 
+  .cloud-info p {
+    word-break: keep-all; /* 단어 단위로 끊어지게 설정 */
+    overflow-wrap: break-word;
+  }
+
+/* 태블릿/모바일 환경은 기존 유지 */
 @media (max-width: 1024px) {
-  .cloud-grid  { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-  .cloud-image { height: 190px; }
-  .cloud-info  { padding: 1.8rem; }
+  .layout-3-cols .cloud-grid,
+  .layout-4-cols .cloud-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  }
 }
 
 @media (max-width: 768px) {

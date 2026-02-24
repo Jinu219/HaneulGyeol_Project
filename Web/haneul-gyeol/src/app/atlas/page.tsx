@@ -105,39 +105,49 @@ export default function AtlasPage() {
       </section>
 
       {/* Main Content */}
+
       <main className="main-content">
-        <CloudLevelSection
-          level="high"
-          title="고층운 (High Clouds)"
-          subtitle="가늘고 섬세한 얼음 결정으로 이루어진 높은 구름"
-          altitude="5-13 km"
-          altitudeDetail="극지방: 3-8km | 온대: 5-13km | 열대: 6-18km"
-          icon="☁️"
-          activeFilter={activeFilter}
-          searchTerm={debounced}   // ✅ 여기! debounced로 바꿈
-        />
+        {/* 👇 고층운: 3개 레이아웃으로 감싸기 */}
+        <div className="layout-3-cols">
+          <CloudLevelSection
+            level="high"
+            title="고층운 (High Clouds)"
+            subtitle="얼음 결정으로 이루어진 높은 구름"
+            altitude="5-13 km"
+            altitudeDetail="극지방: 3-8km | 온대: 5-13km | 열대: 6-18km"
+            icon="☁️"
+            activeFilter={activeFilter}
+            searchTerm={debounced}
+          />
+        </div>
 
-        <CloudLevelSection
-          level="mid"
-          title="중층운 (Middle Clouds)"
-          subtitle="물방울과 얼음 결정이 혼재된 중간 고도의 구름"
-          altitude="2-7 km"
-          altitudeDetail="극지방: 2-4km | 온대: 2-7km | 열대: 2-8km"
-          icon="⛅"
-          activeFilter={activeFilter}
-          searchTerm={debounced}   // ✅ 여기
-        />
+        {/* 👇 중층운: 3개 레이아웃으로 감싸기 */}
+        <div className="layout-3-cols">
+          <CloudLevelSection
+            level="mid"
+            title="중층운 (Middle Clouds)"
+            subtitle="물방울과 얼음 결정이 혼재된 중간 고도의 구름"
+            altitude="2-7 km"
+            altitudeDetail="극지방: 2-4km | 온대: 2-7km | 열대: 2-8km"
+            icon="⛅"
+            activeFilter={activeFilter}
+            searchTerm={debounced}
+          />
+        </div>
 
-        <CloudLevelSection
-          level="low"
-          title="저층운 (Low Clouds)"
-          subtitle="주로 물방울로 이루어진 낮은 고도의 구름 (적운, 적란운 포함)"
-          altitude="0-2 km"
-          altitudeDetail="지표면 근처부터 2km 이하 고도 (적운/적란운은 수직 발달)"
-          icon="🌤️"
-          activeFilter={activeFilter}
-          searchTerm={debounced}   // ✅ 여기
-        />
+        {/* 👇 저층운: 4개 레이아웃으로 감싸기 */}
+        <div className="layout-4-cols">
+          <CloudLevelSection
+            level="low"
+            title="저층운 (Low Clouds)"
+            subtitle="주로 물방울로 이루어진 낮은 고도의 구름 (적운, 적란운 포함)"
+            altitude="0-2 km"
+            altitudeDetail="지표면 근처부터 2km 이하 고도 (적운/적란운은 수직 발달)"
+            icon="🌤️"
+            activeFilter={activeFilter}
+            searchTerm={debounced}
+          />
+        </div>
       </main>
 
       {/* Footer */}

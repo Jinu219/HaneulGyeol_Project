@@ -1,30 +1,33 @@
 /* ================================================================
-   MasonryGallery.css — CSS columns Pinterest 메이슨리
+   MasonryGallery.css — Pinterest 스타일 CSS columns 메이슨리
+   전체 너비, 자연 비율, 다양한 높이
    ================================================================ */
 
-/* ── 컨테이너 ── */
+/* ── 그리드: columns 방식으로 전체 너비 꽉 채우기 ── */
 .mgal-grid {
-  column-count: var(--col-desktop, 3);
-  column-gap: 8px;
+  /* PC 화면에서 사진이 너무 크다면 var(--col-desktop) 값을 높여주세요 (예: 4 -> 5 또는 6) */
+  column-count: var(--col-desktop, 5);
+  column-gap: 12px; /* 사진 사이 가로 간격 */
   width: 100%;
+  padding: 0;
 }
 
-/* ── 아이템 ── */
+/* ── 개별 아이템 ── */
 .mgal-item {
   position: relative;
-  break-inside: avoid;      /* 컬럼 사이 분리 방지 */
-  margin-bottom: 8px;
+  break-inside: avoid;
+  margin-bottom: 12px; /* 사진 사이 세로 간격 (가로 간격과 맞춤) */
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   display: block;
-  background: #d4e4f0;
+  background: #d0dde8;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .mgal-item:hover {
   transform: translateY(-3px) scale(1.015);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.20);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
   z-index: 1;
 }
 
@@ -33,25 +36,22 @@
   outline-offset: 2px;
 }
 
-/* ── 이미지 — 자연 비율 그대로 ── */
+/* ── 이미지: 자연 비율 그대로 유지 ── */
 .mgal-img {
-  display: block;
   width: 100%;
-  height: auto;             /* ← 핵심: 자연 비율 유지 */
-  border-radius: 8px;
-  transition: transform 0.4s ease, filter 0.25s ease;
+  height: auto !important; /* 원본 세로 비율 유지 */
+  display: block;
+  object-fit: cover; 
 }
 
-.mgal-item:hover .mgal-img {
-  transform: scale(1.04);
-  filter: brightness(1.05);
-}
+.mgal-img--loaded { opacity: 1; }
+
+.mgal-item:hover .mgal-img { transform: scale(1.04); }
 
 /* ── 로드 실패 fallback ── */
 .mgal-fallback {
   width: 100%;
   min-height: 90px;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -62,11 +62,10 @@
   border-radius: 8px;
   font-family: 'Noto Serif KR', serif;
 }
-
 .mgal-fallback span  { font-size: 1.4rem; opacity: 0.45; }
 .mgal-fallback small { font-size: 0.68rem; }
 
-/* ── 출처 ── */
+/* ── 출처 표기 ── */
 .mgal-credit {
   position: absolute;
   bottom: 0.3rem;
@@ -89,13 +88,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   background: rgba(10, 25, 55, 0.15);
   opacity: 0;
   transition: opacity 0.22s ease;
   border-radius: 8px;
 }
-
 .mgal-item:hover .mgal-overlay { opacity: 1; }
 
 /* ── 빈 상태 ── */
@@ -103,32 +101,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
-  padding: 1.6rem 1rem;
+  gap: 0.5rem;
+  padding: 1.8rem 1rem;
   background: #f2f7fb;
   border-radius: 10px;
   border: 2px dashed #c4d6e8;
   color: #8aa5bb;
 }
-
-.mgal-empty span { font-size: 1.6rem; opacity: 0.38; }
-.mgal-empty p    { font-size: 0.8rem; font-family: 'Noto Serif KR', serif; }
+.mgal-empty span { font-size: 1.8rem; opacity: 0.4; }
+.mgal-empty p    { font-size: 0.82rem; font-family: 'Noto Serif KR', serif; }
 
 /* ── 라이트박스 ── */
 .mgal-lightbox {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(4, 10, 28, 0.93);
+  background: rgba(4, 10, 28, 0.94);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: zoom-out;
   backdrop-filter: blur(10px);
-  animation: mgalIn 0.18s ease;
+  animation: mgalFadeIn 0.18s ease;
 }
 
-@keyframes mgalIn {
+@keyframes mgalFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
@@ -138,13 +135,13 @@
   top: 1rem;
   right: 1.2rem;
   z-index: 10001;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
   border: none;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -152,39 +149,39 @@
   transition: background 0.2s;
   font-family: sans-serif;
 }
-
-.mgal-lb-close:hover { background: rgba(255, 255, 255, 0.22); color: #fff; }
+.mgal-lb-close:hover { background: rgba(255, 255, 255, 0.22); }
 
 .mgal-lb-body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.75rem;
   cursor: default;
+  max-width: min(92vw, 1100px);
 }
 
 .mgal-lb-img {
-  max-width: min(90vw, 1100px);
+  max-width: min(90vw, 1080px);
   max-height: 86vh;
   object-fit: contain;
   border-radius: 8px;
 }
 
 .mgal-lb-caption {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.50);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.52);
   font-family: 'Noto Serif KR', serif;
   text-align: center;
 }
 
 /* ── 반응형 ── */
 @media (max-width: 1024px) {
-  .mgal-grid { column-count: var(--col-tablet, 2); column-gap: 7px; }
-  .mgal-item { margin-bottom: 7px; }
+  .mgal-grid   { column-count: var(--col-tablet, 10); column-gap: 5px; }
+  .mgal-item   { margin-bottom: 5px; }
 }
 
 @media (max-width: 640px) {
-  .mgal-grid { column-count: var(--col-mobile, 1); column-gap: 6px; }
-  .mgal-item { margin-bottom: 6px; }
+  .mgal-grid   { column-count: var(--col-mobile, 5); column-gap: 4px; }
+  .mgal-item   { margin-bottom: 4px; border-radius: 6px; }
   .mgal-lb-img { max-width: 96vw; max-height: 72vh; }
 }

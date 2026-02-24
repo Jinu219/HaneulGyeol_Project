@@ -94,13 +94,13 @@
    ================================================================ */
 .cloud-hero {
   position: relative;
-  min-height: 460px;
+  min-height: 300px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 1.5rem 3rem;
+  padding: 8rem 5% 2rem;
   text-align: center;
 }
 
@@ -173,17 +173,18 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 /* 제목 */
 .cloud-hero h1 {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-family: 'Gowun Batang', serif;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45);
   margin: 0.2rem 0;
+  margin-bottom:0.5rem;
 }
 
 /* 영문명 */
@@ -191,7 +192,7 @@
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.78);
   font-style: italic;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 /* 뱃지 행 */
@@ -237,8 +238,10 @@
    <section className="detail-section gallery-full">  ← 갤러리용
    ================================================================ */
 .cloud-detail-content {
-  max-width: 960px;
+  max-width: 100%;
   margin: 0 auto;
+  margin-left: 20px;
+  margin-right:20px;
   padding: 2rem 1.5rem 4rem;
 }
 
@@ -547,7 +550,7 @@
    반응형
    ================================================================ */
 @media (max-width: 768px) {
-  .cloud-hero          { min-height: 340px; padding: 0 1rem 2.5rem; }
+  .cloud-hero          { min-height: 340px; padding: 8rem 1rem 2.5rem; }
   .cloud-hero h1       { font-size: 1.9rem; }
   .cloud-symbol-large  { font-size: 1.7rem; }
 
@@ -566,4 +569,25 @@
 
   .sub-card-header { padding: 0.75rem 1rem; }
   .sub-card-ko     { font-size: 0.9rem; }
+}
+
+
+/* src/app/atlas/[cloudId]/cloud-detail.css 하단에 추가 */
+
+/* 갤러리 섹션 전체 여백 */
+.gallery-section {
+  margin-top: 1rem;
+  margin-bottom: 4rem; 
+}
+
+/* "사진 갤러리" 제목 스타일링 (margin, padding 신경씀) */
+.gallery-section .section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  margin-top: 2.5rem;    /* 위쪽 요소와의 간격 넓힘 */
+  margin-bottom: 1.5rem; /* 아래쪽 갤러리와의 간격 넓힘 */
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--sky-light); /* 깔끔한 밑줄 포인트 (선택사항) */
+  display: block;
 }
