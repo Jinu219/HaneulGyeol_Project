@@ -1,6 +1,7 @@
-// AtlasSection.tsx
+// src/components/AtlasSection.tsx
 "use client";
 
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type CloudCard = {
@@ -12,7 +13,22 @@ type CloudCard = {
   desc: string;
 };
 
+function levelClass(type: CloudCard["type"]) {
+  switch (type) {
+    case "고층운":
+      return "high-cloud";
+    case "중층운":
+      return "mid-cloud";
+    case "저층운":
+      return "low-cloud";
+    default:
+      return "";
+  }
+}
+
 export default function AtlasSection() {
+  const router = useRouter();
+
   const cards: CloudCard[] = [
     // 고층운 (3개)
     {
@@ -115,23 +131,50 @@ export default function AtlasSection() {
   const mid = cards.filter((c) => c.type === "중층운");
   const low = cards.filter((c) => c.type === "저층운");
 
+  const goDetail = (symbol: string) => {
+    router.push(`/atlas/${symbol.toLowerCase()}`);
+  };
+
   const renderGrid = (list: CloudCard[], gridClass: string) => (
     <div className={`cloud-grid ${gridClass}`}>
-      {list.map((c) => (
-        <div key={`${c.type}-${c.symbol}`} className="cloud-card">
-          <div className="cloud-image">{c.emoji}</div>
+      {list.map((c) => {
+        const href = `/atlas/${c.symbol.toLowerCase()}`;
+        return (
+          <div
+            key={`${c.type}-${c.symbol}`}
+            className={`cloud-card ${levelClass(c.type)}`}
+            data-name={`${c.name} ${c.en}`.toLowerCase()}
+            role="button"
+            tabIndex={0}
+            onClick={() => goDetail(c.symbol)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") goDetail(c.symbol);
+            }}
+          >
+            <div className="cloud-image">{c.emoji}</div>
 
-          <div className="cloud-info">
-            <div className="cloud-header">
-              <div className="cloud-type">{c.type}</div>
-              <div className="cloud-symbol">{c.symbol}</div>
+            <div className="cloud-info">
+              <div className="cloud-header">
+                <div className="cloud-type">{c.type}</div>
+                <div className="cloud-symbol">{c.symbol}</div>
+              </div>
+
+              <h3 className="cloud-name">{c.name}</h3>
+              <p className="cloud-name-en">{c.en}</p>
+              <p className="cloud-description">{c.desc}</p>
+
+              {/* "자세히 보기"는 링크로도 동작하게 */}
+              <Link
+                href={href}
+                className="cloud-details-link"
+                onClick={(e) => e.stopPropagation()}
+              >
+                자세히 보기 →
+              </Link>
             </div>
-            <h3 className="cloud-name">{c.name}</h3>
-            <p className="cloud-name-en">{c.en}</p>
-            <p className="cloud-description">{c.desc}</p>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 
