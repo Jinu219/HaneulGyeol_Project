@@ -1,9 +1,8 @@
 "use client";
 
 // src/components/atlas/MasonryGallery.tsx
-// CSS columns Pinterest 스타일 — 전체 너비, 자연 비율, 다양한 높이
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { CloudGalleryItem } from "@/app/atlas/[cloudId]/cloudData";
 import "./MasonryGallery.css";
 
@@ -18,14 +17,41 @@ type Props = {
 export default function MasonryGallery({
   images,
   emptyMessage = "사진을 추가하면 여기에 표시됩니다",
-  colDesktop = 4,   /* 기본 10→4로 변경: 데스크톱에서 칸 수 줄여 이미지 축소 */
+  colDesktop = 4,
   colTablet = 3,
   colMobile = 2,
 }: Props) {
-  const [lightbox, setLightbox] = useState<CloudGalleryItem | null>(null);
+  // lightbox에 현재 인덱스를 저장
+  const [lbIndex, setLbIndex] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Record<number, boolean>>({});
 
   const valid = images.filter((img) => img.src);
+  const total = valid.length;
+
+  // 이전 / 다음 이동
+  const goPrev = useCallback(() => {
+    setLbIndex((i) => (i === null ? null : (i - 1 + total) % total));
+  }, [total]);
+
+  const goNext = useCallback(() => {
+    setLbIndex((i) => (i === null ? null : (i + 1) % total));
+  }, [total]);
+
+  const close = useCallback(() => setLbIndex(null), []);
+
+  // 키보드 이벤트
+  useEffect(() => {
+    if (lbIndex === null) return;
+
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft")  { e.preventDefault(); goPrev(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); goNext(); }
+      if (e.key === "Escape")     { close(); }
+    };
+
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lbIndex, goPrev, goNext, close]);
 
   if (valid.length === 0) {
     return (
@@ -36,8 +62,11 @@ export default function MasonryGallery({
     );
   }
 
+  const current = lbIndex !== null ? valid[lbIndex] : null;
+
   return (
     <>
+      {/* 그리드 */}
       <div
         className="mgal-grid"
         style={{
@@ -50,10 +79,10 @@ export default function MasonryGallery({
           <div
             key={idx}
             className="mgal-item"
-            onClick={() => setLightbox(img)}
+            onClick={() => setLbIndex(idx)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && setLightbox(img)}
+            onKeyDown={(e) => e.key === "Enter" && setLbIndex(idx)}
             aria-label={`${img.alt} 크게 보기`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -78,19 +107,51 @@ export default function MasonryGallery({
         ))}
       </div>
 
-      {lightbox && (
+      {/* 라이트박스 */}
+      {lbIndex !== null && current && (
         <div
           className="mgal-lightbox"
-          onClick={() => setLightbox(null)}
+          onClick={close}
           role="dialog"
           aria-modal="true"
         >
-          <button className="mgal-lb-close" onClick={() => setLightbox(null)} aria-label="닫기">✕</button>
+          {/* 닫기 */}
+          <button className="mgal-lb-close" onClick={close} aria-label="닫기">✕</button>
+
+          {/* 카운터 */}
+          <div className="mgal-lb-counter">{lbIndex + 1} / {total}</div>
+
+          {/* 이전 버튼 */}
+          <button
+            className="mgal-lb-nav mgal-lb-prev"
+            onClick={(e) => { e.stopPropagation(); goPrev(); }}
+            aria-label="이전 사진"
+          >
+            ‹
+          </button>
+
+          {/* 사진 */}
           <div className="mgal-lb-body" onClick={(e) => e.stopPropagation()}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={lightbox.src} alt={lightbox.alt} className="mgal-lb-img" />
-            {lightbox.alt && <p className="mgal-lb-caption">{lightbox.alt}</p>}
+            <img
+              key={lbIndex}             /* key 변경 → 트랜지션 재실행 */
+              src={current.src}
+              alt={current.alt}
+              className="mgal-lb-img mgal-lb-img--anim"
+            />
+            {current.alt && <p className="mgal-lb-caption">{current.alt}</p>}
+            {/* 키보드 힌트 */}
+            <p className="mgal-lb-hint">← → 방향키로 이동 &nbsp;·&nbsp; ESC로 닫기</p>
           </div>
+
+          {/* 다음 버튼 */}
+          <button
+            className="mgal-lb-nav mgal-lb-next"
+            onClick={(e) => { e.stopPropagation(); goNext(); }}
+            aria-label="다음 사진"
+          >
+            ›
+          </button>
         </div>
       )}
     </>
