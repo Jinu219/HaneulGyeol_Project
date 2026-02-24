@@ -1,9 +1,19 @@
+// AtlasSection.tsx
 "use client";
 
 import Link from "next/link";
 
+type CloudCard = {
+  symbol: string;
+  emoji: string;
+  type: "고층운" | "중층운" | "저층운";
+  name: string;
+  en: string;
+  desc: string;
+};
+
 export default function AtlasSection() {
-  const cards = [
+  const cards: CloudCard[] = [
     // 고층운 (3개)
     {
       symbol: "Ci",
@@ -32,6 +42,7 @@ export default function AtlasSection() {
       desc:
         "하늘을 얇은 베일처럼 덮는 투명한 구름으로, 태양이나 달 주위에 무리(halo)를 만들기도 합니다. 날씨 변화의 신호로 자주 나타납니다.",
     },
+
     // 중층운 (3개)
     {
       symbol: "As",
@@ -60,6 +71,7 @@ export default function AtlasSection() {
       desc:
         "하늘 전체를 두껍게 덮으며 오랜 시간 비나 눈을 내리는 구름입니다. 태양이 보이지 않을 정도로 하늘을 어둡게 만들며, 지속적인 강수를 동반합니다.",
     },
+
     // 저층운 (4개)
     {
       symbol: "Cu",
@@ -78,7 +90,6 @@ export default function AtlasSection() {
       en: "Cumulonimbus",
       desc:
         "천둥번개를 동반하는 거대한 구름으로, 강한 상승기류로 인해 수직으로 크게 발달합니다. 소나기와 우박을 동반하기도 합니다.",
-
     },
     {
       symbol: "St",
@@ -88,7 +99,6 @@ export default function AtlasSection() {
       en: "Stratus",
       desc:
         "하늘을 회색 담요처럼 덮는 낮은 구름입니다. 안개와 비슷한 형태로 나타나며 이슬비를 내리기도 합니다.",
-
     },
     {
       symbol: "Sc",
@@ -101,32 +111,45 @@ export default function AtlasSection() {
     },
   ];
 
+  const high = cards.filter((c) => c.type === "고층운");
+  const mid = cards.filter((c) => c.type === "중층운");
+  const low = cards.filter((c) => c.type === "저층운");
+
+  const renderGrid = (list: CloudCard[], gridClass: string) => (
+    <div className={`cloud-grid ${gridClass}`}>
+      {list.map((c) => (
+        <div key={`${c.type}-${c.symbol}`} className="cloud-card">
+          <div className="cloud-image">{c.emoji}</div>
+
+          <div className="cloud-info">
+            <div className="cloud-header">
+              <div className="cloud-type">{c.type}</div>
+              <div className="cloud-symbol">{c.symbol}</div>
+            </div>
+            <h3 className="cloud-name">{c.name}</h3>
+            <p className="cloud-name-en">{c.en}</p>
+            <p className="cloud-description">{c.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <section className="atlas-section" id="atlas">
       <h2 className="section-title">구름 도감</h2>
       <p className="section-subtitle">다양한 구름의 종류를 탐험해보세요</p>
 
-      <div className="cloud-grid">
-        {cards.map((c) => (
-          <div key={c.en} className="cloud-card">
-            <div className="cloud-image">{c.emoji}</div>
+      {/* 고층운 3개 */}
+      <div className="cloud-group">{renderGrid(high, "cloud-grid--3")}</div>
 
-            <div className="cloud-info">
-              <div className="cloud-header">
-                <div className="cloud-type">{c.type}</div>
-                <div className="cloud-symbol">{c.symbol}</div>
-              </div>
-              <h3 className="cloud-name">{c.name}</h3>
-              <p className="cloud-name-en">{c.en}</p>
-              <p className="cloud-description">{c.desc}</p>
-              <span className="cloud-badge">{c.badge}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* 중층운 3개 */}
+      <div className="cloud-group">{renderGrid(mid, "cloud-grid--3")}</div>
 
-      {/* 전체 구름 도감으로 이동하는 버튼 */}
-      <div style={{ textAlign: "center", marginTop: "3rem" }}>
+      {/* 저층운 4개 */}
+      <div className="cloud-group">{renderGrid(low, "cloud-grid--4")}</div>
+
+      <div className="atlas-cta">
         <Link href="/atlas" className="cta-button">
           전체 구름 도감 보기
         </Link>
