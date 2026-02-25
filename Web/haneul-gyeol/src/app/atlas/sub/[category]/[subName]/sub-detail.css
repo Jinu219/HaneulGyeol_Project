@@ -1,0 +1,383 @@
+/* ================================================================
+   sub-detail.css (updated)
+   src/app/atlas/sub/[category]/[subName]/sub-detail.css
+   ================================================================ */
+
+:root {
+  --sky-deep:    #2c7be5;
+  --sky-blue:    #7fb9ff;
+  --sky-light:   #e8f3ff;
+  --cloud-white: #ffffff;
+  --cloud-gray:  #f6f9fc;
+  --text-dark:   #0f172a;
+  --text-light:  #64748b;
+}
+
+/* ── Nav ── */
+.atlas-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.atlas-nav .nav-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: 'Gowun Batang', serif;
+  color: var(--sky-deep);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.atlas-nav .nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.atlas-nav .nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 400;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.atlas-nav .nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--sky-deep);
+  transition: width 0.3s ease;
+}
+
+.atlas-nav .nav-links a.active::after,
+.atlas-nav .nav-links a:hover::after { width: 100%; }
+.atlas-nav .nav-links a.active { color: var(--sky-deep); font-weight: 600; }
+
+/* ── 404 ── */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ================================================================
+   Hero — cloud-detail.css 와 동일하게 하단 중앙 정렬
+   ================================================================ */
+.sub-hero {
+  position: relative;
+  min-height: 340px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;   /* ← 하단 정렬 */
+  padding: 8rem 5% 2.5rem;
+  text-align: center;
+}
+
+/* 레벨별 배경 */
+.sub-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.sub-hero-bg.level-high { background: linear-gradient(160deg, #1a2f6e 0%, #2a4a9f 40%, #4a90e2 100%); }
+.sub-hero-bg.level-mid  { background: linear-gradient(160deg, #01579b 0%, #0277bd 40%, #4fc3f7 100%); }
+.sub-hero-bg.level-low  { background: linear-gradient(160deg, #006064 0%, #00838f 45%, #4dd0e1 100%); }
+/* 카테고리 정보만 있고 특정 레벨이 없는 경우 */
+.sub-hero-bg.level-none { background: linear-gradient(160deg, #1a2f6e 0%, #2c7be5 60%, #56acf0 100%); }
+
+.sub-hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 25, 55, 0.10) 0%,
+    rgba(10, 25, 55, 0.50) 55%,
+    rgba(10, 25, 55, 0.78) 100%
+  );
+  z-index: 1;
+}
+
+/* 모든 자식을 배경 위로 */
+.sub-hero > *:not(.sub-hero-bg) {
+  position: relative;
+  z-index: 2;
+}
+
+/* 카테고리 태그 */
+.sub-category-tag {
+  display: inline-block;
+  padding: 0.28rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Noto Serif KR', serif;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+}
+
+/* 한글 이름 */
+.sub-hero-name-ko {
+  font-size: 2.5rem;
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45);
+  margin: 0 0 0.2rem;
+  line-height: 1.1;
+}
+
+/* 영문 이름 */
+.sub-hero-name-en {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-style: italic;
+  font-family: 'Noto Serif KR', serif;
+  margin: 0 0 0.8rem;
+}
+
+/* 브레드크럼 */
+.sub-breadcrumb {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Noto Serif KR', serif;
+  margin-top: 0.4rem;
+}
+
+.sub-breadcrumb a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.sub-breadcrumb a:hover { color: #fff; }
+
+/* ================================================================
+   본문 레이아웃
+   ================================================================ */
+.sub-detail-content {
+  --content-width: 78%;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  padding: 2.2rem 0 4.2rem;
+}
+
+.detail-section { margin: 0 auto 2.6rem; padding: 0; }
+
+.gallery-full { margin-left: 0; margin-right: 0; }
+.gallery-full .section-title {
+  width: var(--content-width);
+  max-width: var(--content-width);
+  margin: 0 auto 1rem;
+  padding: 0;
+}
+
+.section-title {
+  font-family: "Gowun Batang", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  width: var(--content-width);
+  margin: 0 auto 1rem;
+  padding: 0;
+}
+
+.count-badge {
+  font-size: 0.78rem;
+  color: var(--sky-deep);
+  background: rgba(44, 123, 229, 0.12);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.definition-box {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: var(--cloud-gray);
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+}
+
+.formation-box {
+  width: var(--content-width);
+  margin: 0 auto;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2fb 100%);
+  border-left: 4px solid var(--sky-deep);
+  border-radius: 0 12px 12px 0;
+  padding: 1.2rem 1.5rem;
+}
+
+.editable-content {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text-dark);
+}
+
+.physical-multi { display: flex; flex-direction: column; gap: 0.6rem; }
+.physical-row { display: block; font-size: 0.92rem; line-height: 1.8; color: var(--text-dark); }
+
+/* ================================================================
+   출현 구름 카드 그리드
+   ================================================================ */
+.occurrence-grid {
+  width: var(--content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.occurrence-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.2rem;
+  background: #fff;
+  border: 1.5px solid #e2eaf4;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.occurrence-card:hover {
+  border-color: var(--sky-deep);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(44, 123, 229, 0.14);
+}
+
+.occ-level-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  font-family: 'Noto Serif KR', serif;
+  align-self: flex-start;
+}
+
+.occ-cloud-name { display: flex; align-items: center; gap: 0.5rem; }
+
+.occ-symbol {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--sky-deep);
+  background: rgba(44, 123, 229, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: 7px;
+  font-family: 'Noto Serif KR', serif;
+  line-height: 1.4;
+}
+
+.occ-name-ko {
+  font-size: 1.05rem;
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.occ-full-label {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-light);
+  font-family: 'Noto Serif KR', serif;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.occ-link-hint {
+  font-size: 0.72rem;
+  color: var(--sky-deep);
+  font-weight: 600;
+  font-family: 'Noto Serif KR', serif;
+  margin-top: auto;
+  padding-top: 0.4rem;
+  border-top: 1px solid #edf2f9;
+}
+
+/* ── 하단 nav / 푸터 ── */
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e8eff8;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  background: var(--sky-light);
+  color: var(--sky-deep);
+  border-radius: 25px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--sky-blue);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.atlas-footer {
+  background: var(--text-dark);
+  color: #fff;
+  padding: 2.5rem 5%;
+  text-align: center;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  .sub-detail-content { --content-width: 92%; padding: 1.5rem 0 3rem; }
+  .sub-hero { min-height: 270px; padding: 5.5rem 4% 2rem; }
+  .sub-hero-name-ko { font-size: 1.9rem; }
+  .sub-hero-name-en { font-size: 0.9rem; }
+  .occurrence-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .atlas-nav .nav-links { gap: 1rem; }
+  .atlas-nav .nav-links a { font-size: 0.85rem; }
+}
+
+@media (max-width: 480px) {
+  .atlas-nav { padding: 1rem 4%; }
+  .atlas-nav .nav-logo { font-size: 1.4rem; }
+  .sub-hero-name-ko { font-size: 1.6rem; }
+  .occurrence-grid { grid-template-columns: 1fr 1fr; }
+}

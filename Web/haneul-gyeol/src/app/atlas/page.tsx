@@ -21,24 +21,12 @@ export default function AtlasPage() {
     <>
       {/* Navbar */}
       <nav className="atlas-nav">
-        <Link href="/" className="logo">
-          하늘결
-        </Link>
+        <Link href="/" className="logo">하늘결</Link>
         <ul className="nav-links">
-          <li>
-            <Link href="/">홈</Link>
-          </li>
-          <li>
-            <Link href="/#ai">AI 식별</Link>
-          </li>
-          <li>
-            <Link href="/atlas" className="active">
-              구름 도감
-            </Link>
-          </li>
-          <li>
-            <Link href="/#about">소개</Link>
-          </li>
+          <li><Link href="/">홈</Link></li>
+          <li><Link href="/#ai">AI 식별</Link></li>
+          <li><Link href="/atlas" className="active">구름 도감</Link></li>
+          <li><Link href="/#about">소개</Link></li>
         </ul>
       </nav>
 
@@ -52,11 +40,7 @@ export default function AtlasPage() {
         </p>
         <div className="reference-note">
           📚 참고:{" "}
-          <a
-            href="https://cloudatlas.wmo.int/en/home.html"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://cloudatlas.wmo.int/en/home.html" target="_blank" rel="noreferrer">
             WMO International Cloud Atlas
           </a>
         </div>
@@ -68,26 +52,38 @@ export default function AtlasPage() {
       {/* Classification Info */}
       <section className="classification-info">
         <div className="info-grid">
-          <div className="info-card">
+
+          {/* Genera — 링크 없음 (현재 페이지) */}
+          <div className="info-card info-card--static">
             <div className="count">10</div>
             <h3>구름 속 (Genera)</h3>
             <p>기본적인 구름의 형태와 고도에 따라 분류되는 10가지 주요 구름 종류</p>
           </div>
-          <div className="info-card">
-            <div className="count">14</div>
+
+          {/* Species → taxonomy#species */}
+          <Link href="/atlas/taxonomy#species" className="info-card info-card--link">
+            <div className="count">15</div>
             <h3>구름 종 (Species)</h3>
             <p>구름의 형태와 구조적 특징에 따른 세부 분류</p>
-          </div>
-          <div className="info-card">
+            <span className="info-card-cta">전체 목록 보기 →</span>
+          </Link>
+
+          {/* Varieties → taxonomy#varieties */}
+          <Link href="/atlas/taxonomy#varieties" className="info-card info-card--link">
             <div className="count">9</div>
             <h3>변종 (Varieties)</h3>
             <p>투명도와 배열 패턴에 따른 추가 분류</p>
-          </div>
-          <div className="info-card">
-            <div className="count">9+</div>
+            <span className="info-card-cta">전체 목록 보기 →</span>
+          </Link>
+
+          {/* Supplementary → taxonomy#supplementary */}
+          <Link href="/atlas/taxonomy#supplementary" className="info-card info-card--link">
+            <div className="count">15</div>
             <h3>부속 구름 등</h3>
             <p>보조 특징, 부속 구름 및 특수 구름 형태</p>
-          </div>
+            <span className="info-card-cta">전체 목록 보기 →</span>
+          </Link>
+
         </div>
 
         {/* Search Box */}
@@ -105,9 +101,7 @@ export default function AtlasPage() {
       </section>
 
       {/* Main Content */}
-
       <main className="main-content">
-        {/* 👇 고층운: 3개 레이아웃으로 감싸기 */}
         <div className="layout-3-cols">
           <CloudLevelSection
             level="high"
@@ -120,8 +114,6 @@ export default function AtlasPage() {
             searchTerm={debounced}
           />
         </div>
-
-        {/* 👇 중층운: 3개 레이아웃으로 감싸기 */}
         <div className="layout-3-cols">
           <CloudLevelSection
             level="mid"
@@ -134,8 +126,6 @@ export default function AtlasPage() {
             searchTerm={debounced}
           />
         </div>
-
-        {/* 👇 저층운: 4개 레이아웃으로 감싸기 */}
         <div className="layout-4-cols">
           <CloudLevelSection
             level="low"

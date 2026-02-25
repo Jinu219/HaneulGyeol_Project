@@ -1,0 +1,224 @@
+/* ================================================================
+   RelatedCloudsPanel.css
+   src/components/atlas/RelatedCloudsPanel.css
+   ================================================================ */
+
+.rcp-section {
+  --content-width: 78%;
+  width: var(--content-width);
+  margin: 0 auto 2.5rem;
+}
+
+/* 헤더 행 */
+.rcp-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.rcp-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rcp-all-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2c7be5;
+  text-decoration: none;
+  font-family: 'Noto Serif KR', serif;
+  transition: opacity 0.2s;
+}
+
+.rcp-all-link:hover { opacity: 0.7; }
+
+/* 테이블 컨테이너 */
+.rcp-table {
+  background: #fff;
+  border: 1.5px solid #e2eaf4;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(44, 123, 229, 0.07);
+}
+
+/* 열 헤더 행 */
+.rcp-col-headers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1.5px solid #e2eaf4;
+}
+
+.rcp-col-header {
+  padding: 0.65rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  border-right: 1px solid #e2eaf4;
+}
+
+.rcp-col-header:last-child { border-right: none; }
+
+.rcp-col-label {
+  font-family: 'Gowun Batang', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.rcp-col-sub {
+  font-size: 0.65rem;
+  font-family: 'Noto Serif KR', serif;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+/* 열 내용 행 */
+.rcp-col-body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.rcp-col-items {
+  padding: 0.75rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-right: 1px solid #f0f4f8;
+}
+
+.rcp-col-items:last-child { border-right: none; }
+
+/* 공통 칩 */
+.rcp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rcp-chip:hover {
+  filter: brightness(0.93);
+  transform: translateX(2px);
+}
+
+.rcp-chip--current {
+  pointer-events: none;
+}
+
+/* Genera 칩 */
+.rcp-chip-sym {
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: 'Noto Serif KR', serif;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.45);
+  padding: 0.06rem 0.3rem;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+/* Sub 칩 코드 */
+.rcp-chip-code {
+  font-size: 0.65rem;
+  font-weight: 800;
+  font-family: 'Noto Serif KR', serif;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.45);
+  padding: 0.06rem 0.28rem;
+  border-radius: 4px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+}
+
+.rcp-chip-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'Gowun Batang', serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.rcp-chip-now {
+  font-size: 0.58rem;
+  background: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.9);
+  padding: 0.05rem 0.3rem;
+  border-radius: 999px;
+  font-family: 'Noto Serif KR', serif;
+  flex-shrink: 0;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 1024px) {
+  .rcp-section { --content-width: 90%; }
+}
+
+@media (max-width: 768px) {
+  .rcp-section { --content-width: 94%; }
+
+  /* 모바일: 2열 */
+  .rcp-col-headers,
+  .rcp-col-body {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* 3, 4번 열 헤더에 위쪽 구분선 */
+  .rcp-col-headers .rcp-col-header:nth-child(3),
+  .rcp-col-headers .rcp-col-header:nth-child(4) {
+    border-top: 1.5px solid #e2eaf4;
+  }
+
+  .rcp-col-body .rcp-col-items:nth-child(3),
+  .rcp-col-body .rcp-col-items:nth-child(4) {
+    border-top: 1px solid #f0f4f8;
+  }
+
+  .rcp-col-body .rcp-col-items:nth-child(2),
+  .rcp-col-body .rcp-col-items:nth-child(4) {
+    border-right: none;
+  }
+
+  .rcp-col-label { font-size: 0.78rem; }
+  .rcp-chip-name { font-size: 0.72rem; }
+}
+
+@media (max-width: 480px) {
+  /* 모바일 소형: 1열 */
+  .rcp-col-headers,
+  .rcp-col-body {
+    grid-template-columns: 1fr;
+  }
+
+  .rcp-col-header,
+  .rcp-col-items {
+    border-right: none !important;
+    border-top: 1px solid #f0f4f8;
+  }
+
+  .rcp-col-headers .rcp-col-header:first-child { border-top: none; }
+  .rcp-col-body .rcp-col-items:first-child { border-top: none; }
+
+  .rcp-col-items {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0.6rem;
+  }
+
+  .rcp-chip { width: auto; }
+}

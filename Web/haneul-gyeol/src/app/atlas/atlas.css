@@ -125,6 +125,59 @@ body{
   font-weight: 600;
 }
 
+/* ================================================================
+   필터 바
+   <FilterBar> 컴포넌트
+   ================================================================ */
+.filter-section {
+  padding: 1.2rem 5%;
+  background: var(--cloud-white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 80px;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.filter-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-right: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.7rem 1.5rem;
+  background: var(--cloud-gray);
+  border: 2px solid transparent;
+  border-radius: 25px;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.filter-btn:hover {
+  background: var(--sky-light);
+  border-color: var(--sky-blue);
+}
+
+.filter-btn.active {
+  background: var(--sky-deep);
+  color: white;
+  border-color: var(--sky-deep);
+}
 
 /* ================================================================
    분류 안내
@@ -228,6 +281,56 @@ body{
 }
 
 /* ================================================================
+   CloudLevelSection 컴포넌트 클래스
+   ================================================================ */
+.cloud-level-section {
+  margin-bottom: 5rem;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid;
+}
+
+.level-header.high     { border-color: #E3F2FD; }
+.level-header.mid      { border-color: #B3E5FC; }
+.level-header.low      { border-color: #81D4FA; }
+.level-header.vertical { border-color: #4FC3F7; }
+
+.level-icon { font-size: 3rem; }
+
+.level-title { flex: 1; }
+
+.level-title h2 {
+  font-size: 2.5rem;
+  font-family: 'Gowun Batang', serif;
+  margin-bottom: 0.3rem;
+}
+
+.level-title .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+.altitude-info {
+  text-align: right;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+.altitude-info strong {
+  display: block;
+  font-size: 1.3rem;
+  color: var(--sky-deep);
+  margin-bottom: 0.2rem;
+}
+
+/* ================================================================
    구름 카드 그리드
    ================================================================ */
 .cloud-grid {
@@ -322,14 +425,13 @@ body{
   color: var(--text-light);
   line-height: 1.8;
   font-size: 0.95rem;
-  margin-bottom: 1.8rem; /* 텍스트와 배지 사이 간격 증가 */
+  margin-bottom: 1.5rem;
 }
 
 .cloud-meta {
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
-  margin-bottom: 1.2rem; /* 배지와 링크 사이 여백 */
 }
 
 .meta-badge {
@@ -342,6 +444,19 @@ body{
   font-weight: 500;
 }
 
+.cloud-details-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--sky-deep);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.cloud-card:hover .cloud-details-link {
+  transform: translateX(5px);
+}
 
 /* 빈 상태 */
 .empty-state { text-align: center; padding: 4rem 2rem; background: var(--cloud-gray); border-radius: 15px; }
@@ -462,4 +577,50 @@ body{
   .cloud-info  { padding: 1.5rem; }
   .cloud-name  { font-size: 1.6rem; }
   .cloud-description { font-size: 0.9rem; }
+}
+
+
+/* ================================================================
+   classification-info 카드 링크 버전
+   ================================================================ */
+
+/* 링크 카드 — 기본 info-card를 상속하되 클릭 가능하게 */
+a.info-card--link {
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+a.info-card--link:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgba(74, 144, 226, 0.18);
+  border-left-color: var(--sky-deep);
+}
+
+a.info-card--link .count { transition: color 0.2s; }
+a.info-card--link:hover .count { color: var(--sky-deep); }
+
+/* 정적 카드 (Genera, 현재 페이지) */
+.info-card--static {
+  cursor: default;
+  opacity: 0.9;
+}
+
+/* "전체 목록 보기 →" 힌트 */
+.info-card-cta {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sky-deep);
+  font-family: 'Noto Serif KR', serif;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+a.info-card--link:hover .info-card-cta {
+  opacity: 1;
+  transform: translateX(0);
 }

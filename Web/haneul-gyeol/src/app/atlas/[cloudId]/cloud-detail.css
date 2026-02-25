@@ -1016,3 +1016,52 @@
   .atlas-nav .nav-links { gap: 1rem; }
   .atlas-nav .nav-links a { font-size: 0.82rem; }
 }
+
+
+/* ================================================================
+   SubItemCard — 간략 모드 + 자세히 보기 버튼
+   ================================================================ */
+
+/* 설명/생성원리 텍스트: 3줄로 clamp */
+.sub-card-text--clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--text-light, #64748b);
+}
+
+/* 푸터 행 (자세히 보기 버튼 포함) */
+.sub-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.6rem 1.2rem 0.8rem;
+  border-top: 1px solid #f0f4f8;
+  background: #fafcff;
+}
+
+/* 자세히 보기 링크 버튼 */
+.sub-card-detail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.38rem 0.95rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Noto Serif KR', serif;
+  color: var(--sky-deep, #2c7be5);
+  background: rgba(44, 123, 229, 0.08);
+  border: 1.5px solid rgba(44, 123, 229, 0.22);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.sub-card-detail-btn:hover {
+  background: var(--sky-deep, #2c7be5);
+  color: #fff;
+  border-color: var(--sky-deep, #2c7be5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(44, 123, 229, 0.22);
+}
