@@ -298,7 +298,7 @@
    <h2 className="section-title supplementary-title">
    <span className="count-badge">
    ================================================================ */
-.section-title {
+/* .section-title {
   font-family: 'Gowun Batang', serif;
   font-size: 1.3rem;
   font-weight: 700;
@@ -311,7 +311,7 @@
   width: 78%;
   padding: 0 16px;
   align-items: baseline;
-}
+} */
 
 .count-badge {
   font-size: 0.72rem;
@@ -620,7 +620,7 @@
   padding: 0;
 }
 
-.section-title {
+.cloud-section-title {
   font-family: "Gowun Batang", serif;
   font-size: 1.35rem;
   font-weight: 700;
@@ -632,6 +632,7 @@
   margin: 0 auto 1rem;
   padding: 0;
 }
+
 
 .count-badge {
   font-size: 0.78rem;

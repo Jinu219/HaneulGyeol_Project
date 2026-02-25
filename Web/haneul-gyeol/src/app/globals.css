@@ -217,6 +217,14 @@
             position: relative;
         }
 
+        .ai-section .section-title {
+            font-size: 3rem;
+            font-family: 'Gowun Batang', serif;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
         .section-title {
             font-size: 3rem;
             font-family: 'Gowun Batang', serif;
@@ -320,6 +328,13 @@
         padding: 4rem 1.5rem;
         }
 
+        .atlas-section .section-title {
+            font-size: 3rem;
+            font-family: 'Gowun Batang', serif;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
         /* 섹션 내부를 “정확히” 가운데로 잡아주는 컨테이너 역할 */
         .atlas-section .section-title,
         .atlas-section .section-subtitle,
@@ -437,6 +452,14 @@
             background: var(--cloud-white);
         }
 
+        .about-section .section-title {
+            font-size: 3rem;
+            font-family: 'Gowun Batang', serif;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
         .about-content {
             max-width: 900px;
             margin: 0 auto;

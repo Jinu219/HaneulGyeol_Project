@@ -130,7 +130,7 @@ export default function CloudDetailPage() {
         {/* ① 갤러리 */}
         {cloud.images.length > 0 && (
           <section className="detail-section gallery-full">
-            <h2 className="section-title">
+            <h2 className="cloud-section-title">
               사진 갤러리 <span className="count-badge">{cloud.images.length}장</span>
             </h2>
             <MasonryGallery images={cloud.images} colDesktop={4} colTablet={3} colMobile={2} />
@@ -139,7 +139,7 @@ export default function CloudDetailPage() {
 
         {/* ② 정의 */}
         <section className="detail-section">
-          <h2 className="section-title">정의 (Definition)</h2>
+          <h2 className="cloud-section-title">정의 (Definition)</h2>
           <div className="definition-box">
             <p className="editable-content">{cloud.definition || "여기에 구름의 정의를 작성하세요..."}</p>
           </div>
@@ -147,7 +147,7 @@ export default function CloudDetailPage() {
 
         {/* ③ 생성 원리 */}
         <section className="detail-section">
-          <h2 className="section-title">생성 원리 (Formation)</h2>
+          <h2 className="cloud-section-title">생성 원리 (Formation)</h2>
           <div className="formation-box">
             <p className="editable-content">{cloud.formation || "여기에 구름의 생성 원리를 작성하세요..."}</p>
           </div>
@@ -155,7 +155,7 @@ export default function CloudDetailPage() {
 
         {/* ④ 종 · 변종 · 부속구름 */}
         <section className="detail-section taxonomy-section">
-          <h2 className="section-title">종 · 변종 · 부속구름</h2>
+          <h2 className="cloud-section-title">종 · 변종 · 부속구름</h2>
           {cloud.species.length === 0 && cloud.varieties.length === 0 && cloud.supplementary.length === 0 ? (
             <div className="taxonomy-empty"><p>이 구름에는 <b>종/변종/부속구름</b> 정보가 없습니다.</p></div>
           ) : (
@@ -210,7 +210,7 @@ export default function CloudDetailPage() {
 
         {/* ⑤ 물리적 구성 */}
         <section className="detail-section">
-          <h2 className="section-title">물리적 구성 (Physical Constitution)</h2>
+          <h2 className="cloud-section-title">물리적 구성 (Physical Constitution)</h2>
           <div className="definition-box">
             <p className="editable-content">{cloud.physical || "여기에 물리적 구성을 작성하세요..."}</p>
           </div>
@@ -218,7 +218,7 @@ export default function CloudDetailPage() {
 
         {/* ⑥ 관측 정보 */}
         <section className="detail-section">
-          <h2 className="section-title">관측 정보 (Observation)</h2>
+          <h2 className="cloud-section-title">관측 정보 (Observation)</h2>
           <div className="definition-box">
             <p className="editable-content">{cloud.observation || "여기에 관측 팁을 작성하세요..."}</p>
           </div>

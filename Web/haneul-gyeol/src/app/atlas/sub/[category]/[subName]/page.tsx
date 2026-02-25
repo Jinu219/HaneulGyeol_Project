@@ -138,7 +138,7 @@ export default function SubDetailPage() {
         {/* ① 사진 갤러리 */}
         {allImages.length > 0 && (
           <section className="detail-section gallery-full">
-            <h2 className="section-title">
+            <h2 className="cloud-section-title">
               사진 갤러리
               <span className="count-badge">{allImages.length}장</span>
             </h2>
@@ -148,7 +148,7 @@ export default function SubDetailPage() {
 
         {/* ② 출현 구름 */}
         <section className="detail-section">
-          <h2 className="section-title">
+          <h2 className="cloud-section-title">
             출현 구름 (Cloud Genera)
             <span className="count-badge">{occurrences.length}종</span>
           </h2>
@@ -175,7 +175,7 @@ export default function SubDetailPage() {
 
         {/* ③ 정의 */}
         <section className="detail-section">
-          <h2 className="section-title">정의 (Definition)</h2>
+          <h2 className="cloud-section-title">정의 (Definition)</h2>
           <div className="definition-box">
             <p className="editable-content">
               {firstItem.description || "여기에 정의를 작성하세요..."}
@@ -185,7 +185,7 @@ export default function SubDetailPage() {
 
         {/* ④ 생성 원리 */}
         <section className="detail-section">
-          <h2 className="section-title">생성 원리 (Formation)</h2>
+          <h2 className="cloud-section-title">생성 원리 (Formation)</h2>
           <div className="formation-box">
             <p className="editable-content">
               {firstItem.formation || "여기에 생성 원리를 작성하세요..."}
@@ -195,7 +195,7 @@ export default function SubDetailPage() {
 
         {/* ⑤ 물리적 구성 */}
         <section className="detail-section">
-          <h2 className="section-title">물리적 구성 (Physical Constitution)</h2>
+          <h2 className="cloud-section-title">물리적 구성 (Physical Constitution)</h2>
           <div className="definition-box">
             <p className="editable-content">
               여기에 물리적 구성을 작성하세요...
