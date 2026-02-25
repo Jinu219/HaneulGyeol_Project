@@ -42,5 +42,8 @@
 }
 
 .altitude-info strong {
-  color: var(--text-dark);
+  display: block;
+  font-size: 1.3rem;
+  color: var(--sky-deep);
+  margin-bottom: 0.2rem;
 }
