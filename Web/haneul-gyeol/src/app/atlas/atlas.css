@@ -581,46 +581,234 @@ body{
 
 
 /* ================================================================
-   classification-info 카드 링크 버전
+   info-card 탭 버튼 버전
+   (기존 .info-card 스타일에 추가)
    ================================================================ */
 
-/* 링크 카드 — 기본 info-card를 상속하되 클릭 가능하게 */
-a.info-card--link {
-  text-decoration: none;
-  display: block;
+/* 모든 카드를 버튼으로 사용하기 위한 리셋 */
+.info-card--tab {
+  width: 100%;
+  text-align: left;
   cursor: pointer;
+  font-family: inherit;
   position: relative;
+  transition: all 0.25s ease;
+  border: 2px solid transparent;  /* 활성 시 테두리 */
 }
 
-a.info-card--link:hover {
+/* 활성 탭 카드 */
+.info-card--active {
   transform: translateY(-6px);
-  box-shadow: 0 14px 36px rgba(74, 144, 226, 0.18);
-  border-left-color: var(--sky-deep);
+  box-shadow: 0 14px 40px rgba(44, 123, 229, 0.18);
 }
 
-a.info-card--link .count { transition: color 0.2s; }
-a.info-card--link:hover .count { color: var(--sky-deep); }
-
-/* 정적 카드 (Genera, 현재 페이지) */
-.info-card--static {
-  cursor: default;
-  opacity: 0.9;
-}
-
-/* "전체 목록 보기 →" 힌트 */
-.info-card-cta {
-  display: block;
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
+/* "보는 중 ✓" 뱃지 */
+.info-active-badge {
+  display: inline-block;
+  margin-top: 0.9rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--sky-deep);
+  color: #fff;
   font-family: 'Noto Serif KR', serif;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: 0.03em;
 }
 
-a.info-card--link:hover .info-card-cta {
-  opacity: 1;
-  transform: translateX(0);
+/* 영문 이름 (소형) */
+.info-en {
+  font-size: 0.78rem;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-left: 0.2rem;
+}
+
+/* ================================================================
+   Sub 탭 콘텐츠
+   (종/변종/부속구름 선택 시 main-content에 표시)
+   ================================================================ */
+.sub-tab-content {
+  padding: 0 0 2rem;
+}
+
+/* 섹션 헤더 */
+.sub-tab-header {
+  border-left: 5px solid;
+  border-radius: 0 14px 14px 0;
+  padding: 1.1rem 1.6rem;
+  margin-bottom: 2rem;
+}
+.sub-tab-header-top {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+.sub-tab-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+.sub-tab-en {
+  font-size: 1rem;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 400;
+  opacity: 0.72;
+}
+.sub-tab-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  font-family: 'Noto Serif KR', serif;
+}
+.sub-tab-desc {
+  font-size: 0.92rem;
+  color: var(--text-light);
+  font-family: 'Noto Serif KR', serif;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* 빈 상태 */
+.sub-tab-empty {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--cloud-gray);
+  border-radius: 14px;
+  color: var(--text-light);
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* 카드 그리드 */
+.sub-tab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+/* ── 카드 ── */
+.sub-tab-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem 1.1rem 0.9rem;
+  background: #fff;
+  border: 1.5px solid #e2eaf4;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* 좌측 컬러 라인 */
+.sub-tab-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--cat-color, #2c7be5);
+  border-radius: 16px 0 0 16px;
+}
+
+.sub-tab-card:hover {
+  border-color: var(--cat-color, #2c7be5);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+}
+
+/* 카드 헤더 */
+.stc-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding-left: 5px;
+}
+
+/* 코드 뱃지 */
+.stc-code {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: 'Noto Serif KR', serif;
+  padding: 0.18rem 0.5rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+/* 이름 묶음 */
+.stc-names { display: flex; flex-direction: column; gap: 0.06rem; min-width: 0; }
+
+.stc-ko {
+  font-size: 1rem;
+  font-family: 'Gowun Batang', serif;
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stc-en {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--text-light);
+  font-family: 'Noto Serif KR', serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 출현 구름 칩들 */
+.stc-clouds { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.stc-cloud-chip {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  font-family: 'Noto Serif KR', serif;
+  padding: 0.12rem 0.42rem;
+  border-radius: 5px;
+  line-height: 1.4;
+}
+
+/* 자세히 보기 버튼 */
+.stc-detail-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0;
+  margin-top: auto;
+  border-top: 1px solid #f0f4f8;
+  padding-top: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Noto Serif KR', serif;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.stc-detail-btn:hover {
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .sub-tab-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .sub-tab-title { font-size: 1.3rem; }
+}
+@media (max-width: 480px) {
+  .sub-tab-grid { grid-template-columns: 1fr 1fr; }
 }

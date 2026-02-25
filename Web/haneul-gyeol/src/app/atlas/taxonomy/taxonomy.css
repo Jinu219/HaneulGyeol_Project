@@ -1,5 +1,5 @@
 /* ================================================================
-   taxonomy.css
+   taxonomy.css (updated)
    src/app/atlas/taxonomy/taxonomy.css
    ================================================================ */
 
@@ -13,7 +13,7 @@
   --text-light:  #64748b;
 }
 
-/* ── Nav (sub-detail.css 동일) ── */
+/* ── Nav ── */
 .atlas-nav {
   position: fixed;
   top: 0;
@@ -28,7 +28,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
-
 .atlas-nav .nav-logo {
   font-size: 1.8rem;
   font-weight: 700;
@@ -37,13 +36,11 @@
   letter-spacing: 0.05em;
   text-decoration: none;
 }
-
 .atlas-nav .nav-links {
   display: flex;
   gap: 2.5rem;
   list-style: none;
 }
-
 .atlas-nav .nav-links a {
   text-decoration: none;
   color: var(--text-dark);
@@ -52,88 +49,91 @@
   transition: all 0.3s ease;
   position: relative;
 }
-
 .atlas-nav .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
+  bottom: -5px; left: 0;
+  width: 0; height: 2px;
   background: var(--sky-deep);
   transition: width 0.3s ease;
 }
-
 .atlas-nav .nav-links a.active::after,
 .atlas-nav .nav-links a:hover::after { width: 100%; }
-
 .atlas-nav .nav-links a.active { color: var(--sky-deep); font-weight: 600; }
 
 /* ================================================================
-   Hero
+   Hero — cloud-hero와 동일한 방식:
+   position relative + 자식 중앙배열
    ================================================================ */
 .taxo-hero {
   position: relative;
-  min-height: 260px;
-  display: flex;
-  align-items: flex-end;
-  padding: 0 5% 3rem;
+  min-height: 320px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* ← 가로 중앙 */
+  justify-content: flex-end;   /* ← 아래 정렬 */
+  padding: 8rem 5% 2.8rem;
+  text-align: center;          /* ← 텍스트 중앙 */
 }
 
+/* 배경 */
 .taxo-hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   background: linear-gradient(135deg, #0f2356 0%, #1a3a8f 35%, #2c7be5 70%, #56acf0 100%);
 }
-
 .taxo-hero-bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.25) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 25, 55, 0.05) 0%,
+    rgba(10, 25, 55, 0.55) 100%
+  );
 }
 
-.taxo-hero-content {
+/* 모든 직계 자식 (bg 제외) 을 배경 위로 */
+.taxo-hero > *:not(.taxo-hero-bg) {
   position: relative;
   z-index: 2;
-  padding-top: 7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
+/* 브레드크럼 */
 .taxo-breadcrumb {
   font-size: 0.8rem;
   color: rgba(255,255,255,0.6);
   font-family: 'Noto Serif KR', serif;
+  margin-bottom: 0.5rem;
 }
-
 .taxo-breadcrumb a {
   color: rgba(255,255,255,0.6);
   text-decoration: none;
+  transition: color 0.2s;
 }
-
 .taxo-breadcrumb a:hover { color: #fff; }
 
+/* 제목 */
 .taxo-hero-title {
   font-size: 2.8rem;
   font-family: 'Gowun Batang', serif;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.35);
-  margin: 0;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  margin: 0 0 0.35rem;
   line-height: 1.1;
 }
 
+/* 부제 */
 .taxo-hero-sub {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: rgba(255,255,255,0.72);
   font-family: 'Noto Serif KR', serif;
-  margin: 0;
+  margin: 0 0 0.8rem;
   max-width: 560px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* 빠른 이동 버튼 */
@@ -141,9 +141,9 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 0.5rem;
+  justify-content: center; /* ← 중앙 정렬 */
+  margin-top: 0.3rem;
 }
-
 .taxo-jump-btn {
   display: inline-block;
   padding: 0.38rem 1rem;
@@ -155,7 +155,6 @@
   transition: all 0.2s ease;
   letter-spacing: 0.03em;
 }
-
 .taxo-jump-btn:hover {
   filter: brightness(0.9);
   transform: translateY(-1px);
@@ -172,10 +171,9 @@
   padding: 3rem 0 4rem;
 }
 
-/* ── 섹션 ── */
 .taxo-section {
   margin-bottom: 3.5rem;
-  scroll-margin-top: 100px; /* 앵커 스크롤 오프셋 */
+  scroll-margin-top: 100px;
 }
 
 /* 섹션 헤더 */
@@ -185,14 +183,12 @@
   padding: 1rem 1.4rem;
   margin-bottom: 1.2rem;
 }
-
 .taxo-section-title-row {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 0.3rem;
 }
-
 .taxo-section-title {
   font-family: 'Gowun Batang', serif;
   font-size: 1.5rem;
@@ -202,14 +198,12 @@
   gap: 0.4rem;
   margin: 0;
 }
-
 .taxo-section-en {
   font-size: 0.9rem;
   font-family: 'Noto Serif KR', serif;
   font-weight: 400;
   opacity: 0.75;
 }
-
 .taxo-count-badge {
   font-size: 0.75rem;
   font-weight: 700;
@@ -217,7 +211,6 @@
   border-radius: 20px;
   font-family: 'Noto Serif KR', serif;
 }
-
 .taxo-section-desc {
   font-size: 0.88rem;
   color: var(--text-light);
@@ -226,14 +219,14 @@
   line-height: 1.5;
 }
 
-/* ── 카드 그리드 ── */
+/* 카드 그리드 */
 .taxo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 12px;
 }
 
-/* ── 카드 ── */
+/* 카드 */
 .taxo-card {
   display: flex;
   flex-direction: column;
@@ -248,34 +241,25 @@
   position: relative;
   overflow: hidden;
 }
-
-/* 왼쪽 색상 악센트 라인 */
 .taxo-card::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 4px;
   background: var(--cat-color, #2c7be5);
   border-radius: 14px 0 0 14px;
 }
-
 .taxo-card:hover {
   border-color: var(--cat-color, #2c7be5);
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
-
-/* 카드 헤더 */
 .taxo-card-head {
   display: flex;
   align-items: flex-start;
   gap: 0.55rem;
-  padding-left: 4px; /* ::before 라인 만큼 오프셋 */
+  padding-left: 4px;
 }
-
-/* 코드 뱃지 */
 .taxo-card-code {
   display: inline-block;
   font-size: 0.7rem;
@@ -288,41 +272,22 @@
   letter-spacing: 0.04em;
   line-height: 1.4;
 }
-
-.taxo-card-names {
-  display: flex;
-  flex-direction: column;
-  gap: 0.08rem;
-  min-width: 0;
-}
-
+.taxo-card-names { display: flex; flex-direction: column; gap: 0.08rem; min-width: 0; }
 .taxo-card-ko {
   font-size: 0.95rem;
   font-family: 'Gowun Batang', serif;
   font-weight: 700;
   color: var(--text-dark);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-
 .taxo-card-en {
   font-size: 0.72rem;
   font-style: italic;
   color: var(--text-light);
   font-family: 'Noto Serif KR', serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-
-/* 출현 구름 칩 */
-.taxo-card-clouds {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
+.taxo-card-clouds { display: flex; flex-wrap: wrap; gap: 4px; }
 .taxo-cloud-chip {
   display: inline-block;
   font-size: 0.68rem;
@@ -332,8 +297,6 @@
   border-radius: 5px;
   line-height: 1.4;
 }
-
-/* 자세히 보기 힌트 */
 .taxo-card-hint {
   font-size: 0.7rem;
   color: var(--cat-color, #2c7be5);
@@ -343,10 +306,9 @@
   transition: opacity 0.2s;
   margin-top: auto;
 }
-
 .taxo-card:hover .taxo-card-hint { opacity: 1; }
 
-/* ── 하단 nav / 푸터 ── */
+/* 하단 nav / 푸터 */
 .back-btn {
   display: inline-flex;
   align-items: center;
@@ -361,19 +323,8 @@
   text-decoration: none;
   transition: background 0.2s, transform 0.2s;
 }
-
-.back-btn:hover {
-  background: var(--sky-blue);
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-.bottom-nav {
-  display: flex;
-  justify-content: center;
-  padding-top: 2rem;
-  border-top: 1px solid #e8eff8;
-}
+.back-btn:hover { background: var(--sky-blue); color: #fff; transform: translateY(-2px); }
+.bottom-nav { display: flex; justify-content: center; padding-top: 2rem; border-top: 1px solid #e8eff8; }
 
 .atlas-footer {
   background: var(--text-dark);
@@ -385,26 +336,20 @@
   line-height: 1.7;
 }
 
-/* ── 반응형 ── */
-@media (max-width: 1024px) {
-  .taxo-content { --content-width: 92%; }
-  .taxo-grid { grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); }
-}
-
+/* 반응형 */
+@media (max-width: 1024px) { .taxo-content { --content-width: 92%; } }
 @media (max-width: 768px) {
   .taxo-content { --content-width: 96%; padding: 2rem 0 3rem; }
-  .taxo-hero { padding: 0 4% 2.5rem; min-height: 220px; }
+  .taxo-hero { min-height: 270px; padding: 5.5rem 5% 2rem; }
   .taxo-hero-title { font-size: 2rem; }
-  .taxo-hero-content { padding-top: 5.5rem; }
   .taxo-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
   .taxo-section-title { font-size: 1.25rem; }
-
   .atlas-nav .nav-links { gap: 1rem; }
   .atlas-nav .nav-links a { font-size: 0.85rem; }
 }
-
 @media (max-width: 480px) {
   .taxo-grid { grid-template-columns: 1fr 1fr; }
   .atlas-nav { padding: 1rem 4%; }
   .atlas-nav .nav-logo { font-size: 1.4rem; }
+  .taxo-hero-title { font-size: 1.7rem; }
 }
