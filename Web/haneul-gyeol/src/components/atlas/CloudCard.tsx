@@ -2,6 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import "./CloudCard.css";
 
 export type CloudData = {
@@ -14,6 +15,7 @@ export type CloudData = {
   description: string;
   composition: string;
   speciesCount?: number;
+  image?: string;
 };
 
 type CloudCardProps = {
@@ -22,6 +24,7 @@ type CloudCardProps = {
 
 export default function CloudCard({ cloud }: CloudCardProps) {
   const router = useRouter();
+  const [imgError, setImgError] = useState(false);
 
   const handleClick = () => {
     // 구름 상세 페이지로 라우팅
@@ -34,7 +37,19 @@ export default function CloudCard({ cloud }: CloudCardProps) {
       data-name={`${cloud.name_ko} ${cloud.name_en}`.toLowerCase()}
       onClick={handleClick}
     >
-      <div className="cloud-image">{cloud.emoji}</div>
+      <div className="cloud-image">
+        {cloud.image && !imgError ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={cloud.image}
+            alt={cloud.name_ko}
+            className="cloud-card-photo"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span className="cloud-card-emoji">{cloud.emoji}</span>
+        )}
+      </div>
       <div className="cloud-info">
         <div className="cloud-header">
           <div className="cloud-type">{cloud.type}</div>
