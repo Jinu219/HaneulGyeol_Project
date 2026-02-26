@@ -335,8 +335,8 @@ body{
    ================================================================ */
 .cloud-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2.8rem;
 }
 
 .cloud-card {
@@ -348,6 +348,7 @@ body{
   cursor: pointer;
   position: relative;
   border: 2px solid transparent;
+  text-decoration: none;
 }
 
 .cloud-card:hover {
@@ -363,7 +364,7 @@ body{
 
 .cloud-image {
   width: 100%;
-  height: 220px;
+  height: 260px;
   background: linear-gradient(135deg, #E3F2FD 0%, #90CAF9 100%);
   display: flex;
   align-items: center;
@@ -581,542 +582,394 @@ body{
 
 
 /* ================================================================
-   v3 추가 스타일
-   info-card 탭 / Sub 카드 (이미지 포함) / 전체 뷰
+   v4 전체 추가 스타일
+   - CloudCard 사진 지원
+   - Sub 카드 (크게, 사진 포함)
+   - 전체 뷰 (AllView) 개선
+   - 5열 그리드 (15개 종/부속)
    ================================================================ */
 
-/* ── info-card 버튼화 ──────────────────────────────────────── */
+/* ── info-card 탭 버튼 공통 ── */
 button.info-card--tab {
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  font-family: inherit;
-  position: relative;
+  width: 100%; text-align: left; cursor: pointer;
+  font-family: inherit; position: relative;
   border: 2px solid transparent;
   transition: all 0.25s ease;
 }
-
 button.info-card--tab:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-
 .info-card--active {
   transform: translateY(-7px) !important;
-  box-shadow: 0 16px 40px rgba(44, 123, 229, 0.18) !important;
+  box-shadow: 0 16px 40px rgba(44,123,229,0.18) !important;
 }
-
-/* 카드 상단 이모지 + 숫자 행 */
 .info-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.1rem;
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 0.1rem;
 }
-
-.info-emoji {
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-/* "보는 중 ✓" 뱃지 */
+.info-emoji { font-size: 1.5rem; line-height: 1; }
 .info-active-badge {
-  display: inline-block;
-  margin-top: 0.9rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #fff;
+  display: inline-block; margin-top: 0.9rem;
+  padding: 0.25rem 0.75rem; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 700; color: #fff;
   font-family: 'Noto Serif KR', serif;
 }
-
 .info-en {
-  font-size: 0.75rem;
+  font-size: 0.75rem; font-family: 'Noto Serif KR', serif;
+  font-weight: 400; opacity: 0.65;
+}
+
+/* 5열 그리드 (info-grid) */
+.info-grid { grid-template-columns: repeat(5, 1fr) !important; }
+@media (max-width: 1100px) { .info-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+@media (max-width: 768px)  { .info-grid { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 480px)  { .info-grid { grid-template-columns: 1fr !important; } }
+
+/* ================================================================
+   CloudCard 사진 지원
+   ================================================================ */
+.cloud-card-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.cloud-card:hover .cloud-card-photo { transform: scale(1.06); }
+
+.cloud-card-photo-fallback {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.cloud-card-sym-big {
+  font-size: 3.5rem; font-weight: 900;
   font-family: 'Noto Serif KR', serif;
-  font-weight: 400;
-  opacity: 0.65;
+  opacity: 0.7;
 }
 
-/* 5개 열 */
-.info-grid {
-  grid-template-columns: repeat(5, 1fr) !important;
+/* 레벨 뱃지 (사진 좌하단) */
+.cloud-card-level-badge {
+  position: absolute;
+  bottom: 0.5rem; left: 0.6rem;
+  font-size: 0.68rem; font-weight: 800;
+  padding: 0.15rem 0.5rem; border-radius: 6px;
+  font-family: 'Noto Serif KR', serif;
+  backdrop-filter: blur(4px);
+  z-index: 2;
 }
 
-@media (max-width: 1100px) {
-  .info-grid { grid-template-columns: repeat(3, 1fr) !important; }
-}
-@media (max-width: 768px) {
-  .info-grid { grid-template-columns: 1fr 1fr !important; }
-}
-@media (max-width: 480px) {
-  .info-grid { grid-template-columns: 1fr !important; }
+/* cloud-image 안 겹치는 그라디언트 오버레이 */
+.cloud-image::after {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 50%,
+    rgba(0,0,0,0.18) 100%
+  );
+  pointer-events: none;
 }
 
 /* ================================================================
-   Sub 카드 (종/변종/부속) — 이미지 포함 큰 카드
+   종/변종/부속 탭 — 큰 카드
    ================================================================ */
 .sub-tab-content { padding-bottom: 2rem; }
 
 .sub-tab-header {
-  border-left: 5px solid;
-  border-radius: 0 14px 14px 0;
-  padding: 1.2rem 1.8rem;
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  border-left: 5px solid; border-radius: 0 14px 14px 0;
+  padding: 1.2rem 1.8rem; margin-bottom: 2rem;
 }
-
 .sub-tab-header-top {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 0.3rem;
 }
-
 .sub-tab-emoji { font-size: 1.5rem; }
-
 .sub-tab-title {
-  font-family: 'Gowun Batang', serif;
-  font-size: 1.7rem;
-  font-weight: 700;
-  margin: 0;
+  font-family: 'Gowun Batang', serif; font-size: 1.7rem;
+  font-weight: 700; margin: 0;
 }
-
 .sub-tab-en {
-  font-size: 1rem;
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 400;
-  opacity: 0.7;
+  font-size: 1rem; font-family: 'Noto Serif KR', serif;
+  font-weight: 400; opacity: 0.7;
 }
-
 .sub-tab-count {
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 0.24rem 0.7rem;
-  border-radius: 20px;
+  font-size: 0.8rem; font-weight: 700;
+  padding: 0.24rem 0.7rem; border-radius: 20px;
   font-family: 'Noto Serif KR', serif;
 }
-
 .sub-tab-desc {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  font-family: 'Noto Serif KR', serif;
-  margin: 0;
-  line-height: 1.55;
+  font-size: 0.95rem; color: var(--text-light);
+  font-family: 'Noto Serif KR', serif; margin: 0; line-height: 1.55;
 }
-
 .sub-tab-empty {
-  text-align: center;
-  padding: 3rem 2rem;
-  background: var(--cloud-gray);
-  border-radius: 14px;
-  color: var(--text-light);
-  font-family: 'Noto Serif KR', serif;
+  text-align: center; padding: 3rem 2rem;
+  background: var(--cloud-gray); border-radius: 14px;
+  color: var(--text-light); font-family: 'Noto Serif KR', serif;
 }
 
-/* 그리드: 더 크게 */
+/* 기본 그리드 */
 .sub-tab-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
 }
 
-/* ── 카드 본체 ── */
+/* 15개 → 5열 × 3행 고정 */
+.sub-tab-grid--5col {
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 18px;
+}
+
+/* ── stc-card (사진 포함 큰 카드) ── */
 .stc-card {
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   background: #fff;
   border: 1.5px solid #e2eaf4;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
   text-decoration: none;
   transition: all 0.25s ease;
   position: relative;
 }
-
 .stc-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
+  content: ""; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
   background: var(--cat-color, #2c7be5);
 }
-
 .stc-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-7px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.13);
   border-color: var(--cat-color, #2c7be5);
 }
 
-/* 썸네일 영역 */
+/* 썸네일 */
 .stc-thumb {
-  width: 100%;
-  height: 150px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%; height: 220px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-
 .stc-thumb-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.35s ease;
 }
-
 .stc-card:hover .stc-thumb-img { transform: scale(1.07); }
 
-/* 이미지 없을 때 폴백 */
 .stc-thumb-fallback {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  width: 100%;
-  height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.5rem; width: 100%; height: 100%;
 }
-
-.stc-thumb-emoji { font-size: 2.5rem; opacity: 0.45; }
-
+.stc-thumb-emoji { font-size: 2.8rem; opacity: 0.4; }
 .stc-thumb-code {
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-size: 1.2rem; font-weight: 800;
   font-family: 'Noto Serif KR', serif;
-  letter-spacing: 0.05em;
-  opacity: 0.8;
+  letter-spacing: 0.05em; opacity: 0.75;
 }
-
 /* 이미지 위 코드 뱃지 */
 .stc-thumb-badge {
-  position: absolute;
-  bottom: 0.4rem;
-  left: 0.5rem;
-  font-size: 0.68rem;
-  font-weight: 800;
+  position: absolute; bottom: 0.45rem; left: 0.55rem;
+  font-size: 0.7rem; font-weight: 800;
   font-family: 'Noto Serif KR', serif;
-  padding: 0.15rem 0.45rem;
-  border-radius: 6px;
-  backdrop-filter: blur(4px);
-  letter-spacing: 0.04em;
+  padding: 0.15rem 0.48rem; border-radius: 6px;
+  backdrop-filter: blur(4px); letter-spacing: 0.04em;
 }
 
-/* 카드 정보 영역 */
+/* 카드 본문 */
 .stc-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 1rem 1.1rem 0.9rem;
+  display: flex; flex-direction: column;
+  gap: 0.65rem; padding: 1.1rem 1.2rem 1rem;
   flex: 1;
 }
-
 .stc-names { display: flex; flex-direction: column; gap: 0.1rem; }
-
 .stc-ko {
-  font-size: 1.05rem;
-  font-family: 'Gowun Batang', serif;
-  font-weight: 700;
-  color: var(--text-dark, #0f172a);
+  font-size: 1.1rem; font-family: 'Gowun Batang', serif;
+  font-weight: 700; color: var(--text-dark, #0f172a);
 }
-
 .stc-en {
-  font-size: 0.78rem;
-  font-style: italic;
+  font-size: 0.78rem; font-style: italic;
   color: var(--text-light, #64748b);
   font-family: 'Noto Serif KR', serif;
 }
-
-/* 출현 구름 칩 */
 .stc-clouds { display: flex; flex-wrap: wrap; gap: 4px; }
-
 .stc-cloud-chip {
-  display: inline-block;
-  font-size: 0.68rem;
-  font-weight: 800;
+  display: inline-block; font-size: 0.7rem; font-weight: 800;
   font-family: 'Noto Serif KR', serif;
-  padding: 0.14rem 0.44rem;
-  border-radius: 5px;
-  line-height: 1.4;
+  padding: 0.14rem 0.46rem; border-radius: 5px; line-height: 1.4;
 }
-
-/* 자세히 보기 */
 .stc-cta {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.82rem; font-weight: 700;
   font-family: 'Noto Serif KR', serif;
-  margin-top: auto;
-  padding-top: 0.55rem;
+  margin-top: auto; padding-top: 0.6rem;
   border-top: 1px solid #f0f4f8;
   transition: letter-spacing 0.2s;
 }
-
 .stc-card:hover .stc-cta { letter-spacing: 0.04em; }
 
-/* compact variant (전체 뷰용) */
-.stc-card--compact .stc-thumb { height: 100px; }
-.stc-card--compact .stc-thumb-emoji { font-size: 1.8rem; }
+/* 5열일 때 썸네일 높이 조정 */
+.sub-tab-grid--5col .stc-thumb { height: 170px; }
+.sub-tab-grid--5col .stc-ko { font-size: 1rem; }
 
 /* ================================================================
-   전체 뷰 (2컬럼 레이아웃)
+   전체 뷰 (AllView)
    ================================================================ */
 .all-view {
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 28px;
+  grid-template-columns: 400px 1fr;
+  gap: 32px;
   align-items: flex-start;
 }
 
 /* 공통 섹션 헤더 */
 .all-section-header {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1.2rem;
-  border-left: 4px solid;
-  border-radius: 0 12px 12px 0;
-  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.9rem 1.3rem;
+  border-left: 4px solid; border-radius: 0 12px 12px 0;
+  margin-bottom: 1.1rem;
 }
-
 .all-section-emoji { font-size: 1.4rem; flex-shrink: 0; }
-
 .all-section-title {
-  font-family: 'Gowun Batang', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin: 0 0 0.1rem;
-  display: flex;
-  align-items: baseline;
-  gap: 0.3rem;
+  font-family: 'Gowun Batang', serif; font-size: 1.2rem;
+  font-weight: 700; margin: 0 0 0.1rem;
+  display: flex; align-items: baseline; gap: 0.3rem;
 }
-
 .all-section-en {
-  font-size: 0.78rem;
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 400;
-  opacity: 0.7;
+  font-size: 0.78rem; font-family: 'Noto Serif KR', serif;
+  font-weight: 400; opacity: 0.7;
+}
+.all-section-count {
+  font-size: 0.72rem; color: var(--text-light, #64748b);
+  font-family: 'Noto Serif KR', serif; margin: 0;
 }
 
-.all-section-count {
-  font-size: 0.72rem;
-  color: var(--text-light, #64748b);
+/* 전체 보기 버튼 */
+.all-view-more-btn {
+  margin-left: auto; flex-shrink: 0;
+  padding: 0.35rem 0.9rem;
+  border: 1.5px solid; border-radius: 20px;
+  background: transparent; cursor: pointer;
+  font-size: 0.75rem; font-weight: 700;
   font-family: 'Noto Serif KR', serif;
-  margin: 0;
+  transition: all 0.18s ease;
 }
+.all-view-more-btn:hover { opacity: 0.7; transform: translateY(-1px); }
 
 /* ── 왼쪽: 운형 목록 ── */
-.all-view-left {
-  position: sticky;
-  top: 90px; /* nav 높이 */
-}
+.all-view-left { position: sticky; top: 90px; }
 
-.all-genera-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.all-genera-list { display: flex; flex-direction: column; gap: 10px; }
 
-/* 운형 카드 (가로형) */
+/* 운형 카드 */
 .all-genera-card {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.65rem 0.9rem;
-  background: #fff;
-  border: 1.5px solid #e2eaf4;
-  border-radius: 12px;
-  text-decoration: none;
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: #fff; border: 1.5px solid #e2eaf4;
+  border-radius: 16px; text-decoration: none;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
-
 .all-genera-card:hover {
-  transform: translateX(4px);
+  transform: translateX(5px);
   border-color: var(--sky-deep, #2c7be5);
-  box-shadow: 0 6px 20px rgba(44, 123, 229, 0.13);
+  box-shadow: 0 8px 26px rgba(44,123,229,0.16);
 }
 
 /* 썸네일 */
 .all-genera-thumb {
-  width: 52px;
-  height: 52px;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 82px; height: 82px;
+  border-radius: 13px; overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
 }
-
 .all-genera-thumb-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.3s;
 }
-
-.all-genera-card:hover .all-genera-thumb-img { transform: scale(1.1); }
-
+.all-genera-card:hover .all-genera-thumb-img { transform: scale(1.08); }
 .all-genera-thumb-sym {
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-size: 1.7rem; font-weight: 800;
   font-family: 'Noto Serif KR', serif;
 }
 
 /* 정보 */
 .all-genera-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  flex: 1;
-  min-width: 0;
+  display: flex; flex-direction: column; gap: 0.18rem;
+  flex: 1; min-width: 0;
 }
-
-.all-genera-name-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
+.all-genera-name-row { display: flex; align-items: center; gap: 0.5rem; }
 .all-genera-ko {
-  font-size: 0.95rem;
-  font-family: 'Gowun Batang', serif;
-  font-weight: 700;
-  color: var(--text-dark, #0f172a);
+  font-size: 1.08rem; font-family: 'Gowun Batang', serif;
+  font-weight: 700; color: var(--text-dark, #0f172a);
 }
-
 .all-genera-level {
-  font-size: 0.62rem;
-  font-weight: 700;
-  padding: 0.1rem 0.4rem;
-  border-radius: 5px;
-  font-family: 'Noto Serif KR', serif;
-  flex-shrink: 0;
+  font-size: 0.66rem; font-weight: 700;
+  padding: 0.12rem 0.45rem; border-radius: 5px;
+  font-family: 'Noto Serif KR', serif; flex-shrink: 0;
 }
-
 .all-genera-en {
-  font-size: 0.72rem;
-  font-style: italic;
+  font-size: 0.78rem; font-style: italic;
   color: var(--text-light, #64748b);
   font-family: 'Noto Serif KR', serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-
-.all-genera-sym {
-  font-size: 0.65rem;
-  font-weight: 800;
-  padding: 0.08rem 0.35rem;
-  border-radius: 4px;
-  font-family: 'Noto Serif KR', serif;
-  align-self: flex-start;
-}
-
 .all-genera-arrow {
-  font-size: 1.3rem;
-  color: var(--text-light, #64748b);
-  transition: transform 0.2s, color 0.2s;
-  flex-shrink: 0;
+  font-size: 1.5rem; flex-shrink: 0;
+  transition: transform 0.2s; opacity: 0.6;
 }
-.all-genera-card:hover .all-genera-arrow {
-  transform: translateX(3px);
-  color: var(--sky-deep, #2c7be5);
-}
+.all-genera-card:hover .all-genera-arrow { transform: translateX(3px); opacity: 1; }
 
-/* ── 오른쪽: 종/변종/부속 ── */
-.all-view-right {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
+/* ── 오른쪽: 종/변종/부속 섹션 ── */
+.all-view-right { display: flex; flex-direction: column; gap: 28px; }
+.all-sub-section { }
 
-.all-sub-section { /* 각 카테고리 섹션 */ }
-
-/* 칩 그리드 */
-.all-sub-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+/* 오른쪽 카드 그리드 — 15개 전체, 5열 × 3행 */
+.all-sub-card-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
 }
 
-/* 칩 */
-.all-sub-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.85rem;
-  border: 1.5px solid;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: all 0.18s ease;
+/* AllView 안 카드 — 컴팩트하게, 사진 충분히 */
+.all-sub-card-grid .stc-thumb { height: 160px; }
+.all-sub-card-grid .stc-body  { padding: 0.85rem 0.9rem 0.8rem; gap: 0.5rem; }
+.all-sub-card-grid .stc-ko    { font-size: 0.95rem; }
+.all-sub-card-grid .stc-en    { font-size: 0.73rem; }
+.all-sub-card-grid .stc-cta   { font-size: 0.78rem; }
+
+/* ── 반응형 ── */
+@media (max-width: 1300px) {
+  .all-view             { grid-template-columns: 320px 1fr; gap: 22px; }
+  .all-sub-card-grid    { grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .all-sub-card-grid .stc-thumb { height: 140px; }
 }
-
-.all-sub-chip:hover {
-  filter: brightness(0.93);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.all-sub-code {
-  font-size: 0.7rem;
-  font-weight: 800;
-  font-family: 'Noto Serif KR', serif;
-  letter-spacing: 0.03em;
-}
-
-.all-sub-name {
-  font-size: 0.82rem;
-  font-family: 'Gowun Batang', serif;
-  font-weight: 600;
-  color: var(--text-dark, #0f172a);
-}
-
-/* "더 보기" 버튼 */
-.all-sub-more {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.45rem 0.85rem;
-  border: 1.5px dashed;
-  border-radius: 10px;
-  background: transparent;
-  cursor: pointer;
-  font-size: 0.78rem;
-  font-family: 'Noto Serif KR', serif;
-  font-weight: 600;
-  transition: all 0.18s ease;
-}
-
-.all-sub-more:hover { opacity: 0.7; }
-
-/* ── 전체 뷰 반응형 ── */
 @media (max-width: 1100px) {
-  .all-view { grid-template-columns: 320px 1fr; gap: 20px; }
+  .all-view             { grid-template-columns: 1fr; }
+  .all-view-left        { position: static; }
+  .all-genera-list      { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .all-sub-card-grid    { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .sub-tab-grid--5col   { grid-template-columns: repeat(4, 1fr) !important; }
 }
-
-@media (max-width: 860px) {
-  .all-view { grid-template-columns: 1fr; }
-  .all-view-left { position: static; }
-  .all-genera-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-}
-
-@media (max-width: 540px) {
-  .all-genera-list { grid-template-columns: 1fr; }
-}
-
-/* ── sub-tab-grid 반응형 ── */
 @media (max-width: 768px) {
-  .sub-tab-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .sub-tab-grid         { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .sub-tab-grid--5col   { grid-template-columns: repeat(3, 1fr) !important; }
+  .sub-tab-grid--5col .stc-thumb { height: 130px; }
+  .all-genera-list      { grid-template-columns: 1fr; }
+  .all-sub-card-grid    { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .all-sub-card-grid .stc-thumb { height: 120px; }
 }
 @media (max-width: 480px) {
-  .sub-tab-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .stc-thumb    { height: 110px; }
+  .sub-tab-grid--5col   { grid-template-columns: 1fr 1fr !important; }
+  .all-sub-card-grid    { grid-template-columns: repeat(2, 1fr); }
+  .all-sub-card-grid .stc-thumb { height: 100px; }
+}
+
+/* 레이아웃 그리드 (고/중/저층운) */
+@media (min-width: 1025px) {
+  .layout-3-cols .cloud-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .layout-4-cols .cloud-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 1.5rem !important; }
+}
+@media (max-width: 1024px) {
+  .layout-3-cols .cloud-grid,
+  .layout-4-cols .cloud-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  }
 }

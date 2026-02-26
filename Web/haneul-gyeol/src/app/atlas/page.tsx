@@ -4,7 +4,6 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import FilterBar from "@/components/atlas/FilterBar";
-import CloudLevelSection from "@/components/atlas/CloudLevelSection";
 import { cloudDetailData } from "@/app/atlas/[cloudId]/cloudData";
 import "./atlas.css";
 
@@ -44,7 +43,6 @@ const TAB_META: Record<MainTab, {
   },
 };
 
-// 레벨 색상
 const LEVEL_COLOR: Record<string, { color: string; bg: string; label: string }> = {
   high: { color: "#4a90e2", bg: "#E3F2FD", label: "상층운" },
   mid:  { color: "#0277bd", bg: "#B3E5FC", label: "중층운" },
@@ -58,14 +56,11 @@ function collectUnique(cat: SubCat) {
     thumbnail: string | null;
     inClouds: { id: string; symbol: string; nameKo: string; level: string }[];
   }>();
-
   Object.entries(cloudDetailData).forEach(([id, cloud]) => {
     (cloud[cat] ?? []).forEach((item) => {
       if (!map.has(item.name_en)) {
         map.set(item.name_en, {
-          nameKo: item.name_ko,
-          nameEn: item.name_en,
-          code:   item.code,
+          nameKo: item.name_ko, nameEn: item.name_en, code: item.code,
           thumbnail: item.images?.[0]?.src ?? null,
           inClouds: [],
         });
@@ -75,25 +70,112 @@ function collectUnique(cat: SubCat) {
       });
     });
   });
+  return Array.from(map.values()).sort((a, b) => b.inClouds.length - a.inClouds.length);
+}
 
-  return Array.from(map.values()).sort(
-    (a, b) => b.inClouds.length - a.inClouds.length
+// ================================================================
+// ① CloudCard (사진 포함) — 속 탭 전용
+// ================================================================
+function CloudCard({ id, cloud }: { id: string; cloud: typeof cloudDetailData[string] }) {
+  const [imgErr, setImgErr] = useState(false);
+  const lv = LEVEL_COLOR[cloud.level];
+
+  return (
+    <Link href={`/atlas/${id}`} className={`cloud-card ${cloud.level}-cloud`}>
+      {/* 이미지 영역 */}
+      <div className="cloud-image">
+        {cloud.image && !imgErr ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={cloud.image}
+            alt={cloud.name_ko}
+            className="cloud-card-photo"
+            onError={() => setImgErr(true)}
+          />
+        ) : (
+          <div className="cloud-card-photo-fallback" style={{ background: `linear-gradient(135deg, ${lv.bg} 0%, ${lv.color}33 100%)` }}>
+            <span className="cloud-card-sym-big" style={{ color: lv.color }}>{cloud.symbol}</span>
+          </div>
+        )}
+        {/* 오버레이 — 레벨 뱃지 */}
+        <span className="cloud-card-level-badge" style={{ color: lv.color, background: lv.bg + "dd" }}>
+          {lv.label}
+        </span>
+      </div>
+
+      <div className="cloud-info">
+        <div className="cloud-header">
+          <span className="cloud-type">{cloud.level_ko}</span>
+          <span className="cloud-symbol">{cloud.symbol}</span>
+        </div>
+        <h3 className="cloud-name">{cloud.name_ko}</h3>
+        <p className="cloud-name-en">{cloud.name_en}</p>
+        <p className="cloud-description">{cloud.definition}</p>
+        <div className="cloud-meta">
+          <span className="meta-badge">{cloud.composition}</span>
+        </div>
+        <span className="cloud-details-link">자세히 보기 →</span>
+      </div>
+    </Link>
   );
 }
 
-// ── Sub 카드 (종/변종/부속 공통) ─────────────────────────────
-interface SubCardItem {
-  nameKo: string; nameEn: string; code: string;
-  thumbnail: string | null;
-  inClouds: { id: string; symbol: string; nameKo: string; level: string }[];
+// ── CloudLevelSection (인라인) ─────────────────────────────────
+function CloudLevelSection({
+  level, title, subtitle, altitude, altitudeDetail, icon, activeFilter, searchTerm,
+}: {
+  level: string; title: string; subtitle: string;
+  altitude: string; altitudeDetail: string; icon: string;
+  activeFilter: string; searchTerm: string;
+}) {
+  const clouds = useMemo(() => {
+    return Object.entries(cloudDetailData).filter(([, c]) => {
+      if (c.level !== level) return false;
+      if (activeFilter !== "all" && activeFilter !== level) return false;
+      if (searchTerm) {
+        const q = searchTerm.toLowerCase();
+        return (
+          c.name_ko.includes(searchTerm) ||
+          c.name_en.toLowerCase().includes(q) ||
+          c.symbol.toLowerCase().includes(q)
+        );
+      }
+      return true;
+    });
+  }, [level, activeFilter, searchTerm]);
+
+  if (clouds.length === 0) return null;
+
+  return (
+    <div className="cloud-level-section">
+      <div className={`level-header ${level}`}>
+        <span className="level-icon">{icon}</span>
+        <div className="level-title">
+          <h2>{title}</h2>
+          <p className="subtitle">{subtitle}</p>
+        </div>
+        <div className="altitude-info">
+          <strong>{altitude}</strong>
+          {altitudeDetail}
+        </div>
+      </div>
+      <div className="cloud-grid">
+        {clouds.map(([id, cloud]) => (
+          <CloudCard key={id} id={id} cloud={cloud} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
+// ================================================================
+// ② SubCard (사진 포함) — 종/변종/부속 탭 및 전체 뷰 공용
+// ================================================================
 function SubCard({
-  item, cat, variant = "default",
+  item, cat,
 }: {
-  item: SubCardItem;
+  item: ReturnType<typeof collectUnique>[number];
   cat: SubCat;
-  variant?: "default" | "compact";
 }) {
   const meta = TAB_META[cat];
   const [imgError, setImgError] = useState(false);
@@ -101,10 +183,10 @@ function SubCard({
   return (
     <Link
       href={`/atlas/sub/${cat}/${item.nameEn}`}
-      className={`stc-card stc-card--${variant}`}
+      className="stc-card"
       style={{ "--cat-color": meta.color, "--cat-bg": meta.bg } as React.CSSProperties}
     >
-      {/* 썸네일 이미지 영역 */}
+      {/* 썸네일 */}
       <div className="stc-thumb" style={{ background: meta.bg }}>
         {item.thumbnail && !imgError ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -117,30 +199,22 @@ function SubCard({
         ) : (
           <div className="stc-thumb-fallback">
             <span className="stc-thumb-emoji">{meta.emoji}</span>
-            <span className="stc-thumb-code" style={{ color: meta.color }}>
-              {item.code}
-            </span>
+            <span className="stc-thumb-code" style={{ color: meta.color }}>{item.code}</span>
           </div>
         )}
-        {/* 코드 뱃지 (이미지 위에 오버레이) */}
         {item.thumbnail && !imgError && (
-          <span
-            className="stc-thumb-badge"
-            style={{ color: meta.color, background: meta.bg + "ee" }}
-          >
+          <span className="stc-thumb-badge" style={{ color: meta.color, background: meta.bg + "ee" }}>
             {item.code}
           </span>
         )}
       </div>
 
-      {/* 카드 정보 */}
+      {/* 카드 본문 */}
       <div className="stc-body">
         <div className="stc-names">
           <span className="stc-ko">{item.nameKo}</span>
           <span className="stc-en">{item.nameEn}</span>
         </div>
-
-        {/* 출현 구름 */}
         <div className="stc-clouds">
           {item.inClouds.map((c) => {
             const lv = LEVEL_COLOR[c.level];
@@ -152,16 +226,15 @@ function SubCard({
             );
           })}
         </div>
-
-        <span className="stc-cta" style={{ color: meta.color }}>
-          자세히 보기 →
-        </span>
+        <span className="stc-cta" style={{ color: meta.color }}>자세히 보기 →</span>
       </div>
     </Link>
   );
 }
 
-// ── Sub 탭 콘텐츠 ─────────────────────────────────────────────
+// ================================================================
+// ③ 종/변종/부속 탭 콘텐츠 — 5열 그리드 (15개 → 5×3)
+// ================================================================
 function SubTabContent({ cat, searchTerm }: { cat: SubCat; searchTerm: string }) {
   const meta  = TAB_META[cat];
   const items = useMemo(() => collectUnique(cat), [cat]);
@@ -171,15 +244,18 @@ function SubTabContent({ cat, searchTerm }: { cat: SubCat; searchTerm: string })
     if (!q) return items;
     return items.filter(
       (i) =>
-        i.nameKo.includes(q) ||
-        i.nameEn.toLowerCase().includes(q) ||
+        i.nameKo.includes(q) || i.nameEn.toLowerCase().includes(q) ||
         i.code.toLowerCase().includes(q) ||
         i.inClouds.some((c) => c.nameKo.includes(q) || c.symbol.toLowerCase().includes(q))
     );
   }, [items, searchTerm]);
 
+  // 15개 고정 → 5열 그리드 여부
+  const is15 = items.length === 15 && filtered.length === items.length;
+
   return (
     <div className="sub-tab-content">
+      {/* 헤더 */}
       <div className="sub-tab-header"
         style={{ borderColor: meta.border, background: meta.bg }}>
         <div className="sub-tab-header-top">
@@ -199,9 +275,9 @@ function SubTabContent({ cat, searchTerm }: { cat: SubCat; searchTerm: string })
       {filtered.length === 0 ? (
         <div className="sub-tab-empty"><p>검색 결과가 없습니다.</p></div>
       ) : (
-        <div className="sub-tab-grid">
+        <div className={`sub-tab-grid${is15 ? " sub-tab-grid--5col" : ""}`}>
           {filtered.map((item) => (
-            <SubCard key={item.nameEn} item={item} cat={cat} variant="default" />
+            <SubCard key={item.nameEn} item={item} cat={cat} />
           ))}
         </div>
       )}
@@ -209,19 +285,19 @@ function SubTabContent({ cat, searchTerm }: { cat: SubCat; searchTerm: string })
   );
 }
 
-// ── 전체 뷰 (운형 왼쪽 + 나머지 오른쪽) ─────────────────────
-function AllView({ searchTerm }: { searchTerm: string }) {
+// ================================================================
+// ④ 전체 뷰 — 왼쪽: 속(사진), 오른쪽: 종/변종/부속(큰 카드)
+// ================================================================
+function AllView({ searchTerm, onTabSwitch }: { searchTerm: string; onTabSwitch: (tab: MainTab) => void }) {
   const allCats: SubCat[] = ["species", "varieties", "supplementary"];
   const q = searchTerm.trim().toLowerCase();
 
-  // 각 카테고리 데이터
   const catData = useMemo(() =>
     allCats.reduce((acc, cat) => {
       const items = collectUnique(cat);
       acc[cat] = q
         ? items.filter((i) =>
-            i.nameKo.includes(q) ||
-            i.nameEn.toLowerCase().includes(q) ||
+            i.nameKo.includes(q) || i.nameEn.toLowerCase().includes(q) ||
             i.code.toLowerCase().includes(q) ||
             i.inClouds.some((c) => c.nameKo.includes(q) || c.symbol.toLowerCase().includes(q))
           )
@@ -230,19 +306,16 @@ function AllView({ searchTerm }: { searchTerm: string }) {
     }, {} as Record<SubCat, ReturnType<typeof collectUnique>>),
   [q]);
 
-  // 운형 필터
   const genera = useMemo(() => {
     if (!q) return Object.entries(cloudDetailData);
     return Object.entries(cloudDetailData).filter(([, c]) =>
-      c.name_ko.includes(q) ||
-      c.name_en.toLowerCase().includes(q) ||
-      c.symbol.toLowerCase().includes(q)
+      c.name_ko.includes(q) || c.name_en.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q)
     );
   }, [q]);
 
   return (
     <div className="all-view">
-      {/* ── 왼쪽: 운형 ── */}
+      {/* ── 왼쪽: 운형 (사진 카드) ── */}
       <div className="all-view-left">
         <div className="all-section-header"
           style={{ borderColor: TAB_META.genera.border, background: TAB_META.genera.bg }}>
@@ -261,7 +334,7 @@ function AllView({ searchTerm }: { searchTerm: string }) {
             const [imgErr, setImgErr] = useState(false);
             return (
               <Link key={id} href={`/atlas/${id}`} className="all-genera-card">
-                {/* 이미지 영역 */}
+                {/* 썸네일 */}
                 <div className="all-genera-thumb" style={{ background: lv.bg }}>
                   {cloud.image && !imgErr ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -277,29 +350,23 @@ function AllView({ searchTerm }: { searchTerm: string }) {
                     </span>
                   )}
                 </div>
-                {/* 정보 */}
                 <div className="all-genera-info">
                   <div className="all-genera-name-row">
                     <span className="all-genera-ko">{cloud.name_ko}</span>
-                    <span className="all-genera-level"
-                      style={{ color: lv.color, background: lv.bg }}>
+                    <span className="all-genera-level" style={{ color: lv.color, background: lv.bg }}>
                       {lv.label}
                     </span>
                   </div>
                   <span className="all-genera-en">{cloud.name_en}</span>
-                  <span className="all-genera-sym"
-                    style={{ color: lv.color, background: lv.bg + "cc" }}>
-                    {cloud.symbol}
-                  </span>
                 </div>
-                <span className="all-genera-arrow">›</span>
+                <span className="all-genera-arrow" style={{ color: lv.color }}>›</span>
               </Link>
             );
           })}
         </div>
       </div>
 
-      {/* ── 오른쪽: 종/변종/부속 ── */}
+      {/* ── 오른쪽: 종/변종/부속 (큰 카드 그리드) ── */}
       <div className="all-view-right">
         {allCats.map((cat) => {
           const meta  = TAB_META[cat];
@@ -309,41 +376,27 @@ function AllView({ searchTerm }: { searchTerm: string }) {
               <div className="all-section-header"
                 style={{ borderColor: meta.border, background: meta.bg }}>
                 <span className="all-section-emoji">{meta.emoji}</span>
-                <div>
+                <div style={{ flex: 1 }}>
                   <h3 className="all-section-title" style={{ color: meta.color }}>
                     {meta.ko} <span className="all-section-en">({meta.en})</span>
                   </h3>
                   <p className="all-section-count">{items.length}종</p>
                 </div>
+                {/* 전체 보기 버튼 */}
+                <button
+                  className="all-view-more-btn"
+                  style={{ color: meta.color, borderColor: meta.border }}
+                  onClick={() => onTabSwitch(cat)}
+                >
+                  전체 보기 →
+                </button>
               </div>
 
-              <div className="all-sub-grid">
-                {items.slice(0, 12).map((item) => (
-                  <Link
-                    key={item.nameEn}
-                    href={`/atlas/sub/${cat}/${item.nameEn}`}
-                    className="all-sub-chip"
-                    style={{
-                      borderColor: meta.border,
-                      background: meta.bg,
-                      "--cat-color": meta.color,
-                    } as React.CSSProperties}
-                  >
-                    <span className="all-sub-code" style={{ color: meta.color }}>
-                      {item.code}
-                    </span>
-                    <span className="all-sub-name">{item.nameKo}</span>
-                  </Link>
+              {/* 카드 그리드 */}
+              <div className="all-sub-card-grid">
+                {items.map((item) => (
+                  <SubCard key={item.nameEn} item={item} cat={cat} />
                 ))}
-                {items.length > 12 && (
-                  <button
-                    className="all-sub-more"
-                    style={{ borderColor: meta.border, color: meta.color }}
-                    onClick={() => {/* 탭 전환은 부모에서 처리 */}}
-                  >
-                    +{items.length - 12}개 더 보기
-                  </button>
-                )}
               </div>
             </div>
           );
@@ -353,7 +406,9 @@ function AllView({ searchTerm }: { searchTerm: string }) {
   );
 }
 
-// ── 메인 페이지 ──────────────────────────────────────────────
+// ================================================================
+// ⑤ 메인 페이지
+// ================================================================
 export default function AtlasPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [searchTerm,   setSearchTerm]   = useState<string>("");
@@ -404,12 +459,12 @@ export default function AtlasPage() {
         </div>
       </section>
 
-      {/* 고도 필터바 — genera 탭에서만 */}
+      {/* 필터바 — genera에서만 */}
       {mainTab === "genera" && (
         <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
       )}
 
-      {/* ── Classification Info ── */}
+      {/* Classification Info */}
       <section className="classification-info">
         <div className="info-grid">
           {tabs.map((tab) => {
@@ -430,8 +485,7 @@ export default function AtlasPage() {
                   <div className="count" style={isActive ? { color: m.color } : {}}>{m.count}</div>
                 </div>
                 <h3 style={isActive ? { color: m.color } : {}}>
-                  {m.ko}
-                  <span className="info-en"> ({m.en})</span>
+                  {m.ko}<span className="info-en"> ({m.en})</span>
                 </h3>
                 <p>{m.desc}</p>
                 {isActive && (
@@ -447,7 +501,6 @@ export default function AtlasPage() {
         {/* 검색창 */}
         <div className="search-container">
           <input
-            id="search-box"
             type="text"
             className="search-box"
             placeholder={searchPlaceholders[mainTab]}
@@ -458,10 +511,10 @@ export default function AtlasPage() {
         </div>
       </section>
 
-      {/* ── Main Content ── */}
+      {/* Main Content */}
       <main className="main-content">
         {mainTab === "all" ? (
-          <AllView searchTerm={debounced} />
+          <AllView searchTerm={debounced} onTabSwitch={(tab) => { setMainTab(tab); setSearchTerm(""); }} />
         ) : mainTab === "genera" ? (
           <>
             <div className="layout-3-cols">
@@ -478,8 +531,8 @@ export default function AtlasPage() {
             </div>
             <div className="layout-4-cols">
               <CloudLevelSection level="low" title="저층운 (Low Clouds)"
-                subtitle="주로 물방울로 이루어진 낮은 고도의 구름 (적운, 적란운 포함)"
-                altitude="0-2 km" altitudeDetail="지표면 근처부터 2km 이하 고도 (적운/적란운은 수직 발달)"
+                subtitle="주로 물방울로 이루어진 낮은 고도의 구름"
+                altitude="0-2 km" altitudeDetail="지표면 근처부터 2km 이하 고도"
                 icon="🌤️" activeFilter={activeFilter} searchTerm={debounced} />
             </div>
           </>

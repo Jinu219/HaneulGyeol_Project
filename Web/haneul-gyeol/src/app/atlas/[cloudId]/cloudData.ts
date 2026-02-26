@@ -97,7 +97,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/ci/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("ci", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "가느다란 깃털 모양의 하얀 구름으로, 하늘 높은 곳에 위치합니다. 날씨가 변하기 전 자주 관찰됩니다.",
     formation: "",
     // ── 종 (5개) ──
     species: [
@@ -133,7 +133,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/cc/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("cc", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "작고 하얀 알갱이 모양의 구름들이 물결처럼 배열된 모습이 특징입니다. 매우 높은 하늘에 나타나며, 보통 맑은 날씨와 함께 관찰됩니다.",
     formation: "",
     // ── 종 (4개) ──
     species: [
@@ -167,7 +167,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/cs/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("cs", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "하늘을 얇은 베일처럼 덮는 투명한 구름으로, 태양이나 달 주위에 무리(halo)를 만들기도 합니다. 날씨 변화의 신호로 자주 나타납니다.",
     formation: "",
     // ── 종 (2개) ──
     species: [
@@ -199,7 +199,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/as/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("as", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "하늘을 넓게 덮는 회백색의 구름으로, 태양이 희미한 원반처럼 보이게 만듭니다. 비나 눈이 오기 전 단계에서 자주 나타납니다.",
     formation: "",
     // ── 종 없음 ──
     species: [],
@@ -232,7 +232,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/ac/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("ac", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "중간 높이에 위치한 작은 덩어리 모양의 구름들이 무리지어 나타납니다. 양떼구름이라고도 불립니다.",
     formation: "",
     // ── 종 (4개) ── ※ volutus는 고적운 종 아님 (자료 기준)
     species: [
@@ -274,7 +274,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/ns/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("ns", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "하늘 전체를 두껍게 덮으며 오랜 시간 비나 눈을 내리는 구름입니다. 태양이 보이지 않을 정도로 하늘을 어둡게 만들며, 지속적인 강수를 동반합니다.",
     formation: "",
     // ── 종 없음 ──
     species: [],
@@ -304,7 +304,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/cu/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("cu", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "뭉게구름이라고도 불리는 적운은 맑은 날 하늘에서 가장 흔히 볼 수 있는 구름입니다. 솜사탕처럼 부풀어 오른 모양이 특징입니다.",
     formation: "",
     // ── 종 (4개) ──
     species: [
@@ -342,7 +342,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/cb/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("cb", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "천둥번개를 동반하는 거대한 구름으로, 강한 상승기류로 인해 수직으로 크게 발달합니다. 소나기와 우박을 동반하기도 합니다.",
     formation: "",
     // ── 종 (2개) ──
     species: [
@@ -380,7 +380,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/st/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("st", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "하늘을 회색 담요처럼 덮는 낮은 구름입니다. 안개와 비슷한 형태로 나타나며 이슬비를 내리기도 합니다.",
     formation: "",
     // ── 종 (2개) ──
     species: [
@@ -411,7 +411,7 @@ export const cloudDetailData: Record<string, CloudDetail> = {
     image: "/clouds/sc/gallery/01.jpg",
     imageCredit: "CCSN Dataset",
     images: gallery("sc", 30, "CCSN Dataset"),
-    definition: "",
+    definition: "회색이나 흰색의 덩어리들이 층을 이루며 펼쳐진 구름입니다. 적운과 층운의 특징을 모두 가지고 있습니다.",
     formation: "",
     // ── 종 (5개) ── ※ 자료 기준: stratiformis, lenticularis, castellanus, volutus, floccus
     species: [
